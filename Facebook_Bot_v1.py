@@ -86,6 +86,7 @@ class Facebook:
                     try:
                         self.Installer()
                         self.username = ''
+                        self.commented = []
                         self.password = ''
                         self.logged = False
                         self.friends = ''
@@ -216,6 +217,16 @@ class Facebook:
                                 except:
                                     break
                                     pass
+                            m = {}
+                            for friend_name, friend_url in friends.items():
+                                self.browser.open('https://m.facebook.com' + friend_url)
+                                for hovera in self.browser.find_all('a'):
+                                    if str(hovera['href']).endswith('hovercard'):
+                                        m[friend_name] = hovera['href']
+                                        break
+                                        pass
+                                    pass
+                            friends = m
                             if self.logged and friends.__len__() > 0:
                                 print('[+][Log] Friends Number: [' + str(friends.__len__()) + ']')
                                 return friends
@@ -313,7 +324,7 @@ class Facebook:
                             pass
                         self.sys.exit(1)
                         pass
-                    except:
+                    except Exception as e:
                         pass
 
                 def account_name_gen(self):
@@ -360,9 +371,27 @@ class Facebook:
                                             pass
                                         pass
                                     pass
+                                elif div.find_all('h4'):
+                                    for a in div.find_all('a'):
+                                        try:
+                                            if str(a['href']).split('?')[1] == 'fref=none':
+                                                if a.text not in pages_list or pages_list[a.text] != a['href']:
+                                                    pages_list[a.text] = a['href']
+                                                elif a.text in pages_list or pages_list[a.text] != a['href']:
+                                                    pages_list[a.text + str(self.random.randint(0, 9999999))] = a[
+                                                        'href']
+                                                else:
+                                                    pass
+                                            else:
+                                                if a.text == 'See More':
+                                                    see_more.append('https://m.facebook.com' + a['href'])
+                                        except:
+                                            pass
+                                        pass
+                                    pass
                                 else:
                                     pass
-                                pass
+
                             for see in see_more:
                                 url = str(see).split('=')
                                 url.pop()
@@ -399,6 +428,39 @@ class Facebook:
                         pass
                     except:
                         pass
+
+                def Comments_Fetcher(self):
+                    print('[+][Start] Fetching Commented Lists')
+                    try:
+                        read = open('F_PG.DAT', 'r+').read()
+                        for r in read.split("\n"):
+                            if str(self.decrypter(r, 10)).strip().replace(' ', '').__len__() > 0:
+                                self.commented.append(self.decrypter(r, 10))
+                    except FileNotFoundError:
+                        open('F_PG.DAT', 'w+').read()
+                    except Exception as e:
+                        pass
+                    try:
+                        read = open('F_GP.DAT', 'r+').read()
+                        for r in read.split("\n"):
+                            if str(self.decrypter(r, 11)).strip().replace(' ', '').__len__() > 0:
+                                self.commented.append(self.decrypter(r, 11))
+                    except FileNotFoundError:
+                        open('F_GP.DAT', 'w+').read()
+                    except:
+                        pass
+                    try:
+                        read = open('F_FBF.DAT', 'r+').read()
+                        for r in read.split("\n"):
+                            if str(self.decrypter(r, 12)).strip().replace(' ', '').__len__() > 0:
+                                self.commented.append(self.decrypter(r, 12))
+                    except FileNotFoundError:
+                        open('F_FBF.DAT', 'w+').read()
+                    except:
+                        pass
+                    print('[+][Done] Fetching Commented Lists Service')
+                    print(self.commented.__len__())
+                    pass
 
                 def url_encoder(self, message):
                     try:
@@ -683,7 +745,7 @@ class Facebook:
                                             if str(comment_div['id']).startswith('u_'):
                                                 if xm < 1:
                                                     for a in comment_div.find_all('a'):
-                                                        if str(a.text).lower().__contains__('comment'):
+                                                        if str(a['href']).lower().__contains__('/story.php?story_fbid='):
                                                             xm = 1
                                                             a = 'https://m.facebook.com' + a['href']
                                                             self.browser.open(a)
@@ -694,11 +756,19 @@ class Facebook:
                                                             self.browser.submit_form(form, 'https://m.facebok.com' +
                                                                                    self.browser.find_all('form')[0][
                                                                                        'action'])
-                                                            self.time.sleep(sleep_thread)
-                                                            self.time.sleep(1)
-                                                            print(
-                                                                '[+][Log][Success] Comment To Pages Posts Service :[' + page_name + ']')
-                                                            break
+                                                            try:
+                                                                m = self.browser.find_all('div', {
+                                                                    'title': 'User Comments Blocked'})[0]
+                                                                print(
+                                                                    '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                        m['title']) + ']:[' + page_name + ']')
+                                                                break
+                                                            except:
+                                                                print(
+                                                                    '[+][Log][Success] Comment To Pages Posts Service :[' + page_name + ']')
+                                                                self.time.sleep(sleep_thread)
+                                                                self.time.sleep(1)
+                                                                break
                                                             pass
                                                         pass
                                                     pass
@@ -721,6 +791,375 @@ class Facebook:
                     except:
                         pass
 
+                def comment_to_pages_Bot(self, comment=None, sleep_thread=0):
+                    try:
+                        if self.logged:
+                            pages = self.pages_list
+                            commented = self.commented
+                            print('[+][Log][Start] Comment To Pages Posts Service')
+                            while True:
+                                for page_name, page_url in pages.items():
+                                    try:
+                                        xm = 0
+                                        self.browser.open('https://m.facebook.com' + page_url)
+                                        for comment_div in self.browser.find_all('div', {'id': 'recent'})[0].find_all(
+                                                'div'):
+                                            try:
+                                                if str(comment_div['id']).startswith('u_'):
+                                                    if xm < 1:
+                                                        for a in comment_div.find_all('a'):
+                                                            if str(a['href']).lower().__contains__(
+                                                                    '/story.php?story_fbid='):
+                                                                xm = 1
+                                                                a = 'https://m.facebook.com' + a['href']
+                                                                if a not in commented:
+                                                                    self.browser.open(a)
+                                                                    form = self.browser.get_form(
+                                                                        self.browser.find_all('form')[0])
+                                                                    comment = self.url_encoder(comment)
+                                                                    form['comment_text'].value = comment
+                                                                    self.browser.submit_form(form,
+                                                                                             'https://m.facebok.com' +
+                                                                                             self.browser.find_all(
+                                                                                                 'form')[
+                                                                                                 0][
+                                                                                                 'action'])
+                                                                    try:
+                                                                        m = self.browser.find_all('div', {'title': 'User Comments Blocked'})[0]
+                                                                        print(
+                                                                            '[+][Log][Failed] Comment To Pages Posts Service ['+str(m['title'])+']:[' + page_name + ']')
+                                                                        break
+                                                                    except:
+                                                                        print(
+                                                                            '[+][Log][Success] Comment To Pages Posts Service :[' + page_name + ']')
+                                                                        a = str(a).split('&refid=')[0]
+                                                                        commented.append(a)
+                                                                        try:
+                                                                            open('F_PG.DAT', 'a+').write(
+                                                                                self.encrypter(a, 10) + "\n")
+                                                                        except:
+                                                                            open('F_PG.DAT', 'a+')
+                                                                            pass
+                                                                        self.time.sleep(sleep_thread)
+                                                                        self.time.sleep(1)
+                                                                        break
+                                                                else:
+                                                                    break
+                                                                    pass
+                                                                pass
+                                                            pass
+                                                        pass
+                                                    else:
+                                                        break
+                                            except:
+                                                pass
+                                        pass
+                                    except:
+                                        print('[+][Log][Failed] Comment To Pages Posts Service :[' + page_name + ']')
+                                        pass
+                                    pass
+                            print('[+][Log][Done] Comment To Pages Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.sys.exit(1)
+                        pass
+                    except:
+                        pass
+
+                def comment_to_friends(self, comment=None, sleep_thread=0):
+                    try:
+                        if self.logged:
+                            pages = self.friends
+                            print('[+][Log][Start] Comment To Friends Posts Service')
+                            for page_name, page_url in pages.items():
+                                try:
+                                    xm = 0
+                                    self.browser.open('https://m.facebook.com' + page_url)
+                                    for comment_div in self.browser.find_all('div', {'id': 'recent'})[0].find_all('div'):
+                                        try:
+                                            if str(comment_div['id']).startswith('u_'):
+                                                if xm < 1:
+                                                    for a in comment_div.find_all('a'):
+                                                        if str(a['href']).lower().__contains__('story.php?story_fbid='):
+                                                            xm = 1
+                                                            a = 'https://m.facebook.com' + a['href']
+                                                            self.browser.open(a)
+                                                            form = self.browser.get_form(
+                                                              self.browser.find_all('form')[0])
+                                                            comment = self.url_encoder(comment)
+                                                            form['comment_text'].value = comment
+                                                            self.browser.submit_form(form, 'https://m.facebok.com' +
+                                                                                   self.browser.find_all('form')[0][
+                                                                                       'action'])
+                                                            try:
+                                                                m = self.browser.find_all('div', {
+                                                                    'title': 'User Comments Blocked'})[0]
+                                                                print(
+                                                                    '[+][Log][Failed] Comment To Friends Posts Service [' + str(
+                                                                        m['title']) + ']:[' + page_name + ']')
+                                                                break
+                                                            except:
+                                                                print(
+                                                                    '[+][Log][Success] Comment To Friends Posts Service :[' + page_name + ']')
+                                                                self.time.sleep(sleep_thread)
+                                                                self.time.sleep(1)
+                                                                break
+                                                            break
+                                                            pass
+                                                        else:
+                                                            pass
+                                                        pass
+                                                    pass
+                                                else:
+                                                    break
+                                        except:
+                                            pass
+                                    pass
+                                except:
+                                    print('[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                    pass
+                                pass
+                            print('[+][Log][Done] Comment To Friends Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.sys.exit(1)
+                        pass
+                    except:
+                        pass
+
+                def comment_to_friends_Bot(self, comment=None, sleep_thread=0):
+                    try:
+                        if self.logged:
+                            pages = self.friends
+                            commented = self.commented
+                            print('[+][Log][Start] Comment To Friends Posts Service')
+                            while True:
+                                for page_name, page_url in pages.items():
+                                    try:
+                                        xm = 0
+                                        self.browser.open('https://m.facebook.com' + page_url)
+                                        for comment_div in self.browser.find_all('div', {'id': 'recent'})[0].find_all(
+                                                'div'):
+                                            try:
+                                                if str(comment_div['id']).startswith('u_'):
+                                                    if xm < 1:
+                                                        for a in comment_div.find_all('a'):
+                                                            if str(a['href']).lower().__contains__(
+                                                                    'story.php?story_fbid='):
+                                                                xm = 1
+                                                                a = 'https://m.facebook.com' + a['href']
+                                                                if a not in commented:
+                                                                    self.browser.open(a)
+                                                                    form = self.browser.get_form(
+                                                                        self.browser.find_all('form')[0])
+                                                                    comment = self.url_encoder(comment)
+                                                                    form['comment_text'].value = comment
+                                                                    self.browser.submit_form(form,
+                                                                                             'https://m.facebok.com' +
+                                                                                             self.browser.find_all(
+                                                                                                 'form')[
+                                                                                                 0][
+                                                                                                 'action'])
+                                                                    try:
+                                                                        m = self.browser.find_all('div', {
+                                                                            'title': 'User Comments Blocked'})[0]
+                                                                        print(
+                                                                            '[+][Log][Failed] Comment To Friends Posts Service [' + str(
+                                                                                m['title']) + ']:[' + page_name + ']')
+                                                                        break
+                                                                    except:
+                                                                        print(
+                                                                            '[+][Log][Success] Comment To Friends Posts Service :[' + page_name + ']')
+                                                                        a = str(a).split('&refid=')[0]
+                                                                        commented.append(a)
+                                                                        try:
+                                                                            open('F_FBF.DAT', 'a+').write(
+                                                                                self.encrypter(a, 12) + "\n")
+                                                                        except:
+                                                                            open('F_FBF.DAT', 'a+')
+                                                                            pass
+                                                                        self.time.sleep(sleep_thread)
+                                                                        self.time.sleep(1)
+                                                                        break
+                                                                    break
+                                                                    pass
+                                                                else:
+                                                                    break
+                                                                    pass
+                                                                pass
+                                                            else:
+                                                                pass
+                                                            pass
+                                                        pass
+                                                    else:
+                                                        break
+                                            except:
+                                                pass
+                                        pass
+                                    except:
+                                        print('[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                        pass
+                                    pass
+                            print('[+][Log][Done] Comment To Friends Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.sys.exit(1)
+                        pass
+                    except:
+                        pass
+
+                def comment_to_groups(self, comment=None, sleep_thread=0):
+                    try:
+                        if self.logged:
+                            pages = self.group_list
+                            print('[+][Log][Start] Comment To Groups Posts Service')
+                            for page_name, page_url in pages.items():
+                                try:
+                                    xm = 0
+                                    self.browser.open('https://m.facebook.com' + page_url)
+                                    for comment_div in self.browser.find_all('div', {'id': 'm_group_stories_container'})[0].find_all('div'):
+                                        try:
+                                            if str(comment_div['id']).startswith('u_'):
+                                                if xm < 1:
+                                                    for a in comment_div.find_all('a'):
+                                                        if str(a['href']).lower().__contains__('?view=permalink&id='):
+                                                            xm = 1
+                                                            a = 'https://m.facebook.com' + a['href']
+                                                            self.browser.open(a)
+                                                            form = self.browser.get_forms()[1]
+                                                            comment = self.url_encoder(comment)
+                                                            form['comment_text'].value = comment
+                                                            self.browser.submit_form(form, 'https://m.facebok.com' +
+                                                                                   self.browser.find_all('form')[0][
+                                                                                       'action'])
+                                                            try:
+                                                                m = self.browser.find_all('div', {
+                                                                    'title': 'User Comments Blocked'})[0]
+                                                                print(
+                                                                    '[+][Log][Failed] Comment To Groups Posts Service [' + str(
+                                                                        m['title']) + ']:[' + page_name + ']')
+                                                                break
+                                                            except:
+                                                                print(
+                                                                    '[+][Log][Success] Comment To Groups Posts Service :[' + page_name + ']')
+                                                                self.time.sleep(sleep_thread)
+                                                                self.time.sleep(1)
+                                                                break
+                                                            break
+                                                            pass
+                                                        else:
+                                                            pass
+                                                        pass
+                                                    pass
+                                                else:
+                                                    break
+                                        except:
+                                            pass
+                                    pass
+                                except:
+                                    print('[+][Log][Failed] Comment To Groups Posts Service :[' + page_name + ']')
+                                    pass
+                                pass
+                            print('[+][Log][Done] Comment To Groups Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.sys.exit(1)
+                        pass
+                    except Exception as e:
+                        print(e)
+                        pass
+
+                def comment_to_groups_Bot(self, comment=None, sleep_thread=0):
+                    try:
+                        if self.logged:
+                            pages = self.group_list
+                            commented = self.commented
+                            print('[+][Log][Start] Comment To Groups Posts Service')
+                            while True:
+                                for page_name, page_url in pages.items():
+                                    try:
+                                        xm = 0
+                                        self.browser.open('https://m.facebook.com' + page_url)
+                                        for comment_div in \
+                                        self.browser.find_all('div', {'id': 'm_group_stories_container'})[0].find_all(
+                                                'div'):
+                                            try:
+                                                if str(comment_div['id']).startswith('u_'):
+                                                    if xm < 1:
+                                                        for a in comment_div.find_all('a'):
+                                                            if str(a['href']).lower().__contains__(
+                                                                    '?view=permalink&id='):
+                                                                xm = 1
+                                                                a = 'https://m.facebook.com' + a['href']
+                                                                if a not in commented:
+                                                                    self.browser.open(a)
+                                                                    form = self.browser.get_forms()[1]
+                                                                    comment = self.url_encoder(comment)
+                                                                    form['comment_text'].value = comment
+                                                                    self.browser.submit_form(form,
+                                                                                             'https://m.facebok.com' +
+                                                                                             self.browser.find_all(
+                                                                                                 'form')[
+                                                                                                 0][
+                                                                                                 'action'])
+                                                                    try:
+                                                                        m = self.browser.find_all('div', {
+                                                                            'title': 'User Comments Blocked'})[0]
+                                                                        print(
+                                                                            '[+][Log][Failed] Comment To Pages Groups Service [' + str(
+                                                                                m['title']) + ']:[' + page_name + ']')
+                                                                        break
+                                                                    except:
+                                                                        print(
+                                                                            '[+][Log][Success] Comment To Groups Posts Service :[' + page_name + ']')
+                                                                        a = str(a).split('&refid=')[0]
+                                                                        commented.append(a)
+                                                                        try:
+                                                                            open('F_GP.DAT', 'a+').write(
+                                                                                self.encrypter(a, 11) + "\n")
+                                                                        except:
+                                                                            open('F_GP.DAT', 'a+')
+                                                                            pass
+                                                                        self.time.sleep(sleep_thread)
+                                                                        self.time.sleep(1)
+                                                                        break
+                                                                    break
+                                                                    pass
+                                                                else:
+                                                                    break
+                                                                    pass
+                                                            else:
+                                                                pass
+                                                            pass
+                                                        pass
+                                                    else:
+                                                        break
+                                            except:
+                                                pass
+                                        pass
+                                    except:
+                                        print('[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                        pass
+                                    pass
+                            print('[+][Log][Done] Comment To Friends Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.sys.exit(1)
+                        pass
+                    except Exception as e:
+                        print(e)
+                        pass
+
                 def auto_liker(self, sleep_thread=2):
                     try:
                         if self.logged and self.friends.__len__() > 0:
@@ -728,12 +1167,6 @@ class Facebook:
                             for friend_name, friend_url in self.friends.items():
                                 post_links = []
                                 self.browser.open('https://m.facebook.com' + friend_url)
-                                for hovera in self.browser.find_all('a'):
-                                    if str(hovera['href']).endswith('hovercard'):
-                                        self.browser.open('https://m.facebook.com' + hovera['href'])
-                                        break
-                                        pass
-                                    pass
                                 for div in self.browser.find_all('div'):
                                     try:
                                         if str(div['id']).startswith('u_'):
@@ -1003,6 +1436,18 @@ class Facebook:
                         pass
                     pass
 
+                def Coment_To_Pages_Posts_BOT(self, comment=None, sleep_thread=2):
+                    try:
+                        self.login()
+                        print('[+][start] Pages List Generator Service')
+                        self.pages_list = self.pages_list_gen()
+                        print('[+][Done] Pages List Generator Service')
+                        self.comment_to_pages_Bot(comment, sleep_thread)
+                        pass
+                    except:
+                        pass
+                    pass
+
                 def Auto_Liker(self, sleep_thread=2):
                     try:
                         self.login()
@@ -1065,9 +1510,9 @@ class Facebook:
                 def Comment_Groups_Posts(self, Comment=None, sleep_thread=2):
                     try:
                         self.login()
-                        print('[+][start] Friend List Generator Service')
-                        self.group_list = self.group_list()
-                        print('[+][Done] Friend List Generator Service')
+                        print('[+][start] Groups List Generator Service')
+                        self.group_list = self.group_list_gen()
+                        print('[+][Done] Groups List Generator Service')
                         self.comment_to_groups(Comment, sleep_thread)
                         pass
                     except:
@@ -1080,7 +1525,7 @@ class Facebook:
                         print('[+][start] Friend List Generator Service')
                         self.friends = self.friend_list_gen()
                         print('[+][Done] Friend List Generator Service')
-                        self.comment_to_friends_bot(Comment, sleep_thread)
+                        self.comment_to_friends_Bot(Comment, sleep_thread)
                         pass
                     except:
                         pass
@@ -1089,12 +1534,12 @@ class Facebook:
                 def Comment_Groups_Posts_Bot(self, Comment=None, sleep_thread=2):
                     try:
                         self.login()
-                        print('[+][start] Friend List Generator Service')
-                        self.group_list = self.group_list()
-                        print('[+][Done] Friend List Generator Service')
-                        self.comment_to_groups_bot(Comment, sleep_thread)
+                        print('[+][start] Groups List Generator Service')
+                        self.group_list = self.group_list_gen()
+                        print('[+][Done] Groups List Generator Service')
+                        self.comment_to_groups_Bot(Comment, sleep_thread)
                         pass
-                    except:
+                    except Exception as e:
                         pass
                     pass
 
@@ -1130,9 +1575,9 @@ class Facebook:
                         print('[+][start] Pages List Generator Service')
                         self.pages_list = self.pages_list_gen()
                         print('[+][Done] Pages List Generator Service')
-                        self.comment_to_friends_bot(Comment, sleep_thread)
-                        self.comment_to_groups_bot(Comment, sleep_thread)
-                        self.Comment_To_Pages_Posts_Bot(Comment, sleep_thread)
+                        self.comment_to_friends_Bot(Comment, sleep_thread)
+                        self.comment_to_groups_Bot(Comment, sleep_thread)
+                        self.comment_to_pages_Bot(Comment, sleep_thread)
                         pass
                     except:
                         pass
@@ -1144,6 +1589,7 @@ class Facebook:
                         username = input('[+]Facebook Account Name: ')
                         password = self.getpass.getpass('[+]Facebook Account Password: ')
                         self.Login(username, password)
+                        self.Comments_Fetcher()
                         try:
                             choose = int(input('[+]Please Choose One Of this Services To Start:'
                                                '\n[+][1] Message To All'
@@ -1243,7 +1689,7 @@ class Facebook:
                                     except:
                                         pass
                                     if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Comment_To_Pages_Posts_Bot(message, thread)
+                                        self.Comment_To_Pages_Posts_BOT(message, thread)
                                     else:
                                         print(
                                             '[-][error] Message Is Empty. System Will Exit')
@@ -1375,7 +1821,8 @@ class Facebook:
                                 print('[-][error] You Must Choose Number between 1 and 16 to Start. System Will Exit')
                                 self.sys.exit(1)
                             pass
-                        except:
+                        except Exception as e:
+                            print(e)
                             print('[-][error] You Must Choose Number To Start. System Will Exit')
                             self.sys.exit(1)
                             pass
