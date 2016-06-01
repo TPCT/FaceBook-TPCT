@@ -1,5 +1,5 @@
 # coding=utf-8
-
+#!/usr/bin/python
 
 class Facebook:
         try:
@@ -15,10 +15,12 @@ class Facebook:
                    Facebook: https://www.facebook.com/Taylor.Ackerley.9\n'''
 
                 class Installer:
+                    import os, shutil
                     def __init__(self):
                         self.Admin_Rights()
                         self.Import_Checker()
-
+                        self.__installer()
+                        
                     def Admin_Rights(self):
                         try:
                             import os, sys
@@ -56,7 +58,7 @@ class Facebook:
                 class Display:
                     import pyvirtualdisplay, sys, os, ctypes
                     display = ''
-
+                                                                                                      
                     def stop(self):
                         if self.sys.platform.lower() == 'linux':
                             self.display.stop()
@@ -1594,244 +1596,251 @@ class Facebook:
                         print(self.Coder)
                         username = input('[+]Facebook Account Name: ')
                         password = self.getpass.getpass('[+]Facebook Account Password: ')
-                        self.Login(username, password)
-                        self.Comments_Fetcher()
-                        try:
-                            choose = int(input('[+]Please Choose One Of this Services To Start:'
-                                               '\n[+][1] Message To All'
-                                               '\n[+][2] Auto Message BOT'
-                                               '\n[+][3] Post To All Friends Walls'
-                                               '\n[+][4] Post To All Groups Walls'
-                                               '\n[+][5] Comment On Latest Pages Posts'
-                                               '\n[+][6] Comment On Latest Pages Posts (BOT)'
-                                               '\n[+][7] Comment On Latest Friends Posts'
-                                               '\n[+][8] Comment On Latest Friends Posts (BOT)'
-                                               '\n[+][9] Comment On Latest Groups Posts'
-                                               '\n[+][10] Comment On Latest Groups Posts(BOT)'
-                                               '\n[+][11] Comment On All Latest Posts'
-                                               '\n[+][12] Comment On All Latest Posts (BOT)'
-                                               '\n[+][13] Auto Liker For All Friends'
-                                               '\n[+][14] Auto Liker For All Friends (BOT)'
-                                               '\n[+][15] Watcher'
-                                               '\n[+][16] Watcher (BOT)'
-                                               '\n[+][Choose] Enter Your Choise: '))
-                            if choose > 0 and choose < 17:
-                                if choose == 1:
-                                    message = input('[+]You have chose Message To All'
-                                                    '\n[+]Enter Your Message Text To Start: ')
-                                    thread = 2
-                                    try:
-                                        thread = int(input('[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Message_To_All(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 2:
-                                    message = input('[+]You have chose Auto Bot Message'
-                                                    '\n[+]Enter Your Message Text To Start: ')
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        message = message
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                    self.Auto_bot(message)
-                                elif choose == 3:
-                                    message = input('[+]You have chose Post To All Friends Walls'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
+                        if str(username).strip().replace(' ', '').__len__() > 0 and str(password).strip().replace(' ', '').__len__() > 0:
+                            self.Login(username, password)
+                            self.Comments_Fetcher()
+                            try:
+                                choose = int(input('[+]Please Choose One Of this Services To Start:'
+                                                   '\n[+][1] Message To All'
+                                                   '\n[+][2] Auto Message BOT'
+                                                   '\n[+][3] Post To All Friends Walls'
+                                                   '\n[+][4] Post To All Groups Walls'
+                                                   '\n[+][5] Comment On Latest Pages Posts'
+                                                   '\n[+][6] Comment On Latest Pages Posts (BOT)'
+                                                   '\n[+][7] Comment On Latest Friends Posts'
+                                                   '\n[+][8] Comment On Latest Friends Posts (BOT)'
+                                                   '\n[+][9] Comment On Latest Groups Posts'
+                                                   '\n[+][10] Comment On Latest Groups Posts(BOT)'
+                                                   '\n[+][11] Comment On All Latest Posts'
+                                                   '\n[+][12] Comment On All Latest Posts (BOT)'
+                                                   '\n[+][13] Auto Liker For All Friends'
+                                                   '\n[+][14] Auto Liker For All Friends (BOT)'
+                                                   '\n[+][15] Watcher'
+                                                   '\n[+][16] Watcher (BOT)'
+                                                   '\n[+][Choose] Enter Your Choise: '))
+                                if choose > 0 and choose < 17:
+                                    if choose == 1:
+                                        message = input('[+]You have chose Message To All'
+                                                        '\n[+]Enter Your Message Text To Start: ')
+                                        thread = 2
+                                        try:
+                                            thread = int(input(
                                                 '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Wall_Message_To_All(message, thread)
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Message_To_All(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 2:
+                                        message = input('[+]You have chose Auto Bot Message'
+                                                        '\n[+]Enter Your Message Text To Start: ')
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            message = message
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                        self.Auto_bot(message)
+                                    elif choose == 3:
+                                        message = input('[+]You have chose Post To All Friends Walls'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Wall_Message_To_All(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 4:
+                                        message = input('[+]You have chose Post To All Groups Walls'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Post_To_Groups_Wall(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 5:
+                                        message = input('[+]You have Comment On Latest Pages Posts'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Comment_To_Pages_Posts(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 6:
+                                        message = input('[+]You have chose Comment On Latest Pages Posts (BOT)'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Comment_To_Pages_Posts_BOT(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 7:
+                                        message = input('[+]You have chose Comment On Latest Friends Posts'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Commet_Friends_Posts(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 8:
+                                        message = input('[+]You have chose Comment On Latest Friends Posts (BOT)'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Commet_Friends_Posts_Bot(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 9:
+                                        message = input('[+]You have chose Comment On Latest Groups Posts'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Comment_Groups_Posts(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 10:
+                                        message = input('[+]You have chose Comment On Latest Groups Posts (BOT)'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Comment_Groups_Posts_Bot(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 11:
+                                        message = input('[+]You have chose Comment On All Latest Posts'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Comment_To_All(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 12:
+                                        message = input('[+]You have chose Comment On All Latest Posts (BOT)'
+                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        if str(message).strip().replace(' ', '').__len__() > 0:
+                                            self.Comment_To_All_Bot(message, thread)
+                                        else:
+                                            print(
+                                                '[-][error] Message Is Empty. System Will Exit')
+                                            self.sys.exit(1)
+                                    elif choose == 13:
+                                        thread = 2
+                                        try:
+                                            thread = int(input('[+]You have chose Auto Liker For All Friends'
+                                                               '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        self.Auto_Liker(thread)
+                                    elif choose == 14:
+                                        thread = 2
+                                        try:
+                                            thread = int(input('[+]You have chose Auto Liker For All Friends (BOT)'
+                                                               '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except:
+                                            pass
+                                        self.Auto_Liker_BOT(thread)
+                                    elif choose == 15:
+                                        activities = 10
+                                        try:
+                                            activities = int(input('[+]You have chose Watcher'
+                                                                   '\n[+]Enter Numer Of Activites To Get: '))
+                                        except:
+                                            pass
+                                        self.Watcher(activities)
+                                    elif choose == 16:
+                                        print('[+]You have chose Watcher (BOT)')
+                                        self.Watcher_BOT()
                                     else:
                                         print(
                                             '[-][error] Message Is Empty. System Will Exit')
                                         self.sys.exit(1)
-                                elif choose == 4:
-                                    message = input('[+]You have chose Post To All Groups Walls'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
                                         pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Post_To_Groups_Wall(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 5:
-                                    message = input('[+]You have Comment On Latest Pages Posts'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Comment_To_Pages_Posts(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 6:
-                                    message = input('[+]You have chose Comment On Latest Pages Posts (BOT)'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Comment_To_Pages_Posts_BOT(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 7:
-                                    message = input('[+]You have chose Comment On Latest Friends Posts'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Commet_Friends_Posts(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 8:
-                                    message = input('[+]You have chose Comment On Latest Friends Posts (BOT)'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Commet_Friends_Posts_Bot(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 9:
-                                    message = input('[+]You have chose Comment On Latest Groups Posts'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Comment_Groups_Posts(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 10:
-                                    message = input('[+]You have chose Comment On Latest Groups Posts (BOT)'
-                                                   '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Comment_Groups_Posts_Bot(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 11:
-                                    message = input('[+]You have chose Comment On All Latest Posts'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Comment_To_All(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 12:
-                                    message = input('[+]You have chose Comment On All Latest Posts (BOT)'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Comment_To_All_Bot(message, thread)
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.sys.exit(1)
-                                elif choose == 13:
-                                    thread = 2
-                                    try:
-                                        thread = int(input('[+]You have chose Auto Liker For All Friends'
-                                                           '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    self.Auto_Liker(thread)
-                                elif choose == 14:
-                                    thread = 2
-                                    try:
-                                        thread = int(input('[+]You have chose Auto Liker For All Friends (BOT)'
-                                                           '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    self.Auto_Liker_BOT(thread)
-                                elif choose == 15:
-                                    activities = 10
-                                    try:
-                                        activities = int(input('[+]You have chose Watcher'
-                                                  '\n[+]Enter Numer Of Activites To Get: ' ))
-                                    except:
-                                        pass
-                                    self.Watcher(activities)
-                                elif choose == 16:
-                                    print('[+]You have chose Watcher (BOT)')
-                                    self.Watcher_BOT()
+                                    pass
                                 else:
                                     print(
-                                        '[-][error] Message Is Empty. System Will Exit')
+                                        '[-][error] You Must Choose Number between 1 and 16 to Start. System Will Exit')
                                     self.sys.exit(1)
-                                    pass
                                 pass
-                            else:
-                                print('[-][error] You Must Choose Number between 1 and 16 to Start. System Will Exit')
+                            except Exception as e:
+                                print(e)
+                                print('[-][error] You Must Choose Number To Start. System Will Exit')
                                 self.sys.exit(1)
-                            pass
-                        except Exception as e:
-                            print(e)
-                            print('[-][error] You Must Choose Number To Start. System Will Exit')
+                                pass
+                        else:
+                            print('[-][Not Logged] Service Stopped System Will Close')
+                            return False
                             self.sys.exit(1)
-                            pass
                     except:
                         pass
                     pass
