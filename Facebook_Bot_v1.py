@@ -990,15 +990,13 @@ class Facebook:
 
                 def Watcher(self, number_of_activities=10):
                     try:
-                        self.login()
                         self.watcher(number_of_activities)
                     except:
                         pass
 
                 def Watcher_BOT(self):
                     try:
-                        self.login()
-                        self.Watcher_BOT()
+                        self.watcher_bot()
                     except:
                         pass
                     pass
