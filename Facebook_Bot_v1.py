@@ -27,7 +27,7 @@ class Facebook:
                         except Exception as e:
                             e = e.args
                             if e[0] == 13:
-                                print('[+] Sorry You Need To User Script As Admin Script Will Exit')
+                                print('[+] Sorry You Need To Use Script As Admin Script Will Exit')
                                 sys.exit(1)
                             else:
                                 pass
@@ -70,9 +70,8 @@ class Facebook:
                             pass
                         pass
                 Installer()
-                import time, random, re, string, sys, warnings, os, pip, traceback, math, getpass, pyvirtualdisplay, \
-                    pickle, \
-                    signal
+                import time, random, re, string, sys, warnings, os, pip, traceback, math, getpass, pyvirtualdisplay, pickle, signal
+                import pickle
                 from robobrowser import RoboBrowser
                 import robobrowser
                 from selenium import webdriver
@@ -82,10 +81,10 @@ class Facebook:
                     multiplier=True,
                     allow_redirects=True, history=True, parser='lxml')
                 Browser = ''
-                keywords = {'who are you ': 'TPCT Bot'}
 
                 def __init__(self):
                     try:
+                        self.Installer()
                         self.username = ''
                         self.password = ''
                         self.logged = False
@@ -104,7 +103,7 @@ class Facebook:
                     try:
                         if self.logged and str(self.username).strip().__len__() > 0 and str(self.password).strip().__len__() > 0:
                             self.browser.open(
-                                'https://m.facebook.com/a/language.php?l=en_GB&lref=https%3A%2F%2Fm.facebook.com%2Flogin%2F%3Ffl%26refid%3D9%26refsrc%3Dhttps%253A%252F%252Fm.facebook.com%252Flogin%252F%26ref_component%3Dmbasic_footer&index=1&gfid=AQB4NBKfmvzv7Hw1&ref_component=mbasic_footer&ref_page=XLoginController')
+                                    'https://m.facebook.com/a/language.php?l=en_GB&lref=https%3A%2F%2Fm.facebook.com%2Flogin%2F%3Ffl%26refid%3D9%26refsrc%3Dhttps%253A%252F%252Fm.facebook.com%252Flogin%252F%26ref_component%3Dmbasic_footer&index=1&gfid=AQB4NBKfmvzv7Hw1&ref_component=mbasic_footer&ref_page=XLoginController')
                             form = self.browser.get_form('login_form')
                             form['email'] = self.username
                             form['pass'] = self.password
@@ -187,7 +186,7 @@ class Facebook:
                         self.sys.exit(1)
                         pass
 
-                def friend_list_gen(self):  # to get friends list
+                def friend_list_gen(self):
                     try:
                         if self.logged:
                             friends = {}
@@ -234,7 +233,46 @@ class Facebook:
                     except:
                         pass
 
-                def group_list_gen(self):  # to get joinned groups
+                def encrypter(self, data=None, key=0):
+                    Encrypted_Data = ''
+                    if key <= 10:
+                        for c in data:
+                            shipper = round(key * 4 * (4 / 3) * (5 / 4) * (1 / 3) * (5) + 10)
+                            salt = (ord(c) * 4) - shipper
+                            pepper = round(salt + key)
+                            Encrypted_Data += chr(pepper)
+                        return Encrypted_Data
+                    else:
+                        for c in data:
+                            shipper = round(key * (1 / 4) * (4 / 3) * (5 / 4) * (1 / 3) * (1 / 5) - 5)
+                            salt = (ord(c) * 4) + (1 / 4) - shipper
+                            pepper = round(salt + key * (1 / key - 10))
+                            Encrypted_Data += chr(pepper)
+                        return Encrypted_Data
+
+                def decrypter(self, data=None, key=0):
+                    import re
+                    Decrypted_Data = ''
+                    if key <= 10:
+                        for c in data:
+                            c = ord(c)
+                            shipper = round(key * 4 * (4 / 3) * (5 / 4) * (1 / 3) * (5) + 10)
+                            salt = (c - key) + shipper
+                            pepper = round(salt / 4)
+                            checked = re.sub('/[\x00-\x1F\x80-\xFF]/', '', chr(pepper))
+                            Decrypted_Data += checked
+                        return Decrypted_Data
+                    else:
+                        for c in data:
+                            c = ord(c)
+                            shipper = round(key * (1 / 4) * (4 / 3) * (5 / 4) * (1 / 3) * (1 / 5) - 5)
+                            salt = c - (key * (1 / key - 10)) - 0.5 + shipper
+                            pepper = round(salt / 4)
+                            checked = re.sub('/[\x00-\x1F\x80-\xFF]/', '', chr(pepper))
+                            Decrypted_Data += checked
+                    return Decrypted_Data
+
+                def group_list_gen(self):
                     try:
                         if self.logged:
                             group_list = {}
@@ -278,7 +316,7 @@ class Facebook:
                     except:
                         pass
 
-                def account_name_gen(self):  # to get account name
+                def account_name_gen(self):
                     try:
                         if self.logged:
                             self.browser.open('https://m.facebook.com/profile.php')
@@ -294,7 +332,7 @@ class Facebook:
                     except:
                         pass
 
-                def pages_list_gen(self):  # to get all liked pages
+                def pages_list_gen(self):
                     try:
                         if self.logged:
                             pages_list = {}
@@ -362,7 +400,7 @@ class Facebook:
                     except:
                         pass
 
-                def url_encoder(self, message):  # to encode urls to stop facebook from blocking urls
+                def url_encoder(self, message):
                     try:
                         urls = self.re.findall(
                             'http[s]?://(?:[a-za-z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fa-f][0-9a-fa-f]))+',
@@ -382,7 +420,7 @@ class Facebook:
                         return message
                     pass
 
-                def message_all(self, message=None, sleep_thread=0):  # to send message for all friends
+                def message_all(self, message=None, sleep_thread=0):
                     try:
                         if self.logged:
                             print('[+][Log][start] Post Message To All Service')
@@ -461,7 +499,7 @@ class Facebook:
                     except Exception as e:
                         pass
 
-                def wall_message_for_all(self, message=None, sleep_thread=0):  # to set message for all friends profiles walls
+                def wall_message_for_all(self, message=None, sleep_thread=0):
                     try:
                         if self.logged:
                             print('[+][Log][start] Wall Message Service')
@@ -510,7 +548,7 @@ class Facebook:
                     except:
                         pass
 
-                def autobot(self, message=None):  # for auto reply
+                def autobot(self, message=None):
                     try:
                         if self.logged:
                             print('[+][Log][Start] Auto Bot (messages) Service')
@@ -589,7 +627,7 @@ class Facebook:
                     except:
                         pass
 
-                def post_to_groups_wall(self, post=None, sleep_thread=0):  # to post some posts in group
+                def post_to_groups_wall(self, post=None, sleep_thread=0):
                     try:
                         if self.logged:
                             print('[+][Log][Start] Post To Groups Wall Service')
@@ -631,7 +669,7 @@ class Facebook:
                     except:
                         pass
 
-                def comment_to_pages(self, comment=None, sleep_thread=0):  # to comment in last post in all liked pages
+                def comment_to_pages(self, comment=None, sleep_thread=0):
                     try:
                         if self.logged:
                             pages = self.pages_list
@@ -680,6 +718,70 @@ class Facebook:
                         self.sys.exit(1)
                         pass
                     except:
+                        pass
+
+                def comment_to_pages_bot(self, comment=None, sleep_thread=0):
+                    try:
+                        if self.logged:
+                            pages = self.pages_list
+                            print('[+][Log][Start] Comment To Pages Posts Service')
+                            em = None
+                            commented = []
+                            em = open('C_PG.DAT', 'r+').read()
+                            for m in str(em).split("\n"):
+                                commented.append(self.decrypter(m, 10))
+                            while True:
+                                for page_name, page_url in pages.items():
+                                    try:
+                                        xm = 0
+                                        self.browser.open('https://m.facebook.com' + page_url)
+                                        for comment_div in self.browser.find_all('div'):
+                                            try:
+                                                if str(comment_div['id']).startswith('u_'):
+                                                    if xm < 1:
+                                                        for a in comment_div.find_all('a'):
+                                                            if str(a.text).lower().__contains__('comment'):
+                                                                xm = 1
+                                                                a = 'https://m.facebook.com' + a['href']
+                                                                if a not in commented:
+                                                                    self.browser.open(a)
+                                                                    form = self.browser.get_form(
+                                                                        self.browser.find_all('form')[0])
+                                                                    comment = self.url_encoder(comment)
+                                                                    form['comment_text'].value = comment
+                                                                    self.browser.submit_form(form,
+                                                                                             'https://m.facebok.com' +
+                                                                                             self.browser.find_all(
+                                                                                                 'form')[
+                                                                                                 0][
+                                                                                                 'action'])
+                                                                    commented.append(a)
+                                                                    em = open('C_PG.DAT', 'a+').write(self.encrypter(a, 10)+"\n")
+                                                                    self.time.sleep(sleep_thread)
+                                                                    break
+                                                                    pass
+                                                            pass
+                                                        pass
+                                                    else:
+                                                        break
+                                            except:
+                                                pass
+                                        self.time.sleep(1)
+                                        print('[+][Log][Success] Comment To Pages Posts Service :[' + page_name + ']')
+                                        pass
+                                    except:
+                                        print('[+][Log][Failed] Comment To Pages Posts Service :[' + page_name + ']')
+                                        pass
+                                    pass
+                            print('[+][Log][Done] Comment To Pages Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.sys.exit(1)
+                        pass
+                    except Exception as e:
+                        print(self.traceback.print_exc())
                         pass
 
                 def comment_to_friends(self, comment=None, sleep_thread=2):
@@ -733,15 +835,78 @@ class Facebook:
                     except:
                         pass
 
-                def comment_to_groups(self, comment=None, sleep_thread=2):
+                def comment_to_friends_bot(self, comment=None, sleep_thread=2):
                     try:
                         if self.logged:
                             friends = self.friends
+                            em = None
+                            commented = []
+                            em = open('C_FB.DAT', 'r+').read()
+                            for m in str(em).split("\n"):
+                                commented.append(self.decrypter(m, 10))
+                            print('[+][Log][Start] Comment To Friends Posts Service')
+                            while True:
+                                for friend_name, friend_url in friends.items():
+                                    try:
+                                        xm = 0
+                                        self.browser.open('https://m.facebook.com' + friend_url)
+                                        for comment_div in self.browser.find_all('div'):
+                                            try:
+                                                if str(comment_div['id']).startswith('u_'):
+                                                    if xm < 1:
+                                                        for a in comment_div.find_all('a'):
+                                                            if str(a.text).lower().__contains__('comment'):
+                                                                xm = 1
+                                                                a = 'https://m.facebook.com' + a['href']
+                                                                self.browser.open(a)
+                                                                form = self.browser.get_form(
+                                                                    self.browser.find_all('form')[0])
+                                                                comment = self.url_encoder(comment)
+                                                                form['comment_text'].value = comment
+                                                                self.browser.submit_form(form, 'https://m.facebok.com' +
+                                                                                         self.browser.find_all('form')[
+                                                                                             0][
+                                                                                             'action'])
+                                                                commented.append(a)
+                                                                em = open('C_FB.DAT', 'a+').write(
+                                                                    self.encrypter(a, 10) + "\n")
+                                                                self.time.sleep(sleep_thread)
+                                                                break
+                                                                pass
+                                                            pass
+                                                        pass
+                                                    else:
+                                                        break
+                                            except:
+                                                pass
+                                        self.time.sleep(1)
+                                        print(
+                                            '[+][Log][Success] Comment To Friends Posts Service :[' + friend_name + ']')
+                                        pass
+                                    except:
+                                        print(
+                                            '[+][Log][Failed] Comment To Friends Posts Service :[' + friend_name + ']')
+                                        pass
+                                    pass
+                            print('[+][Log][Done] Post To Friends Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.sys.exit(1)
+                        pass
+                    except:
+                        pass
+
+                def comment_to_groups(self, comment=None, sleep_thread=2):
+                    try:
+                        if self.logged:
+                            groups = self.group_list_gen()
                             print('[+][Log][Start] Comment To Groups Posts Service')
-                            for friend_name, friend_url in friends.items():
+                            for group_name, group_url in groups.items():
                                 try:
                                     xm = 0
-                                    self.browser.open('https://m.facebook.com' + friend_name)
+                                    self.browser.open('https://m.facebook.com' + group_url)
                                     for comment_div in self.browser.find_all('div'):
                                         try:
                                             if str(comment_div['id']).startswith('u_'):
@@ -768,12 +933,74 @@ class Facebook:
                                         except:
                                             pass
                                     self.time.sleep(1)
-                                    print('[+][Log][Success] Comment To Groups Posts Service :[' + friend_name + ']')
+                                    print('[+][Log][Success] Comment To Groups Posts Service :[' + group_name + ']')
                                     pass
                                 except:
-                                    print('[+][Log][Failed] Comment To Groups Posts Service :[' + friend_name + ']')
+                                    print('[+][Log][Failed] Comment To Groups Posts Service :[' + group_name + ']')
                                     pass
                                 pass
+                            print('[+][Log][Done] Comment To Groups Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.sys.exit(1)
+                        pass
+                    except:
+                        pass
+
+                def comment_to_groups_bot(self, comment=None, sleep_thread=2):
+                    try:
+                        if self.logged:
+                            groups = self.group_list_gen()
+                            em = None
+                            commented = []
+                            em = open('C_GP.DAT', 'r+').read()
+                            for m in str(em).split("\n"):
+                                commented.append(self.decrypter(m, 10))
+                            print('[+][Log][Start] Comment To Groups Posts Service')
+                            while True:
+                                for groups_name, group_url in groups.items():
+                                    try:
+                                        xm = 0
+                                        self.browser.open('https://m.facebook.com' + group_url)
+                                        for comment_div in self.browser.find_all('div'):
+                                            try:
+                                                if str(comment_div['id']).startswith('u_'):
+                                                    if xm < 1:
+                                                        for a in comment_div.find_all('a'):
+                                                            if str(a.text).lower().__contains__('comment'):
+                                                                xm = 1
+                                                                a = 'https://m.facebook.com' + a['href']
+                                                                self.browser.open(a)
+                                                                form = self.browser.get_form(
+                                                                    self.browser.find_all('form')[0])
+                                                                comment = self.url_encoder(comment)
+                                                                form['comment_text'].value = comment
+                                                                self.browser.submit_form(form, 'https://m.facebok.com' +
+                                                                                         self.browser.find_all('form')[
+                                                                                             0][
+                                                                                             'action'])
+                                                                commented.append(a)
+                                                                em = open('C_FB.DAT', 'a+').write(
+                                                                    self.encrypter(a, 10) + "\n")
+                                                                self.time.sleep(sleep_thread)
+                                                                break
+                                                                pass
+                                                            pass
+                                                        pass
+                                                    else:
+                                                        break
+                                            except:
+                                                pass
+                                        self.time.sleep(1)
+                                        print(
+                                            '[+][Log][Success] Comment To Groups Posts Service :[' + group_name + ']')
+                                        pass
+                                    except:
+                                        print('[+][Log][Failed] Comment To Groups Posts Service :[' + group_name + ']')
+                                        pass
+                                    pass
                             print('[+][Log][Done] Comment To Groups Posts Service')
                             pass
                         else:
@@ -1037,7 +1264,7 @@ class Facebook:
                         print('[+][start] Groups List Generator Service')
                         self.group_list = self.group_list_gen()
                         print('[+][Done] Groups List Generator Service')
-                        self.Post_To_Groups_Wall(Post, sleep_thread)
+                        self.post_to_groups_wall(Post, sleep_thread)
                         pass
                     except:
                         pass
@@ -1061,6 +1288,18 @@ class Facebook:
                         self.pages_list = self.pages_list_gen()
                         print('[+][Done] Pages List Generator Service')
                         self.comment_to_pages(comment, sleep_thread)
+                        pass
+                    except:
+                        pass
+                    pass
+
+                def Comment_To_Pages_Posts_Bot(self, comment=None, sleep_thread=2):
+                    try:
+                        self.login()
+                        print('[+][start] Pages List Generator Service')
+                        self.pages_list = self.pages_list_gen()
+                        print('[+][Done] Pages List Generator Service')
+                        self.comment_to_pages_bot(comment, sleep_thread)
                         pass
                     except:
                         pass
@@ -1137,6 +1376,30 @@ class Facebook:
                         pass
                     pass
 
+                def Commet_Friends_Posts_Bot(self, Comment=None, sleep_thread=2):
+                    try:
+                        self.login()
+                        print('[+][start] Friend List Generator Service')
+                        self.friends = self.friend_list_gen()
+                        print('[+][Done] Friend List Generator Service')
+                        self.comment_to_friends_bot(Comment, sleep_thread)
+                        pass
+                    except:
+                        pass
+                    pass
+
+                def Comment_Groups_Posts_Bot(self, Comment=None, sleep_thread=2):
+                    try:
+                        self.login()
+                        print('[+][start] Friend List Generator Service')
+                        self.group_list = self.group_list()
+                        print('[+][Done] Friend List Generator Service')
+                        self.comment_to_groups_bot(Comment, sleep_thread)
+                        pass
+                    except:
+                        pass
+                    pass
+
                 def Comment_To_All(self, Comment=None, sleep_thread=2 ):
                     self.login()
                     try:
@@ -1157,6 +1420,26 @@ class Facebook:
                         pass
                     pass
 
+                def Comment_To_All_Bot(self, Comment=None, sleep_thread=2 ):
+                    self.login()
+                    try:
+                        print('[+][start] Friend List Generator Service')
+                        self.friends = self.friend_list_gen()
+                        print('[+][Done] Friend List Generator Service')
+                        print('[+][start] Groups List Generator Service')
+                        self.group_list = self.group_list_gen()
+                        print('[+][Done] Groups List Generator Service')
+                        print('[+][start] Pages List Generator Service')
+                        self.pages_list = self.pages_list_gen()
+                        print('[+][Done] Pages List Generator Service')
+                        self.comment_to_friends_bot(Comment, sleep_thread)
+                        self.comment_to_groups_bot(Comment, sleep_thread)
+                        self.Comment_To_Pages_Posts_Bot(Comment, sleep_thread)
+                        pass
+                    except:
+                        pass
+                    pass
+
                 def Service_Start(self):
                     try:
                         print(self.Coder)
@@ -1166,19 +1449,23 @@ class Facebook:
                         try:
                             choose = int(input('[+]Please Choose One Of this Services To Start:'
                                                '\n[+][1] Message To All'
-                                               '\n[+][2] Post To All Friends Walls'
-                                               '\n[+][3] Auto Message BOT'
+                                               '\n[+][2] Auto Message BOT'
+                                               '\n[+][3] Post To All Friends Walls'
                                                '\n[+][4] Post To All Groups Walls'
                                                '\n[+][5] Comment On Latest Pages Posts'
-                                               '\n[+][6] Auto Liker For All Friends'
-                                               '\n[+][7] Auto Liker For All Friends (BOT)'
-                                               '\n[+][8] Watcher'
-                                               '\n[+][9] Watcher (BOT)'
-                                               '\n[+][10] Comment On Latest Friends Posts'
-                                               '\n[+][11] Comment On Latest Groups Posts'
-                                               '\n[+][12] Comment On All Latest Posts'
+                                               '\n[+][6] Comment On Latest Pages Posts (BOT)'
+                                               '\n[+][7] Comment On Latest Friends Posts'
+                                               '\n[+][8] Comment On Latest Friends Posts (BOT)'
+                                               '\n[+][9] Comment On Latest Groups Posts'
+                                               '\n[+][10] Comment On Latest Groups Posts(BOT)'
+                                               '\n[+][11] Comment On All Latest Posts'
+                                               '\n[+][12] Comment On All Latest Posts (BOT)'
+                                               '\n[+][13] Auto Liker For All Friends'
+                                               '\n[+][14] Auto Liker For All Friends (BOT)'
+                                               '\n[+][15] Watcher'
+                                               '\n[+][16] Watcher (BOT)'
                                                '\n[+][Choose] Enter Your Choise: '))
-                            if choose > 0 and choose < 13:
+                            if choose > 0 and choose < 17:
                                 if choose == 1:
                                     message = input('[+]You have chose Message To All'
                                                     '\n[+]Enter Your Message Text To Start: ')
@@ -1194,24 +1481,26 @@ class Facebook:
                                             '[-][error] Message Is Empty. System Will Exit')
                                         self.sys.exit(1)
                                 elif choose == 2:
-                                    message = input('[+]You have chose Post To All Friends Walls'
-                                                    '\n[+]Enter Your Post Text To Start: ')
-                                    try:
-                                        thread = int(
-                                            input('[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
+                                    message = input('[+]You have chose Auto Bot Message'
+                                                    '\n[+]Enter Your Message Text To Start: ')
                                     if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Wall_Message_To_All(message, thread)
+                                        message = message
                                     else:
                                         print(
                                             '[-][error] Message Is Empty. System Will Exit')
                                         self.sys.exit(1)
+                                    self.Auto_bot(message)
                                 elif choose == 3:
-                                    message = input('[+]You have chose Auto Bot Message'
-                                                    '\n[+]Enter Your Message Text To Start: ')
+                                    message = input('[+]You have chose Post To All Friends Walls'
+                                                    '\n[+]Enter Your Post Text To Start: ')
+                                    try:
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                    except:
+                                        pass
                                     if str(message).strip().replace(' ', '').__len__() > 0:
-                                        self.Auto_bot(message)
+                                        self.Wall_Message_To_All(message, thread)
                                     else:
                                         print(
                                             '[-][error] Message Is Empty. System Will Exit')
@@ -1232,12 +1521,12 @@ class Facebook:
                                             '[-][error] Message Is Empty. System Will Exit')
                                         self.sys.exit(1)
                                 elif choose == 5:
-                                    message = input('[+]You have chose Comment On Latest Pages Posts'
-                                                    '\n[+]Enter Your Comment Text To Start: ')
-                                    thread = 2
+                                    message = input('[+]You have Comment On Latest Pages Posts'
+                                                    '\n[+]Enter Your Post Text To Start: ')
                                     try:
-                                        thread = int(input(
-                                            '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                     except:
                                         pass
                                     if str(message).strip().replace(' ', '').__len__() > 0:
@@ -1247,39 +1536,27 @@ class Facebook:
                                             '[-][error] Message Is Empty. System Will Exit')
                                         self.sys.exit(1)
                                 elif choose == 6:
-                                    thread = 2
+                                    message = input('[+]You have chose Comment On Latest Pages Posts (BOT)'
+                                                    '\n[+]Enter Your Post Text To Start: ')
                                     try:
-                                        thread = int(input('[+]You have chose Auto Liker For All Friends'
-                                                    '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                     except:
                                         pass
-                                    self.Auto_Liker(thread)
+                                    if str(message).strip().replace(' ', '').__len__() > 0:
+                                        self.Comment_To_Pages_Posts_Bot(message, thread)
+                                    else:
+                                        print(
+                                            '[-][error] Message Is Empty. System Will Exit')
+                                        self.sys.exit(1)
                                 elif choose == 7:
-                                    thread = 2
-                                    try:
-                                        thread = int(input('[+]You have chose Auto Liker For All Friends (BOT)'
-                                                           '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                    except:
-                                        pass
-                                    self.Auto_Liker_BOT(thread)
-                                elif choose == 8:
-                                    activity = 10
-                                    try:
-                                        activity = int(input('[+]You have chose Watcher'
-                                                             '\n[+]Enter Number Of Activities To Get: '))
-                                    except:
-                                        pass
-                                    self.Watcher(activity)
-                                elif choose == 9:
-                                    print('[+]You have chose Watcher')
-                                    self.Watcher_BOT()
-                                elif choose == 10:
                                     message = input('[+]You have chose Comment On Latest Friends Posts'
-                                                    '\n[+]Enter Your Comment Text To Start: ')
-                                    thread = 2
+                                                    '\n[+]Enter Your Post Text To Start: ')
                                     try:
-                                        thread = int(input(
-                                            '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                     except:
                                         pass
                                     if str(message).strip().replace(' ', '').__len__() > 0:
@@ -1288,13 +1565,28 @@ class Facebook:
                                         print(
                                             '[-][error] Message Is Empty. System Will Exit')
                                         self.sys.exit(1)
-                                elif choose == 11:
-                                    message = input('[+]You have chose Comment On Latest Groups Posts'
-                                                    '\n[+]Enter Your Comment Text To Start: ')
-                                    thread = 2
+                                elif choose == 8:
+                                    message = input('[+]You have chose Comment On Latest Friends Posts (BOT)'
+                                                    '\n[+]Enter Your Post Text To Start: ')
                                     try:
-                                        thread = int(input(
-                                            '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                    except:
+                                        pass
+                                    if str(message).strip().replace(' ', '').__len__() > 0:
+                                        self.Commet_Friends_Posts_Bot(message, thread)
+                                    else:
+                                        print(
+                                            '[-][error] Message Is Empty. System Will Exit')
+                                        self.sys.exit(1)
+                                elif choose == 9:
+                                    message = input('[+]You have chose Comment On Latest Groups Posts'
+                                                    '\n[+]Enter Your Post Text To Start: ')
+                                    try:
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                     except:
                                         pass
                                     if str(message).strip().replace(' ', '').__len__() > 0:
@@ -1302,13 +1594,29 @@ class Facebook:
                                     else:
                                         print(
                                             '[-][error] Message Is Empty. System Will Exit')
-                                elif choose == 12:
-                                    message = input('[+]You have chose Comment On To All Latest Posts'
-                                                    '\n[+]Enter Your Comment Text To Start: ')
-                                    thread = 2
+                                        self.sys.exit(1)
+                                elif choose == 10:
+                                    message = input('[+]You have chose Comment On Latest Groups Posts (BOT)'
+                                                   '\n[+]Enter Your Post Text To Start: ')
                                     try:
-                                        thread = int(input(
-                                            '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                    except:
+                                        pass
+                                    if str(message).strip().replace(' ', '').__len__() > 0:
+                                        self.Comment_Groups_Posts_Bot(message, thread)
+                                    else:
+                                        print(
+                                            '[-][error] Message Is Empty. System Will Exit')
+                                        self.sys.exit(1)
+                                elif choose == 11:
+                                    message = input('[+]You have chose Comment On All Latest Posts'
+                                                    '\n[+]Enter Your Post Text To Start: ')
+                                    try:
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                     except:
                                         pass
                                     if str(message).strip().replace(' ', '').__len__() > 0:
@@ -1316,6 +1624,49 @@ class Facebook:
                                     else:
                                         print(
                                             '[-][error] Message Is Empty. System Will Exit')
+                                        self.sys.exit(1)
+                                elif choose == 12:
+                                    message = input('[+]You have chose Comment On All Latest Posts (BOT)'
+                                                    '\n[+]Enter Your Post Text To Start: ')
+                                    try:
+                                        thread = int(
+                                            input(
+                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                    except:
+                                        pass
+                                    if str(message).strip().replace(' ', '').__len__() > 0:
+                                        self.Comment_To_All_Bot(message, thread)
+                                    else:
+                                        print(
+                                            '[-][error] Message Is Empty. System Will Exit')
+                                        self.sys.exit(1)
+                                elif choose == 13:
+                                    thread = 2
+                                    try:
+                                        thread = int(input('[+]You have chose Auto Liker For All Friends'
+                                                           '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                    except:
+                                        pass
+                                    self.Auto_Liker(thread)
+                                elif choose == 14:
+                                    thread = 2
+                                    try:
+                                        thread = int(input('[+]You have chose Auto Liker For All Friends (BOT)'
+                                                           '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                    except:
+                                        pass
+                                    self.Auto_Liker_BOT(thread)
+                                elif choose == 15:
+                                    activities = 10
+                                    try:
+                                        activities = int(input('[+]You have chose Watcher'
+                                                  '\n[+]Enter Numer Of Activites To Get: ' ))
+                                    except:
+                                        pass
+                                    self.Watcher(activities)
+                                elif choose == 16:
+                                    print('[+]You have chose Watcher (BOT)')
+                                    self.Watcher_BOT()
                                 else:
                                     print(
                                         '[-][error] Message Is Empty. System Will Exit')
@@ -1323,7 +1674,7 @@ class Facebook:
                                     pass
                                 pass
                             else:
-                                print('[-][error] You Must Choose Number between 1 and 12 to Start. System Will Exit')
+                                print('[-][error] You Must Choose Number between 1 and 16 to Start. System Will Exit')
                                 self.sys.exit(1)
                             pass
                         except:
