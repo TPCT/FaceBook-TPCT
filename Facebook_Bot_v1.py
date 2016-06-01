@@ -96,6 +96,12 @@ class Facebook:
                         self.account_name = ''
                         self.account_url = ''
                         self.Display().start()
+                        self.sys.stdout.write("\x1b]2;TPCT Facebook Auto Bot Version 1\x07")
+                        def cls():
+                            import os
+                            os.system('cls' if os.name == 'nt' else 'clear')
+
+                        cls()
                         self.Service_Start()
                     except:
                         pass
