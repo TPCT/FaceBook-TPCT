@@ -19,8 +19,7 @@ class Facebook:
                     def __init__(self):
                         self.Admin_Rights()
                         self.Import_Checker()
-                        self.__installer()
-                        
+
                     def Admin_Rights(self):
                         try:
                             import os, sys
@@ -58,7 +57,7 @@ class Facebook:
                 class Display:
                     import pyvirtualdisplay, sys, os, ctypes
                     display = ''
-                                                                                                      
+
                     def stop(self):
                         if self.sys.platform.lower() == 'linux':
                             self.display.stop()
@@ -467,7 +466,6 @@ class Facebook:
                     except:
                         pass
                     print('[+][Done] Fetching Commented Lists Service')
-                    print(self.commented.__len__())
                     pass
 
                 def url_encoder(self, message):
@@ -1669,7 +1667,7 @@ class Facebook:
                                         except:
                                             pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Post_To_Groups_Wall(message, thread)
+                                            self.Comment_Groups_Posts(message, thread)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -1699,7 +1697,7 @@ class Facebook:
                                         except:
                                             pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Comment_To_Pages_Posts_BOT(message, thread)
+                                            self.Coment_To_Pages_Posts_BOT(message, thread)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -1835,13 +1833,13 @@ class Facebook:
                             except Exception as e:
                                 print(e)
                                 print('[-][error] You Must Choose Number To Start. System Will Exit')
-                                self.sys.exit(1)
                                 pass
                         else:
                             print('[-][Not Logged] Service Stopped System Will Close')
                             return False
                             self.sys.exit(1)
                     except:
+                        print(self.traceback.print_exc())
                         pass
                     pass
 
