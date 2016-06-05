@@ -151,7 +151,6 @@ class Facebook:
                         self.os._exit(1)
                     except Exception as e:
                         print('[-][Not Logged] Service Stopped ' + str(e) + ' System Will Close')
-                        return False
                         self.os._exit(1)
                         pass
 
@@ -289,53 +288,19 @@ class Facebook:
 
                 def Facebook_Accounts_Maker(self, Number=0, File_To_Save=None):
                     try:
-                        myProxy = "101.96.11.29:89"
-                        proxy = Proxy({
-                            'proxyType': ProxyType.MANUAL,
-                            'httpProxy': myProxy,
-                            'ftpProxy': myProxy,
-                            'sslProxy': myProxy,
-                            'noProxy': ''})
-                        Browse_Profile = webdriver.FirefoxProfile()
-                        Browse_Profile.set_preference('general.useragent.override',
-                                                      random_word(random.randint(17, 63)))
-                        Browser = webdriver.Firefox(Browse_Profile, proxy=proxy)
-                        Browser.get('http://checkip.dyndns.org/')
-                        Browser.get('https://temp-mail.org/en/option/change')
-                        account = Browser.find_elements_by_id('mail')[0].get_attribute('value')
-                        Browser.get('https://www.facebook.com/')
-                        for c in 'Codey' + random_word(1):
-                            Browser.find_element_by_name('firstname').send_keys(c)
-                        for c in 'Sage' + random_word(1):
-                            Browser.find_element_by_name('lastname').send_keys(c)
-                        for c in account:
-                            Browser.find_element_by_name('reg_email__').send_keys(c)
-                        for c in account:
-                            Browser.find_element_by_name('reg_email_confirmation__').send_keys(c)
-                        password = random_word(random.randint(9, 63))
-                        for c in password:
-                            Browser.find_element_by_name('reg_passwd__').send_keys(c)
-                        for a in 'httpshttpshttpshttpshttpshttpshttps':
-                            pass
-                        Browser.find_elements_by_name('sex')[0].click()
-                        for a in 'httpshttpshttpshttpshttps':
-                            pass
-                        Browser.find_element_by_name('birthday_day').send_keys(
-                            random.randint(1, 28))
-                        for a in 'httpshttpshttpshttps':
-                            pass
-                        Browser.find_element_by_id('month').send_keys(Keys.ARROW_DOWN)
-                        for a in 'httpshttpshttpshttpshttpshttpshttpshttps':
-                            pass
-                        Browser.find_element_by_name('birthday_year').send_keys(
-                            random.randint(1998, 2000))
-                        for a in 'httpshttpshttpshttpshttps':
-                            pass
-                        Browser.find_element_by_name('websubmit').click()
-                        time.sleep(1)
-                        time.sleep(10)
-                        print(account + ':' + password)
-                        Browser.close()
+                        self.browser.open('https://m.facebook.com/reg')
+                        form = self.browser.get_form(action='https://m.facebook.com/reg/')
+                        form['firstname'].value = 'jackie'
+                        form['lastname'].value = 'eslam'
+                        form['reg_email__'].value = 'soloam@extremail.ru'
+                        form['sex'].value = '1'
+                        form['birthday_day'].value = '14'
+                        form['birthday_month'].value = '8'
+                        form['birthday_year'].value = '1998'
+                        form['reg_passwd__'].value = 'Cod3r@Cod3r'
+                        self.browser.submit_form(form)
+                        print(self.browser.url)
+                        open('Mono.html', 'w+').write(str(self.browser.parsed))
                     except:
                         print(traceback.print_exc()) #Working on it
 
@@ -1866,7 +1831,7 @@ class Facebook:
                 def Watcher_BOT(self):
                     try:
                         self.login()
-                        self.Watcher_BOT()
+                        self.watcher_bot()
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
                     except:
@@ -2316,7 +2281,7 @@ class Facebook:
                                     pass
                                 else:
                                     print(
-                                        '[-][error] You Must Choose Number between 1 and 18 to Start. System Will Exit')
+                                        '[-][error] You Must Choose Number between 1 and 19 to Start. System Will Exit')
                                     self.os._exit(1)
                                 pass
                             except KeyboardInterrupt as e:
