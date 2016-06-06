@@ -1,8 +1,33 @@
 # coding=utf-8
 
 class Facebook:
-        try:
-            class Auto_Bot:
+        class Auto_Bot:
+            try:
+                def __init__(self):
+                    try:
+                        self.Installer()
+                        self.username = ''
+                        self.commented = []
+                        self.password = ''
+                        self.logged = False
+                        self.friends = ''
+                        self.Browse_Profile = ''
+                        self.group_list = ''
+                        self.pages_list = ''
+                        self.account_name = ''
+                        self.account_url = ''
+                        self.sys.stdout.write("\x1b]2;TPCT Facebook Auto Bot Version 1\x07")
+                        self.plateform_check()
+                        def cls():
+                            import os
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                        cls()
+                        self.Service_Start()
+                    except KeyboardInterrupt as e:
+                        self.os._exit(1)
+                    except Exception as e:
+                        pass
+
                 Coder = '''
                     _____ ____   ____   ___ _____  _____ ____   ____ _____
                    |  ___| __ ) | __ ) / _ \_   _ |_   _|  _ \ / ___|_   _|
@@ -21,9 +46,16 @@ class Facebook:
 
                     def Admin_Rights(self):
                         try:
-                            import os, sys
-                            open('/etc/Mod', 'w+')
-                            os.unlink('/etc/Mod')
+                            import os, sys, platform
+                            if str(platform.system()).lower().startswith('linux'):
+                                open('/etc/Mod', 'w+')
+                                os.unlink('/etc/Mod')
+                            elif str(platform.system()).lower().startswith('windows'):
+                                open('c:/Mod', 'w+')
+                                os.unlink('c:/Mod')
+                            else:
+                                open('/etc/Mod', 'w+')
+                                os.unlink('/etc/Mod')
                         except KeyboardInterrupt as e:
                             self.os._exit(1)
                         except Exception as e:
@@ -41,79 +73,37 @@ class Facebook:
                             import pip
                             pip.main(['install', 'robobrowser'])
                             pass
-                        try:
-                            __import__('imp').find_module('selenium')
-                        except ImportError:
-                            import pip
-                            pip.main(['install', 'selenium'])
-                            pass
-                        try:
-                            __import__('imp').find_module('pyvirtualdisplay')
-                        except ImportError:
-                            import pip
-                            pip.main(['install', 'pyvirtualdisplay'])
-                            pass
-                        pass
 
-                class Display:
-                    import pyvirtualdisplay, sys, os, ctypes
-                    display = ''
-
-                    def stop(self):
-                        if self.sys.platform.lower() == 'linux':
-                            self.display.stop()
-                            pass
-                        pass
-
-                    def start(self):
-                        if self.sys.platform.lower() == 'linux':
-                            self.display = self.pyvirtualdisplay.Display(visible=False, size=(5000, 5400))
-                            self.display.start()
-                            pass
-                        pass
-                Installer()
-                import time, random, re, string, sys, warnings, os, pip, traceback, math, getpass, pyvirtualdisplay, pickle, signal
-                import pickle
+                import time, random, re, string, sys, warnings, os, pip, traceback, math, getpass, pickle, \
+                    signal, platform, pickle, robobrowser, requests, tarfile, zipfile
                 from robobrowser import RoboBrowser
-                from selenium import webdriver
-                from selenium.webdriver.common.keys import Keys
-                from selenium.webdriver.common.proxy import Proxy
-                from selenium.webdriver.common.proxy import ProxyType
-                from selenium.webdriver.common.proxy import ProxyTypeFactory
-                browser = RoboBrowser(
-                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-                    multiplier=True,
-                    allow_redirects=True, history=True, parser='lxml')
+                browser = ''
                 Browser = ''
 
-                def __init__(self):
-                    try:
-                        self.Installer()
-                        self.username = ''
-                        self.commented = []
-                        self.password = ''
-                        self.logged = False
-                        self.friends = ''
-                        self.Browse_Profile = ''
-                        self.group_list = ''
-                        self.pages_list = ''
-                        self.account_name = ''
-                        self.account_url = ''
-                        self.Display().start()
-                        self.sys.stdout.write("\x1b]2;TPCT Facebook Auto Bot Version 1\x07")
-                        def cls():
-                            import os
-                            os.system('cls' if os.name == 'nt' else 'clear')
-                        cls()
-                        self.Service_Start()
-                    except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except:
-                        pass
+                def plateform_check(self):
+                    if str(self.platform.system()).lower().startswith('linux'):
+                        browser = self.RoboBrowser(
+                            user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                            multiplier=True,
+                            allow_redirects=True, history=True, parser='lxml')
+                        self.browser = browser
+                    elif str(self.platform.system()).lower().startswith('windows'):
+                        browser = self.RoboBrowser(
+                            user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                            multiplier=True,
+                            allow_redirects=True, history=True, parser='html.parser')
+                        self.browser = browser
+                    else:
+                        browser = self.RoboBrowser(
+                            user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                            multiplier=True,
+                            allow_redirects=True, history=True, parser='lxml')
+                        self.browser = browser
 
                 def login(self):
                     try:
-                        if self.logged and str(self.username).strip().__len__() > 0 and str(self.password).strip().__len__() > 0:
+                        if self.logged and str(self.username).strip().__len__() > 0 and str(
+                                self.password).strip().__len__() > 0:
                             self.browser.open('https://m.facebook.com/login.php')
                             for a in self.browser.find_all('a'):
                                 if str(a['href']).__contains__('/a/language.php?l=en_GB'):
@@ -125,7 +115,8 @@ class Facebook:
                             self.browser.submit_form(form)
                             if self.browser.find_all('div', {'class': 'z'}):
                                 print(
-                                    '[-][error] Something went wrong : ' + self.browser.find_all('div', {'class': 'z'})[
+                                    '[-][error] Something went wrong : ' +
+                                    self.browser.find_all('div', {'class': 'z'})[
                                         0].text)
                                 self.os._exit(1)
                                 pass
@@ -156,10 +147,21 @@ class Facebook:
 
                 def Login(self, username=None, password=None):
                     try:
-                        browser = self.RoboBrowser(
-                            user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-                            multiplier=True,
-                            allow_redirects=True, history=True, parser='lxml')
+                        if str(self.platform.system()).lower().startswith('linux'):
+                            browser = self.RoboBrowser(
+                                user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                multiplier=True,
+                                allow_redirects=True, history=True, parser='lxml')
+                        elif str(self.platform.system()).lower().startswith('windows'):
+                            browser = self.RoboBrowser(
+                                user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                multiplier=True,
+                                allow_redirects=True, history=True, parser='html.parser')
+                        else:
+                            browser = self.RoboBrowser(
+                                user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                multiplier=True,
+                                allow_redirects=True, history=True, parser='lxml')
                         if str(username).strip().__len__() > 0 and str(password).strip().__len__() > 0:
                             browser.open('https://m.facebook.com/login.php')
                             for a in browser.find_all('a'):
@@ -172,7 +174,8 @@ class Facebook:
                             browser.submit_form(form)
                             if browser.find_all('div', {'class': 'z'}):
                                 print(
-                                    '[-][error] Something went wrong : ' + browser.find_all('div', {'class': 'z'})[
+                                    '[-][error] Something went wrong : ' +
+                                    browser.find_all('div', {'class': 'z'})[
                                         0].text)
                                 self.os._exit(1)
                                 pass
@@ -187,8 +190,11 @@ class Facebook:
                                     print('[+][Logged] Service Started successfully')
                                     print('[+][start] Fetching Your Account Name')
                                     browser.open('https://m.facebook.com/profile.php')
-                                    user = browser.find_all('div', {'id': 'm-timeline-cover-section'})[0].find_all('div')[2].find_all('div')[0].find_all('div')[2].find_all('strong')[0].text
-                                    print('[+][Welcome] '+str(user)+'')
+                                    user = \
+                                        browser.find_all('div', {'id': 'm-timeline-cover-section'})[0].find_all(
+                                            'div')[
+                                            2].find_all('div')[0].find_all('div')[2].find_all('strong')[0].text
+                                    print('[+][Welcome] ' + str(user) + '')
                                     self.logged = True
                                     self.username = username
                                     self.password = password
@@ -201,7 +207,8 @@ class Facebook:
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
                     except Exception as e:
-                        print('[-][Not Logged] Service Stopped ' + str(self.traceback.print_exc()) + ' System Will Close')
+                        print('[-][Not Logged] Service Stopped ' + str(
+                            self.traceback.print_exc()) + ' System Will Close')
                         self.os._exit(1)
                         pass
 
@@ -215,17 +222,24 @@ class Facebook:
                                 try:
                                     if self.browser.find('div', {'id': 'header'}):
                                         for item in self.browser.find_all('a'):
-                                            if str(item['href']).__contains__('/friends/hovercard/mbasic/?uid='):
+                                            if str(item['href']).__contains__(
+                                                    '/friends/hovercard/mbasic/?uid='):
                                                 if not str(item).split('>')[1].split('<')[0] in friends:
-                                                    friends[str(item).split('>')[1].split('<')[0]] = item['href']
+                                                    friends[str(item).split('>')[1].split('<')[0]] = item[
+                                                        'href']
                                                 else:
-                                                    if not friends[str(item).split('>')[1].split('<')[0]] == item['href']:
+                                                    if not friends[str(item).split('>')[1].split('<')[0]] == \
+                                                            item[
+                                                                'href']:
                                                         friends[
                                                             str(item).split('>')[1].split('<')[0] + str(
-                                                                self.random.randint(0, 999999999))] = item['href']
-                                            elif str(item['href']).__contains__('/friends/center/friends/?ppk='):
+                                                                self.random.randint(0, 999999999))] = item[
+                                                            'href']
+                                            elif str(item['href']).__contains__(
+                                                    '/friends/center/friends/?ppk='):
                                                 self.browser.open('http://m.facebook.com' + item['href'])
-                                        if not str(self.browser.parsed).__contains__('/friends/center/friends/?ppk='):
+                                        if not str(self.browser.parsed).__contains__(
+                                                '/friends/center/friends/?ppk='):
                                             break
                                     else:
                                         print('[-][Not Logged] Service Stopped')
@@ -284,7 +298,8 @@ class Facebook:
                         return Encrypted_Data
 
                 def random_word(self, length):
-                    return ''.join(self.random.choice(self.string.ascii_lowercase.lower()) for i in range(length))
+                    return ''.join(
+                        self.random.choice(self.string.ascii_lowercase.lower()) for i in range(length))
 
                 def Facebook_Accounts_Maker(self, Number=0, File_To_Save=None):
                     try:
@@ -302,7 +317,7 @@ class Facebook:
                         print(self.browser.url)
                         open('Mono.html', 'w+').write(str(self.browser.parsed))
                     except:
-                        print(traceback.print_exc()) #Working on it
+                        print(traceback.print_exc())  # Working on it
 
                 def unfriend_all(self, sleep_thread):
                     if self.logged:
@@ -326,11 +341,11 @@ class Facebook:
                                     except KeyboardInterrupt:
                                         self.os._exit(1)
                                     except Exception as e:
-                                        print(e)
                                         print('[+][Log][failed] unfriend all Service :[' + friend_name + ']')
                                     pass
                                 else:
-                                    for a in self.browser.find_all('div',{'id': 'm-timeline-cover-section'})[0].find_all('a'):
+                                    for a in self.browser.find_all('div', {'id': 'm-timeline-cover-section'})[
+                                        0].find_all('a'):
                                         try:
                                             if str(a['href']).__contains__('/messages/thread/'):
                                                 self.browser.open(
@@ -340,7 +355,8 @@ class Facebook:
                                                 form = self.browser.get_form(action='/a/removefriend.php')
                                                 self.browser.submit_form(form,
                                                                          submit='https://m.facebook.com' + form.action)
-                                                print('[+][Log][success] unfriend all Service :[' + friend_name + ']')
+                                                print(
+                                                    '[+][Log][success] unfriend all Service :[' + friend_name + ']')
                                                 break
                                                 pass
                                             else:
@@ -348,8 +364,9 @@ class Facebook:
                                         except KeyboardInterrupt:
                                             self.os._exit(1)
                                         except Exception as e:
-                                            print(e)
-                                            print('[+][Log][failed] unfriend all Service :[' + friend_name + ']')
+
+                                            print(
+                                                '[+][Log][failed] unfriend all Service :[' + friend_name + ']')
                                         pass
                                     pass
                                 pass
@@ -393,15 +410,16 @@ class Facebook:
                         if self.logged:
                             group_list = {}
                             self.browser.open('https://m.facebook.com/groups')
-                            while self.browser.find_all('div')[7].find_all('ul')[0].find_all('a')[len(
+                            while str(self.browser.find_all('div')[7].find_all('ul')[0].find_all('a')[len(
                                     self.browser.find_all('div')[7].find_all('ul')[0].find_all(
-                                        'a')) - 1].text == 'See All':
+                                        'a')) - 1].text).lower() == 'see all':
                                 for a in self.browser.find_all('div')[7].find_all('ul')[0].find_all('a'):
-                                    if a.text != 'See All':
+                                    if str(a.text).lower() != 'see all':
                                         if a.text not in group_list or group_list[a.text] != a['href']:
                                             group_list[a.text] = a['href']
                                         elif a.text in group_list or group_list[a.text] != a['href']:
-                                            group_list[a.text + str(self.random.randint(0, 9999999))] = a['href']
+                                            group_list[a.text + str(self.random.randint(0, 9999999))] = a[
+                                                'href']
                                         else:
                                             pass
                                     else:
@@ -410,7 +428,7 @@ class Facebook:
                                     pass
                                 pass
                             for a in self.browser.find_all('div')[7].find_all('ul')[0].find_all('a'):
-                                if a.text != 'See All':
+                                if str(a.text).lower() != 'see all':
                                     if a.text not in group_list or group_list[a.text] != a['href']:
                                         group_list[a.text] = a['href']
                                     elif a.text in group_list or group_list[a.text] != a['href']:
@@ -437,12 +455,15 @@ class Facebook:
                         if self.logged:
                             self.browser.open('https://m.facebook.com/profile.php')
                             self.account_url = 'https://m.facebook.com' + \
-                                               self.browser.find_all('div', {'id': 'header'})[0].find_all('div')[
+                                               self.browser.find_all('div', {'id': 'header'})[0].find_all(
+                                                   'div')[
                                                    0].find_all(
                                                    'a')[
                                                    2][
                                                    'href'].split('?')[0]
-                            self.account_name = browser.find_all('div', {'id': 'm-timeline-cover-section'})[0].find_all('div')[2].find_all('div')[0].find_all('div')[2].find_all('strong')[0].text
+                            self.account_name = \
+                                browser.find_all('div', {'id': 'm-timeline-cover-section'})[0].find_all('div')[
+                                    2].find_all('div')[0].find_all('div')[2].find_all('strong')[0].text
                         else:
                             print('[-][Not Logged] Service Stopped')
                     except KeyboardInterrupt as e:
@@ -458,8 +479,9 @@ class Facebook:
                             m = 11
                             account = str(self.account_url).split('?')[0].split('/')[3]
                             self.browser.open('https://m.facebook.com/' + account + '?v=likes')
-                            for div in self.browser.find_all('div', {'id': 'root'})[0].find_all('div')[0].find_all(
-                                    'div'):
+                            for div in self.browser.find_all('div', {'id': 'root'})[0].find_all('div')[
+                                0].find_all(
+                                'div'):
                                 if div.find_all('h4', {'class': 'bv i'}):
                                     for a in div.find_all('a'):
                                         try:
@@ -467,12 +489,13 @@ class Facebook:
                                                 if a.text not in pages_list or pages_list[a.text] != a['href']:
                                                     pages_list[a.text] = a['href']
                                                 elif a.text in pages_list or pages_list[a.text] != a['href']:
-                                                    pages_list[a.text + str(self.random.randint(0, 9999999))] = a[
-                                                        'href']
+                                                    pages_list[a.text + str(self.random.randint(0, 9999999))] = \
+                                                        a[
+                                                            'href']
                                                 else:
                                                     pass
                                             else:
-                                                if a.text == 'See More':
+                                                if str(a.text).lower() == 'see more':
                                                     see_more.append('https://m.facebook.com' + a['href'])
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
@@ -487,12 +510,13 @@ class Facebook:
                                                 if a.text not in pages_list or pages_list[a.text] != a['href']:
                                                     pages_list[a.text] = a['href']
                                                 elif a.text in pages_list or pages_list[a.text] != a['href']:
-                                                    pages_list[a.text + str(self.random.randint(0, 9999999))] = a[
-                                                        'href']
+                                                    pages_list[a.text + str(self.random.randint(0, 9999999))] = \
+                                                        a[
+                                                            'href']
                                                 else:
                                                     pass
                                             else:
-                                                if a.text == 'See More':
+                                                if str(a.text).lower() == 'see more':
                                                     see_more.append('https://m.facebook.com' + a['href'])
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
@@ -513,11 +537,15 @@ class Facebook:
                                         for a in div.find_all('a'):
                                             try:
                                                 if str(a['href']).split('?')[1] == 'fref=none':
-                                                    if a.text not in pages_list or pages_list[a.text] != a['href']:
+                                                    if a.text not in pages_list or pages_list[a.text] != a[
+                                                        'href']:
                                                         pages_list[a.text] = a['href']
-                                                    elif a.text in pages_list or pages_list[a.text] != a['href']:
-                                                        pages_list[a.text + str(self.random.randint(0, 9999999))] = a[
-                                                            'href']
+                                                    elif a.text in pages_list or pages_list[a.text] != a[
+                                                        'href']:
+                                                        pages_list[
+                                                            a.text + str(self.random.randint(0, 9999999))] = \
+                                                            a[
+                                                                'href']
                                                     else:
                                                         pass
                                                 else:
@@ -588,7 +616,8 @@ class Facebook:
                         l = [self.string.ascii_lowercase, self.string.ascii_uppercase]
                         ran = l[self.random.randint(0, 1)]
                         for url in urls:
-                            encrypted = ''.join(self.random.choice(ran) for _ in range(self.random.randint(7, 34)))
+                            encrypted = ''.join(
+                                self.random.choice(ran) for _ in range(self.random.randint(7, 34)))
                             self.browser.open(
                                 'http://tinyurl.com/create.php?source=indexpage&url=' + url + '&submit=make+tinyurl!&alias=' + encrypted)
                             message = message.replace(url,
@@ -606,41 +635,13 @@ class Facebook:
                     try:
                         if self.logged:
                             print('[+][Log][start] Post Message To All Service')
-                            self.Browse_Profile = self.webdriver.FirefoxProfile()
-                            self.Browse_Profile.set_preference('general.useragent.override',
-                                                               'Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0')
-                            self.Browser = self.webdriver.Firefox(self.Browse_Profile)
-                            self.Browser.get('https://m.facebook.com')
-                            try:
-                                self.Browser.find_element_by_name('email').send_keys(self.username)
-                                self.Browser.find_element_by_name('pass').send_keys(self.password)
-                                self.Browser.find_element_by_name('login').click()
-                                pass
-                            except KeyboardInterrupt as e:
-                                self.os._exit(1)
-                            except:
-                                pass
                             friends = self.friends
                             for friend_name, friend_url in friends.items():
-                                self.Browser.get('https://m.facebook.com' + friend_url)
-                                for a in self.Browser.find_elements_by_tag_name('a'):
+                                self.browser.open('https://m.facebook.com' + friend_url)
+                                for a in self.browser.find_all('a'):
                                     try:
-                                        if str(a.get_attribute('href')).endswith('hovercard'):
-                                            self.Browser.get(a.get_attribute('href'))
-                                            break
-                                        else:
-                                            pass
-                                        pass
-                                    except TypeError:
-                                        pass
-                                    except KeyboardInterrupt as e:
-                                        self.os._exit(1)
-                                    except:
-                                        pass
-                                for a in self.Browser.find_elements_by_tag_name('a'):
-                                    try:
-                                        if str(a.get_attribute('href')).__contains__('/messages/thread'):
-                                            self.Browser.get(a.get_attribute('href'))
+                                        if str(a['href']).__contains__('/messages/thread'):
+                                            self.browser.open('https://m.facebook.com' + a['href'])
                                             break
                                         else:
                                             pass
@@ -653,9 +654,12 @@ class Facebook:
                                         pass
                                 try:
                                     message = self.url_encoder(message)
-                                    self.Browser.find_element_by_name('body').send_keys(self.url_encoder(message))
-                                    self.Browser.find_element_by_name('send').click()
-                                    print('[+][Log][success] Post Message To All Service :[' + friend_name + ']')
+                                    self.browser.find_all('textarea')[0].insert(0, message)
+                                    form = self.browser.get_forms()[1]
+                                    form.action = 'https://m.facebook.com' + form.action
+                                    self.browser.submit_form(form, submit=form.submit_fields['send'])
+                                    print(
+                                        '[+][Log][success] Post Message To All Service :[' + friend_name + ']')
                                     pass
                                 except TypeError:
                                     pass
@@ -664,28 +668,30 @@ class Facebook:
                                 except:
                                     try:
                                         message = self.url_encoder(message)
-                                        self.Browser.find_element_by_name('body').send_keys(self.url_encoder(message))
-                                        self.Browser.find_element_by_name('Send').click()
-                                        print('[+][Log][success] Post Message To All Service :[' + friend_name + ']')
+                                        self.browser.find_all('textarea')[0].insert(0, message)
+                                        form = self.browser.get_forms()[1]
+                                        form.action = 'https://m.facebook.com' + form.action
+                                        self.browser.submit_form(form, submit=form.submit_fields['send'])
+                                        print(
+                                            '[+][Log][success] Post Message To All Service :[' + friend_name + ']')
                                         pass
                                     except TypeError:
                                         pass
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
-                                    except:
-                                        print('[+][Log][failed] Post Message To All Service :[' + friend_name + ']')
+                                    except Exception as e:
+                                        print(
+                                            '[+][Log][failed] Post Message To All Service :[' + friend_name + ']')
                                         pass
                                     pass
                                 self.time.sleep(sleep_thread)
                                 pass
-                            self.Browser.quit()
                             self.os._exit(1)
                             print('[+][Log][Done] Post Message To All Service')
                             pass
                         else:
                             print('[-][Not Logged] Service Stopped')
                             pass
-                        self.Browser.quit()
                         self.os._exit(1)
                         print('[+][Done] Post To All Friends Messages')
                         pass
@@ -695,41 +701,26 @@ class Facebook:
                 def wall_message_for_all_friends(self, message=None, sleep_thread=0):
                     try:
                         if self.logged:
-                            print('[+][Log][start] Wall Message Service')
-                            self.Browse_Profile = self.webdriver.FirefoxProfile()
-                            self.Browse_Profile.set_preference('general.useragent.override',
-                                                               'Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0')
-                            self.Browser = self.webdriver.Firefox(self.Browse_Profile)
-                            self.Browser.get('https://m.facebook.com')
-                            try:
-                                self.Browser.find_element_by_name('email').send_keys(self.username)
-                                self.Browser.find_element_by_name('pass').send_keys(self.password)
-                                self.Browser.find_element_by_name('login').click()
-                                pass
-                            except KeyboardInterrupt as e:
-                                self.os._exit(1)
-                            except:
-                                pass
                             friends = self.friends
                             for friend_name, friend_url in friends.items():
-                                self.Browser.get('https://m.facebook.com' + friend_url)
+                                self.browser.open('https://m.facebook.com' + friend_url)
                                 try:
                                     message = self.url_encoder(message)
-                                    self.Browser.find_element_by_name('xc_message').send_keys(self.url_encoder(message))
-                                    self.Browser.find_element_by_name('view_post').click()
+                                    self.browser.find_all('textarea')[0].insert(0, message)
+                                    form = self.browser.get_forms()[1]
+                                    form.action = 'https://m.facebook.com' + form.action
+                                    self.browser.submit_form(form, submit=form.submit_fields['view_post'])
                                     self.time.sleep(sleep_thread)
                                     print('[+][Log][success] Wall Message Service :[' + friend_name + ']')
                                     pass
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
-                                except:
+                                except Exception:
                                     print('[+][Log][failed] Message Service :[' + friend_name + ']')
                                     pass
                         else:
                             print('[-][Not Logged] Wall Message Service Stopped')
-                            self.Browser.quit()
                             self.os._exit(1)
-                        self.Browser.quit()
                         self.os._exit(1)
                         print('[+][Done] Post To All Friends Walls')
                         pass
@@ -743,43 +734,31 @@ class Facebook:
                         if self.logged:
                             print('[+][Log][Start] Auto Bot (messages) Service')
                             message_list = {}
-                            self.Browse_Profile = self.webdriver.FirefoxProfile()
-                            self.Browse_Profile.set_preference('general.useragent.override',
-                                                               'Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0')
-                            self.Browser = self.webdriver.Firefox(self.Browse_Profile)
-                            self.Browser.get('https://m.facebook.com')
-                            try:
-                                self.Browser.find_element_by_name('email').send_keys(self.username)
-                                self.Browser.find_element_by_name('pass').send_keys(self.password)
-                                self.Browser.find_element_by_name('login').click()
-                                pass
-                            except KeyboardInterrupt as e:
-                                self.os._exit(1)
-                            except:
-                                pass
                             while True:
                                 message = self.url_encoder(message)
-                                self.Browser.get('https://m.facebook.com/messages')
-                                for element in self.Browser.find_elements_by_tag_name('table'):
-                                    if element.value_of_css_property('background-color') == 'rgba(236, 239, 245, 1)':
-                                        if not element.find_element_by_tag_name('a').text in message_list:
+                                self.browser.open('https://m.facebook.com/messages')
+                                for element in self.browser.find_all('table'):
+                                    if ' '.join(element['class']) == 'bl bm bn bo bp bq br':
+                                        if not str(element.find_all('a')[0]).split('>')[1].split('<')[0].split('(')[0] in message_list:
                                             message_list[
-                                                element.find_element_by_tag_name(
-                                                    'a').text] = element.find_element_by_tag_name(
-                                                'a').get_attribute('href')
+                                                str(element.find_all('a')[0]).split('>')[1].split('<')[0].split('(')[0]] = 'https://m.facebook.com' + element.find_all(
+                                                'a')[0]['href']
                                             pass
                                         else:
-                                            message_list[element.find_element_by_tag_name('a').text + str(
-                                                self.random.randint(0, 99999999))] = element.find_element_by_tag_name(
-                                                'a').get_attribute('href')
+                                            message_list[str(element.find_all('a')[0]).split('>')[1].split('<')[0].split('(')[0] + str(
+                                                self.random.randint(0,
+                                                                    99999999))] = 'https://m.facebook.com' + element.find_all(
+                                                'a')[0]['href']
                                     pass
                                 for message_name, message_url in message_list.items():
                                     if message_list[message_name] != 'delete':
                                         try:
-                                            self.Browser.get(message_url)
+                                            self.browser.open(message_url)
                                             self.time.sleep(2)
-                                            self.Browser.find_element_by_name('body').send_keys(message)
-                                            self.Browser.find_element_by_name('send').click()
+                                            self.browser.find_all('textarea')[0].insert(0, message)
+                                            form = self.browser.get_forms()[1]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form.submit_fields['send'])
                                             message_list[message_name] = 'delete'
                                             print('[+][success] Auto Bot (messages) Service :[' +
                                                   str(message_name).split('(')[
@@ -824,7 +803,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
-                    except:
+                    except Exception as e:
+                        print(self.traceback.print_exc())
                         pass
 
                 def unlike_all_friends(self, sleep_thread):
@@ -839,7 +819,8 @@ class Facebook:
                                         if str(div['id']).startswith('u_'):
                                             for a in div.find_all('a'):
                                                 if str(a['href']).__contains__('/a/like.php') and \
-                                                                str(a['href']).split('?')[1].split('&')[0] == 'ul=1':
+                                                                str(a['href']).split('?')[1].split('&')[
+                                                                    0] == 'ul=1':
                                                     post_links.append('https://m.facebook.com' + a['href'])
                                                     pass
                                                 pass
@@ -873,40 +854,27 @@ class Facebook:
                 def post_to_groups_wall(self, post=None, sleep_thread=2):
                     try:
                         if self.logged:
-                            print('[+][Log][Start] Post To Groups Wall Service')
-                            self.Browse_Profile = self.webdriver.FirefoxProfile()
-                            self.Browse_Profile.set_preference('general.useragent.override',
-                                                               'Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0')
-                            self.Browser = self.webdriver.Firefox(self.Browse_Profile)
-                            self.Browser.get('https://m.facebook.com')
-                            try:
-                                self.Browser.find_element_by_name('email').send_keys(self.username)
-                                self.Browser.find_element_by_name('pass').send_keys(self.password)
-                                self.Browser.find_element_by_name('login').click()
-                                pass
-                            except KeyboardInterrupt as e:
-                                self.os._exit(1)
-                            except:
-                                pass
                             groups = self.group_list
                             for group_name, group_url in groups.items():
                                 try:
-                                    self.Browser.get('https://m.facebook.com/' + group_url)
-                                    self.time.sleep(1)
-                                    self.Browser.find_element_by_name('xc_message').send_keys(self.url_encoder(post))
-                                    self.Browser.find_element_by_name('view_post').click()
-                                    self.time.sleep(1)
+                                    self.browser.open('https://m.facebook.com' + group_url)
+                                    message = self.url_encoder(post)
+                                    self.browser.find_all('textarea', {'name': 'xc_message'})[0].insert(0,
+                                                                                                        message)
+                                    form = self.browser.get_forms()[1]
+                                    form.action = 'https://m.facebook.com' + form.action
+                                    self.browser.submit_form(form, submit=form.submit_fields['view_post'])
                                     print('[+][Log][success] Post To Groups Wall Service :[' + group_name + ']')
                                     self.time.sleep(sleep_thread)
                                     pass
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
-                                except:
+                                except Exception as e:
+
                                     print('[+][Log][failed] Post To Groups Wall Service :[' + group_name + ']')
                                     pass
                                 pass
                             print('[+][Log][Done] Post To Groups Wall Service')
-                            self.Browser.quit()
                             self.os._exit(1)
                             pass
                         else:
@@ -928,22 +896,28 @@ class Facebook:
                                 try:
                                     xm = 0
                                     self.browser.open('https://m.facebook.com' + page_url)
-                                    for comment_div in self.browser.find_all('div', {'id': 'recent'})[0].find_all('div'):
+                                    for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                        0].find_all(
+                                        'div'):
                                         try:
                                             if str(comment_div['id']).startswith('u_'):
                                                 if xm < 1:
                                                     for a in comment_div.find_all('a'):
-                                                        if str(a['href']).lower().__contains__('/story.php?story_fbid='):
+                                                        if str(a['href']).lower().__contains__(
+                                                                '/story.php?story_fbid='):
                                                             xm = 1
                                                             a = 'https://m.facebook.com' + a['href']
                                                             self.browser.open(a)
                                                             form = self.browser.get_form(
-                                                              self.browser.find_all('form')[0])
+                                                                self.browser.find_all('form')[0])
                                                             comment = self.url_encoder(comment)
                                                             form['comment_text'].value = comment
-                                                            self.browser.submit_form(form, 'https://m.facebok.com' +
-                                                                                   self.browser.find_all('form')[0][
-                                                                                       'action'])
+                                                            self.browser.submit_form(form,
+                                                                                     'https://m.facebok.com' +
+                                                                                     self.browser.find_all(
+                                                                                         'form')[
+                                                                                         0][
+                                                                                         'action'])
                                                             try:
                                                                 m = self.browser.find_all('div', {
                                                                     'title': 'User Comments Blocked'})[0]
@@ -972,7 +946,8 @@ class Facebook:
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
                                 except:
-                                    print('[+][Log][Failed] Comment To Pages Posts Service :[' + page_name + ']')
+                                    print(
+                                        '[+][Log][Failed] Comment To Pages Posts Service :[' + page_name + ']')
                                     pass
                                 pass
                             print('[+][Log][Done] Comment To Pages Posts Service')
@@ -998,8 +973,9 @@ class Facebook:
                                     try:
                                         xm = 0
                                         self.browser.open('https://m.facebook.com' + page_url)
-                                        for comment_div in self.browser.find_all('div', {'id': 'recent'})[0].find_all(
-                                                'div'):
+                                        for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                            0].find_all(
+                                            'div'):
                                             try:
                                                 if str(comment_div['id']).startswith('u_'):
                                                     if xm < 1:
@@ -1021,9 +997,13 @@ class Facebook:
                                                                                                  0][
                                                                                                  'action'])
                                                                     try:
-                                                                        m = self.browser.find_all('div', {'title': 'User Comments Blocked'})[0]
+                                                                        m = self.browser.find_all('div', {
+                                                                            'title': 'User Comments Blocked'})[
+                                                                            0]
                                                                         print(
-                                                                            '[+][Log][Failed] Comment To Pages Posts Service ['+str(m['title'])+']:[' + page_name + ']')
+                                                                            '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                                m[
+                                                                                    'title']) + ']:[' + page_name + ']')
                                                                         break
                                                                     except KeyboardInterrupt as e:
                                                                         self.os._exit(1)
@@ -1059,7 +1039,8 @@ class Facebook:
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
                                     except:
-                                        print('[+][Log][Failed] Comment To Pages Posts Service :[' + page_name + ']')
+                                        print(
+                                            '[+][Log][Failed] Comment To Pages Posts Service :[' + page_name + ']')
                                         pass
                                     pass
                             print('[+][Log][Done] Comment To Pages Posts Service')
@@ -1083,22 +1064,28 @@ class Facebook:
                                 try:
                                     xm = 0
                                     self.browser.open('https://m.facebook.com' + page_url)
-                                    for comment_div in self.browser.find_all('div', {'id': 'recent'})[0].find_all('div'):
+                                    for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                        0].find_all(
+                                        'div'):
                                         try:
                                             if str(comment_div['id']).startswith('u_'):
                                                 if xm < 1:
                                                     for a in comment_div.find_all('a'):
-                                                        if str(a['href']).lower().__contains__('story.php?story_fbid='):
+                                                        if str(a['href']).lower().__contains__(
+                                                                'story.php?story_fbid='):
                                                             xm = 1
                                                             a = 'https://m.facebook.com' + a['href']
                                                             self.browser.open(a)
                                                             form = self.browser.get_form(
-                                                              self.browser.find_all('form')[0])
+                                                                self.browser.find_all('form')[0])
                                                             comment = self.url_encoder(comment)
                                                             form['comment_text'].value = comment
-                                                            self.browser.submit_form(form, 'https://m.facebok.com' +
-                                                                                   self.browser.find_all('form')[0][
-                                                                                       'action'])
+                                                            self.browser.submit_form(form,
+                                                                                     'https://m.facebok.com' +
+                                                                                     self.browser.find_all(
+                                                                                         'form')[
+                                                                                         0][
+                                                                                         'action'])
                                                             try:
                                                                 m = self.browser.find_all('div', {
                                                                     'title': 'User Comments Blocked'})[0]
@@ -1130,7 +1117,8 @@ class Facebook:
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
                                 except:
-                                    print('[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                    print(
+                                        '[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
                                     pass
                                 pass
                             print('[+][Log][Done] Comment To Friends Posts Service')
@@ -1156,8 +1144,9 @@ class Facebook:
                                     try:
                                         xm = 0
                                         self.browser.open('https://m.facebook.com' + page_url)
-                                        for comment_div in self.browser.find_all('div', {'id': 'recent'})[0].find_all(
-                                                'div'):
+                                        for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                            0].find_all(
+                                            'div'):
                                             try:
                                                 if str(comment_div['id']).startswith('u_'):
                                                     if xm < 1:
@@ -1180,10 +1169,12 @@ class Facebook:
                                                                                                  'action'])
                                                                     try:
                                                                         m = self.browser.find_all('div', {
-                                                                            'title': 'User Comments Blocked'})[0]
+                                                                            'title': 'User Comments Blocked'})[
+                                                                            0]
                                                                         print(
                                                                             '[+][Log][Failed] Comment To Friends Posts Service [' + str(
-                                                                                m['title']) + ']:[' + page_name + ']')
+                                                                                m[
+                                                                                    'title']) + ']:[' + page_name + ']')
                                                                         break
                                                                     except KeyboardInterrupt as e:
                                                                         self.os._exit(1)
@@ -1223,7 +1214,8 @@ class Facebook:
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
                                     except:
-                                        print('[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                        print(
+                                            '[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
                                         pass
                                     pass
                             print('[+][Log][Done] Comment To Friends Posts Service')
@@ -1247,21 +1239,28 @@ class Facebook:
                                 try:
                                     xm = 0
                                     self.browser.open('https://m.facebook.com' + page_url)
-                                    for comment_div in self.browser.find_all('div', {'id': 'm_group_stories_container'})[0].find_all('div'):
+                                    for comment_div in \
+                                            self.browser.find_all('div', {'id': 'm_group_stories_container'})[
+                                                0].find_all(
+                                                'div'):
                                         try:
                                             if str(comment_div['id']).startswith('u_'):
                                                 if xm < 1:
                                                     for a in comment_div.find_all('a'):
-                                                        if str(a['href']).lower().__contains__('?view=permalink&id='):
+                                                        if str(a['href']).lower().__contains__(
+                                                                '?view=permalink&id='):
                                                             xm = 1
                                                             a = 'https://m.facebook.com' + a['href']
                                                             self.browser.open(a)
                                                             form = self.browser.get_forms()[1]
                                                             comment = self.url_encoder(comment)
                                                             form['comment_text'].value = comment
-                                                            self.browser.submit_form(form, 'https://m.facebok.com' +
-                                                                                   self.browser.find_all('form')[0][
-                                                                                       'action'])
+                                                            self.browser.submit_form(form,
+                                                                                     'https://m.facebok.com' +
+                                                                                     self.browser.find_all(
+                                                                                         'form')[
+                                                                                         0][
+                                                                                         'action'])
                                                             try:
                                                                 m = self.browser.find_all('div', {
                                                                     'title': 'User Comments Blocked'})[0]
@@ -1293,7 +1292,8 @@ class Facebook:
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
                                 except:
-                                    print('[+][Log][Failed] Comment To Groups Posts Service :[' + page_name + ']')
+                                    print(
+                                        '[+][Log][Failed] Comment To Groups Posts Service :[' + page_name + ']')
                                     pass
                                 pass
                             print('[+][Log][Done] Comment To Groups Posts Service')
@@ -1320,8 +1320,10 @@ class Facebook:
                                         xm = 0
                                         self.browser.open('https://m.facebook.com' + page_url)
                                         for comment_div in \
-                                        self.browser.find_all('div', {'id': 'm_group_stories_container'})[0].find_all(
-                                                'div'):
+                                                self.browser.find_all('div',
+                                                                      {'id': 'm_group_stories_container'})[
+                                                    0].find_all(
+                                                    'div'):
                                             try:
                                                 if str(comment_div['id']).startswith('u_'):
                                                     if xm < 1:
@@ -1343,10 +1345,12 @@ class Facebook:
                                                                                                  'action'])
                                                                     try:
                                                                         m = self.browser.find_all('div', {
-                                                                            'title': 'User Comments Blocked'})[0]
+                                                                            'title': 'User Comments Blocked'})[
+                                                                            0]
                                                                         print(
                                                                             '[+][Log][Failed] Comment To Pages Groups Service [' + str(
-                                                                                m['title']) + ']:[' + page_name + ']')
+                                                                                m[
+                                                                                    'title']) + ']:[' + page_name + ']')
                                                                         break
                                                                     except KeyboardInterrupt as e:
                                                                         self.os._exit(1)
@@ -1385,7 +1389,8 @@ class Facebook:
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
                                     except:
-                                        print('[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                        print(
+                                            '[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
                                         pass
                                     pass
                             print('[+][Log][Done] Comment To Friends Posts Service')
@@ -1403,35 +1408,44 @@ class Facebook:
                 def delete_wall_posts_friends(self, sleep_thread=2):
                     try:
                         if self.logged:
-                            print('[+][Log][start] Delete Wall Message Service')
-                            friends = self.friends
-                            account_url = self.account_url.split('/')[3]
-                            self.Browse_Profile = self.webdriver.FirefoxProfile()
-                            self.Browse_Profile.set_preference('general.useragent.override',
-                                                               'Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0')
-                            self.Browser = self.webdriver.Firefox(self.Browse_Profile)
-                            self.Browser.get('https://m.facebook.com')
+                            user_agent = (
+                                "Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0"
+                            )
+                            dcap = dict(self.DesiredCapabilities.PHANTOMJS)
+                            dcap["phantomjs.page.settings.userAgent"] = user_agent
+                            self.Browser = self.webdriver.PhantomJS(desired_capabilities=dcap,
+                                                               executable_path='/usr/share/phantomjsbr/phanjs/bin/phantomjs')
+                            self.Browser.get('https://www.facebook.com/login.php')
                             try:
                                 self.Browser.find_element_by_name('email').send_keys(self.username)
                                 self.Browser.find_element_by_name('pass').send_keys(self.password)
-                                self.Browser.find_element_by_name('login').click()
+                                self.Browser.find_element_by_id('loginbutton').click()
                                 pass
                             except KeyboardInterrupt as e:
                                 self.os._exit(1)
                             except:
                                 pass
+                            print('[+][Log][start] Delete Wall Message Service')
+                            friends = self.friends
+                            account_url = self.account_url.split('/')[3]
                             for friend_name, friend_url in friends.items():
                                 self.browser.open('https://m.facebook.com' + friend_url)
                                 for div in self.browser.find_all('div'):
                                     try:
                                         if str(div['id']).startswith('u_'):
-                                            if str(div.find_all('a')[0]['href']).split('?')[0].split('/')[1] == account_url:
+                                            if str(div.find_all('a')[0]['href']).split('?')[0].split('/')[
+                                                1] == account_url:
                                                 for a in div.find_all('a'):
-                                                    if (str(a['href']).__contains__('/nfx/basic/direct_actions/')):
+                                                    if (
+                                                            str(a['href']).__contains__('/nfx/basic/direct_actions/')):
                                                         try:
-                                                            self.Browser.get('http://m.facebook.com' + str(a['href']))
-                                                            self.Browser.find_elements_by_name('action_key')[1].click()
-                                                            for e in self.Browser.find_elements_by_tag_name('input'):
+                                                            self.Browser.get(
+                                                                'http://m.facebook.com' + str(a['href']))
+                                                            print(self.Browser.page_source)
+                                                            self.Browser.find_elements_by_name('action_key')[
+                                                                1].click()
+                                                            for e in self.Browser.find_elements_by_tag_name(
+                                                                    'input'):
                                                                 if e.get_attribute('value') == 'Continue':
                                                                     e.click()
                                                                     break
@@ -1481,7 +1495,8 @@ class Facebook:
                                         if str(div['id']).startswith('u_'):
                                             for a in div.find_all('a'):
                                                 if str(a['href']).__contains__('/a/like.php') and \
-                                                                str(a['href']).split('?')[1].split('&')[0] == 'ul':
+                                                                str(a['href']).split('?')[1].split('&')[
+                                                                    0] == 'ul':
                                                     post_links.append('https://m.facebook.com' + a['href'])
                                                     pass
                                                 pass
@@ -1528,11 +1543,14 @@ class Facebook:
                                                         if str(a['href']).__contains__('/a/like.php') and \
                                                                         str(a['href']).split('?')[1].split('&')[
                                                                             0] == 'ul':
-                                                            if not 'https://m.facebook.com' + a['href'] in liked:
-                                                                self.browser.open('https://m.facebook.com' + a['href'])
+                                                            if not 'https://m.facebook.com' + a[
+                                                                'href'] in liked:
+                                                                self.browser.open(
+                                                                    'https://m.facebook.com' + a['href'])
                                                                 print(
                                                                     '[+][Log][success] Like Post Service : [' + link_name + ']')
-                                                                liked.append('https://m.facebook.com' + a['href'])
+                                                                liked.append(
+                                                                    'https://m.facebook.com' + a['href'])
                                                                 self.time.sleep(sleep_thread)
                                                             pass
                                                         pass
@@ -1554,153 +1572,6 @@ class Facebook:
                         else:
                             print('[-][Not Logged] Service Stopped')
                             pass
-                        self.os._exit(1)
-                        pass
-                    except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except:
-                        pass
-                    pass
-
-                def watcher(self, number_of_activities=10):
-                    try:
-                        if self.logged:
-                            try:
-                                print('[+][Start] Watching Service')
-                                self.Browse_Profile = self.webdriver.FirefoxProfile()
-                                self.Browse_Profile.set_preference('general.useragent.override',
-                                                                   'Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0')
-                                self.Browser = self.webdriver.Firefox(self.Browse_Profile)
-                                self.Browser.maximize_window()
-                                self.Browser.get('https://www.facebook.com/login.php')
-                                links = {}
-                                try:
-                                    self.Browser.find_element_by_name('email').send_keys(self.username)
-                                    self.Browser.find_element_by_name('pass').send_keys(self.password)
-                                    self.Browser.find_element_by_id('loginbutton').click()
-                                    pass
-                                except KeyboardInterrupt as e:
-                                    self.os._exit(1)
-                                except:
-                                    pass
-                                self.time.sleep(5)
-                                m = 1
-                                x = number_of_activities
-                                number_of_activities = int(round(number_of_activities * (0.25)))
-                                for _ in range(number_of_activities):
-                                    for div in self.Browser.find_elements_by_class_name('fbFeedTickerStory'):
-                                        try:
-                                            div.send_keys(self.Keys.ARROW_DOWN)
-                                            pass
-                                        except KeyboardInterrupt as e:
-                                            self.os._exit(1)
-                                        except:
-                                            pass
-                                        pass
-                                    pass
-                                pass
-                                for a in self.Browser.find_element_by_id('pagelet_ticker').find_elements_by_tag_name(
-                                        'a'):
-                                    if links.__len__() < x:
-                                        if str(a.text).__len__() > 0:
-                                            if a.find_element_by_class_name('fwb').text not in links:
-                                                print(
-                                                    '[+][' + str(
-                                                        m) + '][Log][success] Notification : [' + a.find_element_by_class_name(
-                                                        'fwb').text +
-                                                    '][' + str(a.text).strip().replace("\n",
-                                                                                       '') + '] @URL: [' + a.get_attribute(
-                                                        'href') + ']')
-                                                links[a.find_element_by_class_name('fwb').text] = a.get_attribute(
-                                                    'href')
-                                                m += 1
-                                            elif a.find_element_by_class_name('fwb').text in links or links[
-                                                a.find_element_by_class_name('fwb').text] != a.get_attribute('href'):
-                                                print(
-                                                    '[+][' + str(
-                                                        m) + '][Log][success] Notification : [' + a.find_element_by_class_name(
-                                                        'fwb').text +
-                                                    '][' + str(a.text).strip().replace("\n",
-                                                                                       '') + '] @URL: [' + a.get_attribute(
-                                                        'href') + ']')
-                                                m += 1
-                                                links[a.find_element_by_class_name('fwb').text + 'New' + str(
-                                                    self.random.randint(0, 99999999))] = a.get_attribute('href')
-                                            else:
-                                                break
-                                                pass
-                                print('[+][Done] Watching (Bot) Service')
-                            except KeyboardInterrupt as e:
-                                self.os._exit(1)
-                            except:
-                                pass
-                        else:
-                            print('[-][Not Logged] Service Stopped')
-                            pass
-                        self.Browser.close()
-                        self.Browser.quit()
-                        self.os._exit(1)
-                        pass
-                    except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except:
-                        pass
-                    pass
-
-                def watcher_bot(self):
-                    try:
-                        if self.logged:
-                            try:
-                                print('[+][Start] Watching Service')
-                                self.Browse_Profile = self.webdriver.FirefoxProfile()
-                                self.Browse_Profile.set_preference('general.useragent.override',
-                                                                   'Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0')
-                                self.Browser = self.webdriver.Firefox(self.Browse_Profile)
-                                self.Browser.maximize_window()
-                                self.Browser.get('https://www.facebook.com/login.php')
-                                links = {}
-                                try:
-                                    self.Browser.find_element_by_name('email').send_keys(self.username)
-                                    self.Browser.find_element_by_name('pass').send_keys(self.password)
-                                    self.Browser.find_element_by_id('loginbutton').click()
-                                    pass
-                                except KeyboardInterrupt as e:
-                                    self.os._exit(1)
-                                except:
-                                    pass
-                                self.time.sleep(5)
-                                m = 1
-                                while 1:
-                                    for a in self.Browser.find_element_by_id(
-                                            'pagelet_ticker').find_elements_by_tag_name(
-                                            'a'):
-                                        if str(a.text).__len__() > 0:
-                                            if a.find_element_by_class_name('fwb').text not in links:
-                                                print(
-                                                    '[+][' + str(
-                                                        m) + '][Log][success] Notification : [' + a.find_element_by_class_name(
-                                                        'fwb').text +
-                                                    '][' + str(a.text).strip().replace("\n",
-                                                                                       '') + '] @URL: [' + a.get_attribute(
-                                                        'href') + ']')
-                                                links[a.find_element_by_class_name('fwb').text] = a.get_attribute(
-                                                    'href')
-                                                m += 1
-                                            else:
-                                                self.time.sleep(10)
-                                                self.Browser.refresh()
-                                                break
-                                                pass
-                                print('[+][Done] Watching (Bot) Service')
-                            except KeyboardInterrupt as e:
-                                self.os._exit(1)
-                            except:
-                                pass
-                        else:
-                            print('[-][Not Logged] Service Stopped')
-                            pass
-                        self.Browser.close()
-                        self.Browser.quit()
                         self.os._exit(1)
                         pass
                     except KeyboardInterrupt as e:
@@ -1762,6 +1633,10 @@ class Facebook:
                     except:
                         pass
                     pass
+
+                def Auto_Bot(self, message=None):
+                    self.login()
+                    self.autobot(message)
 
                 def Coment_To_Pages_Posts_BOT(self, comment=None, sleep_thread=2):
                     try:
@@ -1827,26 +1702,6 @@ class Facebook:
                         self.os._exit(1)
                     except:
                         pass
-
-                def Watcher_BOT(self):
-                    try:
-                        self.login()
-                        self.watcher_bot()
-                    except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except:
-                        pass
-                    pass
-
-                def Auto_bot(self, message):
-                    try:
-                        self.login()
-                        self.autobot(message)
-                    except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except:
-                        pass
-                    pass
 
                 def Commet_Friends_Posts(self, Comment=None, sleep_thread=2):
                     try:
@@ -1962,26 +1817,14 @@ class Facebook:
                         pass
                     pass
 
-                def Del_All_Wall_Messages_Friends(self, sleep_thread=2):
-                    self.login()
-                    try:
-                        print('[+][start] Friend List Generator Service')
-                        self.friends = self.friend_list_gen()
-                        print('[+][Done] Friend List Generator Service')
-                        self.delete_wall_posts_friends(sleep_thread)
-                        pass
-                    except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except:
-                        pass
-                    pass
-
                 def Service_Start(self):
                     try:
                         print(self.Coder)
                         username = input('[+]Facebook Account Name: ')
                         password = self.getpass.getpass('[+]Facebook Account Password: ')
-                        if str(username).strip().replace(' ', '').__len__() > 0 and str(password).strip().replace(' ', '').__len__() > 0:
+                        if str(username).strip().replace(' ', '').__len__() > 0 and str(
+                                password).strip().replace(
+                            ' ', '').__len__() > 0:
                             self.Login(username, password)
                             self.Comments_Fetcher()
                             try:
@@ -2000,13 +1843,10 @@ class Facebook:
                                                    '\n[+][12] Comment On All Latest Posts (BOT)'
                                                    '\n[+][13] Auto Liker For All Friends'
                                                    '\n[+][14] Auto Liker For All Friends (BOT)'
-                                                   '\n[+][15] Watcher'
-                                                   '\n[+][16] Watcher (BOT)'
-                                                   '\n[+][17] Unfriend all'
-                                                   '\n[+][18] Unlike all Friends'
-                                                   '\n[+][19] Delte all Posts To Friends'
+                                                   '\n[+][15] Unfriend all'
+                                                   '\n[+][16] Unlike all Friends'
                                                    '\n[+][Choose] Enter Your Choise: '))
-                                if choose > 0 and choose < 20:
+                                if choose > 0 and choose < 17:
                                     thread = 2
                                     if choose == 1:
                                         message = input('[+]You have chose Message To All'
@@ -2019,7 +1859,7 @@ class Facebook:
                                         except:
                                             pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Message_To_All(message, thread)
+                                            self.Message_To_All_Friends(message, thread)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -2033,7 +1873,7 @@ class Facebook:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
-                                        self.Auto_bot(message)
+                                        self.Auto_Bot(message)
                                     elif choose == 3:
                                         message = input('[+]You have chose Post To All Friends Walls'
                                                         '\n[+]Enter Your Post Text To Start: ')
@@ -2063,7 +1903,7 @@ class Facebook:
                                         except:
                                             pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Comment_Groups_Posts(message, thread)
+                                            self.Post_To_Groups_Wall(message, thread)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -2120,8 +1960,9 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 8:
-                                        message = input('[+]You have chose Comment On Latest Friends Posts (BOT)'
-                                                        '\n[+]Enter Your Post Text To Start: ')
+                                        message = input(
+                                            '[+]You have chose Comment On Latest Friends Posts (BOT)'
+                                            '\n[+]Enter Your Post Text To Start: ')
                                         try:
                                             thread = int(
                                                 input(
@@ -2217,27 +2058,15 @@ class Facebook:
                                     elif choose == 14:
                                         thread = 2
                                         try:
-                                            thread = int(input('[+]You have chose Auto Liker For All Friends (BOT)'
-                                                               '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                            thread = int(
+                                                input('[+]You have chose Auto Liker For All Friends (BOT)'
+                                                      '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
                                         except:
                                             pass
                                         self.Auto_Liker_BOT(thread)
                                     elif choose == 15:
-                                        activities = 10
-                                        try:
-                                            activities = int(input('[+]You have chose Watcher'
-                                                                   '\n[+]Enter Numer Of Activites To Get: '))
-                                        except KeyboardInterrupt as e:
-                                            self.os._exit(1)
-                                        except:
-                                            pass
-                                        self.Watcher(activities)
-                                    elif choose == 16:
-                                        print('[+]You have chose Watcher (BOT)')
-                                        self.Watcher_BOT()
-                                    elif choose == 17:
                                         print('[+]You have chose Unfriend All')
                                         try:
                                             thread = int(input(
@@ -2249,24 +2078,12 @@ class Facebook:
                                             pass
                                             pass
                                         pass
-                                    elif choose == 18:
+                                    elif choose == 16:
                                         print('[+]You have chose Unlike All Friends')
                                         try:
                                             thread = int(input(
                                                 '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                             self.Unlike_all_friends(thread)
-                                        except KeyboardInterrupt as e:
-                                            self.os._exit(1)
-                                        except:
-                                            pass
-                                            pass
-                                        pass
-                                    elif choose == 19:
-                                        print('[+]You have chose Delete All Post To Friends')
-                                        try:
-                                            thread = int(input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                            self.Del_All_Wall_Messages_Friends(thread)
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
                                         except:
@@ -2281,12 +2098,13 @@ class Facebook:
                                     pass
                                 else:
                                     print(
-                                        '[-][error] You Must Choose Number between 1 and 19 to Start. System Will Exit')
+                                        '[-][error] You Must Choose Number between 1 and 16 to Start. System Will Exit')
                                     self.os._exit(1)
                                 pass
                             except KeyboardInterrupt as e:
                                 self.os._exit(1)
                             except Exception as e:
+                                print(e)
                                 print('[-][error] You Must Choose Number To Start. System Will Exit')
                                 pass
                         else:
@@ -2299,10 +2117,9 @@ class Facebook:
                         print(self.traceback.print_exc())
                         pass
                     pass
-                
-        except KeyboardInterrupt as e:
-            self.os._exit(1)
-        except Exception as e:
-            print('[error] Something Occurred '+str(e))
+
+                pass
+            except Exception as e:
+                pass
 
 Facebook().Auto_Bot()
