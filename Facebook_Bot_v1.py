@@ -73,28 +73,30 @@ class Facebook:
                             import pip
                             pip.main(['install', 'robobrowser'])
                             pass
-
+                        except Exception as e:
+                            pass
+                        pass
                 import time, random, re, string, sys, warnings, os, pip, traceback, math, getpass, pickle, \
-                    signal, platform, pickle, robobrowser, requests, tarfile, zipfile
-                from robobrowser import RoboBrowser
+                    signal, platform, pickle, requests, tarfile, zipfile
                 browser = ''
                 Browser = ''
 
                 def plateform_check(self):
+                    from robobrowser import RoboBrowser
                     if str(self.platform.system()).lower().startswith('linux'):
-                        browser = self.RoboBrowser(
+                        browser = RoboBrowser(
                             user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
                             multiplier=True,
                             allow_redirects=True, history=True, parser='lxml')
                         self.browser = browser
                     elif str(self.platform.system()).lower().startswith('windows'):
-                        browser = self.RoboBrowser(
+                        browser = RoboBrowser(
                             user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
                             multiplier=True,
                             allow_redirects=True, history=True, parser='html.parser')
                         self.browser = browser
                     else:
-                        browser = self.RoboBrowser(
+                        browser = RoboBrowser(
                             user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
                             multiplier=True,
                             allow_redirects=True, history=True, parser='lxml')
@@ -147,18 +149,19 @@ class Facebook:
 
                 def Login(self, username=None, password=None):
                     try:
+                        from robobrowser import RoboBrowser
                         if str(self.platform.system()).lower().startswith('linux'):
-                            browser = self.RoboBrowser(
+                            browser = RoboBrowser(
                                 user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
                                 multiplier=True,
                                 allow_redirects=True, history=True, parser='lxml')
                         elif str(self.platform.system()).lower().startswith('windows'):
-                            browser = self.RoboBrowser(
+                            browser = RoboBrowser(
                                 user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
                                 multiplier=True,
                                 allow_redirects=True, history=True, parser='html.parser')
                         else:
-                            browser = self.RoboBrowser(
+                            browser = RoboBrowser(
                                 user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
                                 multiplier=True,
                                 allow_redirects=True, history=True, parser='lxml')
@@ -2117,9 +2120,10 @@ class Facebook:
                         print(self.traceback.print_exc())
                         pass
                     pass
-
                 pass
             except Exception as e:
+                import traceback
+                print(traceback.print_exc())
                 pass
 
 Facebook().Auto_Bot()
