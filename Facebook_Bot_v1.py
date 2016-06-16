@@ -1341,104 +1341,13 @@ class Auto_Bot:
                     except:
                         pass
 
-                def comment_to_pages(self, comment=None, sleep_thread=2):
+                def comment_to_pages(self, comment=None, sleep_thread=2, photo_path=None):
                     try:
                         if self.logged:
                             pages = self.pages_list
                             print('[+][Log][Start] Comment To Pages Posts Service')
                             for page_name, page_url in pages.items():
-                                try:
-                                    xm = 0
-                                    self.browser.open('https://m.facebook.com' + page_url)
-                                    for comment_div in self.browser.find_all('div', {'id': 'recent'})[
-                                        0].find_all(
-                                        'div'):
-                                        try:
-                                            if str(comment_div['id']).startswith('u_'):
-                                                if xm < 1:
-                                                    for a in comment_div.find_all('a'):
-                                                        if str(a['href']).lower().__contains__(
-                                                                '/story.php?story_fbid='):
-                                                            xm = 1
-                                                            a = 'https://m.facebook.com' + a['href']
-                                                            self.browser.open(a)
-                                                            form = self.browser.get_form(
-                                                                self.browser.find_all('form')[0])
-                                                            comment = self.url_encoder(comment)
-                                                            form['comment_text'].value = comment
-                                                            self.browser.submit_form(form,
-                                                                                     'https://m.facebok.com' +
-                                                                                     self.browser.find_all(
-                                                                                         'form')[
-                                                                                         0][
-                                                                                         'action'])
-                                                            if self.action_blocked_checker(self.browser):
-                                                                print(
-                                                                '[+][Log][Blocked] Comment To Pages Posts  Service : System Will Exit Now.')
-                                                                self.os._exit(1)
-                                                            else:
-                                                                pass
-                                                            try:
-                                                                m = self.browser.find_all('div', {
-                                                                    'title': 'User Comments Blocked'})[0]
-                                                                print(
-                                                                    '[+][Log][Failed] Comment To Pages Posts Service [' + str(
-                                                                        m['title']) + ']:[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
-                                                                self.time.sleep(sleep_thread)
-                                                                break
-                                                            except KeyboardInterrupt as e:
-                                                                self.os._exit(1)
-                                                            except UnicodeError as e:
-                                                                pass
-                                                            except:
-                                                                print(
-                                                                    '[+][Log][Success] Comment To Pages Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
-                                                                self.time.sleep(sleep_thread)
-                                                                self.time.sleep(1)
-                                                                break
-                                                            pass
-                                                        pass
-                                                    pass
-                                                else:
-                                                    break
-                                        except KeyboardInterrupt as e:
-                                            self.os._exit(1)
-                                        except UnicodeError as e:
-                                            pass
-                                        except:
-                                            pass
-                                    pass
-                                except KeyboardInterrupt as e:
-                                    self.os._exit(1)
-                                except UnicodeError as e:
-                                    pass
-                                except:
-                                    print(
-                                        '[+][Log][Failed] Comment To Pages Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
-                                    pass
-                                pass
-                            print('[+][Log][Done] Comment To Pages Posts Service')
-                            pass
-                        else:
-                            print('[-][Not Logged] Service Stopped')
-                            pass
-                        self.os._exit(1)
-                        pass
-                    except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except UnicodeError as e:
-                        pass
-                    except:
-                        pass
-
-                def comment_to_pages_Bot(self, comment=None, sleep_thread=2):
-                    try:
-                        if self.logged:
-                            pages = self.pages_list
-                            commented = self.commented
-                            print('[+][Log][Start] Comment To Pages Posts Service')
-                            while True:
-                                for page_name, page_url in pages.items():
+                                if not photo_path:
                                     try:
                                         xm = 0
                                         self.browser.open('https://m.facebook.com' + page_url)
@@ -1453,59 +1362,45 @@ class Auto_Bot:
                                                                     '/story.php?story_fbid='):
                                                                 xm = 1
                                                                 a = 'https://m.facebook.com' + a['href']
-                                                                if a not in commented:
-                                                                    self.browser.open(a)
-                                                                    form = self.browser.get_form(
-                                                                        self.browser.find_all('form')[0])
-                                                                    comment = self.url_encoder(comment)
-                                                                    form['comment_text'].value = comment
-                                                                    self.browser.submit_form(form,
-                                                                                             'https://m.facebok.com' +
-                                                                                             self.browser.find_all(
-                                                                                                 'form')[
-                                                                                                 0][
-                                                                                                 'action'])
-                                                                    if self.action_blocked_checker(self.browser):
-                                                                        print(
-                                                                            '[+][Log][Blocked] Comment To Pages Posts (BOT)  Service : System Will Exit Now.')
-                                                                        self.os._exit(1)
-                                                                    else:
-                                                                        pass
-                                                                    try:
-                                                                        m = self.browser.find_all('div', {
-                                                                            'title': 'User Comments Blocked'})[
-                                                                            0]
-                                                                        print(
-                                                                            '[+][Log][Failed] Comment To Pages Posts Service [' + str(
-                                                                                m[
-                                                                                    'title']) + ']:[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
-                                                                        self.time.sleep(sleep_thread)
-                                                                        break
-                                                                    except KeyboardInterrupt as e:
-                                                                        self.os._exit(1)
-                                                                    except UnicodeError as e:
-                                                                        pass
-                                                                    except:
-                                                                        print(
-                                                                            '[+][Log][Success] Comment To Pages Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
-                                                                        a = str(a).split('&refid=')[0]
-                                                                        commented.append(a)
-                                                                        try:
-                                                                            open('F_PG.DAT', 'a+').write(
-                                                                                self.encrypter(a, 10) + "\n")
-                                                                        except KeyboardInterrupt as e:
-                                                                            self.os._exit(1)
-                                                                        except UnicodeError as e:
-                                                                            pass
-                                                                        except:
-                                                                            open('F_PG.DAT', 'a+')
-                                                                            pass
-                                                                        self.time.sleep(sleep_thread)
-                                                                        self.time.sleep(1)
-                                                                        break
+                                                                self.browser.open(a)
+                                                                form = self.browser.get_form(
+                                                                    self.browser.find_all('form')[0])
+                                                                comment = self.url_encoder(comment)
+                                                                form['comment_text'].value = comment
+                                                                self.browser.submit_form(form,
+                                                                                         'https://m.facebok.com' +
+                                                                                         self.browser.find_all(
+                                                                                             'form')[
+                                                                                             0][
+                                                                                             'action'])
+                                                                if self.action_blocked_checker(self.browser):
+                                                                    print(
+                                                                        '[+][Log][Blocked] Comment To Pages Posts  Service : System Will Exit Now.')
+                                                                    self.os._exit(1)
                                                                 else:
-                                                                    break
                                                                     pass
+                                                                try:
+                                                                    m = self.browser.find_all('div', {
+                                                                        'title': 'User Comments Blocked'})[0]
+                                                                    print(
+                                                                        '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                            m['title']) + ']:[' + str(
+                                                                            str(page_name).encode('ascii',
+                                                                                                  'ignore').decode()) + ']')
+                                                                    self.time.sleep(sleep_thread)
+                                                                    break
+                                                                except KeyboardInterrupt as e:
+                                                                    self.os._exit(1)
+                                                                except UnicodeError as e:
+                                                                    pass
+                                                                except:
+                                                                    print(
+                                                                        '[+][Log][Success] Comment To Pages Posts Service :[' + str(
+                                                                            str(page_name).encode('ascii',
+                                                                                                  'ignore').decode()) + ']')
+                                                                    self.time.sleep(sleep_thread)
+                                                                    self.time.sleep(1)
+                                                                    break
                                                                 pass
                                                             pass
                                                         pass
@@ -1524,9 +1419,733 @@ class Auto_Bot:
                                         pass
                                     except:
                                         print(
-                                            '[+][Log][Failed] Comment To Pages Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                            '[+][Log][Failed] Comment To Pages Posts Service :[' + str(
+                                                str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                         pass
                                     pass
+                                else:
+                                    if self.os.path.isfile(photo_path):
+                                        try:
+                                            xm = 0
+                                            self.browser.open('https://m.facebook.com' + page_url)
+                                            for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                                0].find_all(
+                                                'div'):
+                                                try:
+                                                    if str(comment_div['id']).startswith('u_'):
+                                                        if xm < 1:
+                                                            for a in comment_div.find_all('a'):
+                                                                if str(a['href']).lower().__contains__(
+                                                                        '/story.php?story_fbid='):
+                                                                    xm = 1
+                                                                    a = 'https://m.facebook.com' + a['href']
+                                                                    comment = self.url_encoder(comment)
+                                                                    self.browser.open(a)
+                                                                    try:
+                                                                        for x in self.browser.find_all('a'):
+                                                                            if str(x['href']).lower().startswith(
+                                                                                    '/mbasic/comment/advanced/?target_id='):
+                                                                                self.browser.open(
+                                                                                    'https://m.facebook.com' + x[
+                                                                                        'href'])
+                                                                                break
+                                                                        try:
+                                                                            self.browser.find_all('textarea',
+                                                                                                  {
+                                                                                                      'name': 'comment_text'})[
+                                                                                0].insert(0, comment)
+                                                                            form = self.browser.get_forms()[0]
+                                                                            form['photo'].value = open(photo_path, 'rb')
+                                                                            self.browser.submit_form(form,
+                                                                                                     submit=form[
+                                                                                                         'post'])
+                                                                        except:
+                                                                            pass
+                                                                    except:
+                                                                        try:
+                                                                            xm = 0
+                                                                            self.browser.open(
+                                                                                'https://m.facebook.com' + page_url)
+                                                                            for comment_div in \
+                                                                            self.browser.find_all('div',
+                                                                                                  {'id': 'recent'})[
+                                                                                0].find_all(
+                                                                                'div'):
+                                                                                try:
+                                                                                    if str(comment_div[
+                                                                                               'id']).startswith('u_'):
+                                                                                        if xm < 1:
+                                                                                            for a in comment_div.find_all(
+                                                                                                    'a'):
+                                                                                                if str(a[
+                                                                                                           'href']).lower().__contains__(
+                                                                                                        '/story.php?story_fbid='):
+                                                                                                    xm = 1
+                                                                                                    a = 'https://m.facebook.com' + \
+                                                                                                        a['href']
+                                                                                                    self.browser.open(a)
+                                                                                                    form = self.browser.get_form(
+                                                                                                        self.browser.find_all(
+                                                                                                            'form')[0])
+                                                                                                    comment = self.url_encoder(
+                                                                                                        comment)
+                                                                                                    form[
+                                                                                                        'comment_text'].value = comment
+                                                                                                    self.browser.submit_form(
+                                                                                                        form,
+                                                                                                        'https://m.facebok.com' +
+                                                                                                        self.browser.find_all(
+                                                                                                            'form')[
+                                                                                                            0][
+                                                                                                            'action'])
+                                                                                                    if self.action_blocked_checker(
+                                                                                                            self.browser):
+                                                                                                        print(
+                                                                                                            '[+][Log][Blocked] Comment To Pages Posts  Service : System Will Exit Now.')
+                                                                                                        self.os._exit(1)
+                                                                                                    else:
+                                                                                                        pass
+                                                                                                    try:
+                                                                                                        m = \
+                                                                                                        self.browser.find_all(
+                                                                                                            'div', {
+                                                                                                                'title': 'User Comments Blocked'})[
+                                                                                                            0]
+                                                                                                        print(
+                                                                                                            '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                                                                m[
+                                                                                                                    'title']) + ']:[' + str(
+                                                                                                                str(
+                                                                                                                    page_name).encode(
+                                                                                                                    'ascii',
+                                                                                                                    'ignore').decode()) + ']')
+                                                                                                        self.time.sleep(
+                                                                                                            sleep_thread)
+                                                                                                        break
+                                                                                                    except KeyboardInterrupt as e:
+                                                                                                        self.os._exit(1)
+                                                                                                    except UnicodeError as e:
+                                                                                                        pass
+                                                                                                    except:
+                                                                                                        print(
+                                                                                                            '[+][Log][Success] Comment To Pages Posts Service :[' + str(
+                                                                                                                str(
+                                                                                                                    page_name).encode(
+                                                                                                                    'ascii',
+                                                                                                                    'ignore').decode()) + ']')
+                                                                                                        self.time.sleep(
+                                                                                                            sleep_thread)
+                                                                                                        self.time.sleep(
+                                                                                                            1)
+                                                                                                        break
+                                                                                                    pass
+                                                                                                pass
+                                                                                            pass
+                                                                                        else:
+                                                                                            break
+                                                                                except KeyboardInterrupt as e:
+                                                                                    self.os._exit(1)
+                                                                                except UnicodeError as e:
+                                                                                    pass
+                                                                                except:
+                                                                                    pass
+                                                                            pass
+                                                                        except KeyboardInterrupt as e:
+                                                                            self.os._exit(1)
+                                                                        except UnicodeError as e:
+                                                                            pass
+                                                                        except:
+                                                                            print(
+                                                                                '[+][Log][Failed] Comment To Pages Posts Service :[' + str(
+                                                                                    str(page_name).encode('ascii',
+                                                                                                          'ignore').decode()) + ']')
+                                                                            pass
+                                                                        pass
+                                                                    if self.action_blocked_checker(self.browser):
+                                                                        print(
+                                                                            '[+][Log][Blocked] Comment To Pages Posts  Service : System Will Exit Now.')
+                                                                        self.os._exit(1)
+                                                                    else:
+                                                                        pass
+                                                                    try:
+                                                                        m = self.browser.find_all('div', {
+                                                                            'title': 'User Comments Blocked'})[0]
+                                                                        print(
+                                                                            '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                                m['title']) + ']:[' + str(
+                                                                                str(page_name).encode('ascii',
+                                                                                                      'ignore').decode()) + ']')
+                                                                        self.time.sleep(sleep_thread)
+                                                                        break
+                                                                    except KeyboardInterrupt as e:
+                                                                        self.os._exit(1)
+                                                                    except UnicodeError as e:
+                                                                        pass
+                                                                    except:
+                                                                        print(
+                                                                            '[+][Log][Success] Comment To Pages Posts Service :[' + str(
+                                                                                str(page_name).encode('ascii',
+                                                                                                      'ignore').decode()) + ']')
+                                                                        self.time.sleep(sleep_thread)
+                                                                        self.time.sleep(1)
+                                                                        break
+                                                                    pass
+                                                                pass
+                                                            pass
+                                                        else:
+                                                            break
+                                                except KeyboardInterrupt as e:
+                                                    self.os._exit(1)
+                                                except UnicodeError as e:
+                                                    pass
+                                                except:
+                                                    pass
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except:
+                                            print(
+                                                '[+][Log][Failed] Comment To Pages Posts Service :[' + str(
+                                                    str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                            pass
+                                        pass
+                                    else:
+                                        try:
+                                            xm = 0
+                                            self.browser.open('https://m.facebook.com' + page_url)
+                                            for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                                0].find_all(
+                                                'div'):
+                                                try:
+                                                    if str(comment_div['id']).startswith('u_'):
+                                                        if xm < 1:
+                                                            for a in comment_div.find_all('a'):
+                                                                if str(a['href']).lower().__contains__(
+                                                                        '/story.php?story_fbid='):
+                                                                    xm = 1
+                                                                    a = 'https://m.facebook.com' + a['href']
+                                                                    self.browser.open(a)
+                                                                    form = self.browser.get_form(
+                                                                        self.browser.find_all('form')[0])
+                                                                    comment = self.url_encoder(comment)
+                                                                    form['comment_text'].value = comment
+                                                                    self.browser.submit_form(form,
+                                                                                             'https://m.facebok.com' +
+                                                                                             self.browser.find_all(
+                                                                                                 'form')[
+                                                                                                 0][
+                                                                                                 'action'])
+                                                                    if self.action_blocked_checker(self.browser):
+                                                                        print(
+                                                                            '[+][Log][Blocked] Comment To Pages Posts  Service : System Will Exit Now.')
+                                                                        self.os._exit(1)
+                                                                    else:
+                                                                        pass
+                                                                    try:
+                                                                        m = self.browser.find_all('div', {
+                                                                            'title': 'User Comments Blocked'})[0]
+                                                                        print(
+                                                                            '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                                m['title']) + ']:[' + str(
+                                                                                str(page_name).encode('ascii',
+                                                                                                      'ignore').decode()) + ']')
+                                                                        self.time.sleep(sleep_thread)
+                                                                        break
+                                                                    except KeyboardInterrupt as e:
+                                                                        self.os._exit(1)
+                                                                    except UnicodeError as e:
+                                                                        pass
+                                                                    except:
+                                                                        print(
+                                                                            '[+][Log][Success] Comment To Pages Posts Service :[' + str(
+                                                                                str(page_name).encode('ascii',
+                                                                                                      'ignore').decode()) + ']')
+                                                                        self.time.sleep(sleep_thread)
+                                                                        self.time.sleep(1)
+                                                                        break
+                                                                    pass
+                                                                pass
+                                                            pass
+                                                        else:
+                                                            break
+                                                except KeyboardInterrupt as e:
+                                                    self.os._exit(1)
+                                                except UnicodeError as e:
+                                                    pass
+                                                except:
+                                                    pass
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except:
+                                            print(
+                                                '[+][Log][Failed] Comment To Pages Posts Service :[' + str(
+                                                    str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                            pass
+                                        pass
+                            print('[+][Log][Done] Comment To Pages Posts Service')
+                            pass
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.os._exit(1)
+                        pass
+                    except KeyboardInterrupt as e:
+                        self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
+                    except:
+                        pass
+
+                def comment_to_pages_Bot(self, comment=None, sleep_thread=2, photo_path):
+                    try:
+                        if self.logged:
+                            pages = self.pages_list
+                            commented = self.commented
+                            print('[+][Log][Start] Comment To Pages Posts Service')
+                            while True:
+                                for page_name, page_url in pages.items():
+                                    if not photo_path:
+                                        try:
+                                            xm = 0
+                                            self.browser.open('https://m.facebook.com' + page_url)
+                                            for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                                0].find_all(
+                                                'div'):
+                                                try:
+                                                    if str(comment_div['id']).startswith('u_'):
+                                                        if xm < 1:
+                                                            for a in comment_div.find_all('a'):
+                                                                if str(a['href']).lower().__contains__(
+                                                                        '/story.php?story_fbid='):
+                                                                    xm = 1
+                                                                    a = 'https://m.facebook.com' + a['href']
+                                                                    if a not in commented:
+                                                                        self.browser.open(a)
+                                                                        form = self.browser.get_form(
+                                                                            self.browser.find_all('form')[0])
+                                                                        comment = self.url_encoder(comment)
+                                                                        form['comment_text'].value = comment
+                                                                        self.browser.submit_form(form,
+                                                                                                 'https://m.facebok.com' +
+                                                                                                 self.browser.find_all(
+                                                                                                     'form')[
+                                                                                                     0][
+                                                                                                     'action'])
+                                                                        if self.action_blocked_checker(self.browser):
+                                                                            print(
+                                                                                '[+][Log][Blocked] Comment To Pages Posts (BOT)  Service : System Will Exit Now.')
+                                                                            self.os._exit(1)
+                                                                        else:
+                                                                            pass
+                                                                        try:
+                                                                            m = self.browser.find_all('div', {
+                                                                                'title': 'User Comments Blocked'})[
+                                                                                0]
+                                                                            print(
+                                                                                '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                                    m[
+                                                                                        'title']) + ']:[' + str(
+                                                                                    str(page_name).encode('ascii',
+                                                                                                          'ignore').decode()) + ']')
+                                                                            self.time.sleep(sleep_thread)
+                                                                            break
+                                                                        except KeyboardInterrupt as e:
+                                                                            self.os._exit(1)
+                                                                        except UnicodeError as e:
+                                                                            pass
+                                                                        except:
+                                                                            print(
+                                                                                '[+][Log][Success] Comment To Pages Posts Service :[' + str(
+                                                                                    str(page_name).encode('ascii',
+                                                                                                          'ignore').decode()) + ']')
+                                                                            a = str(a).split('&refid=')[0]
+                                                                            commented.append(a)
+                                                                            try:
+                                                                                open('F_PG.DAT', 'a+').write(
+                                                                                    self.encrypter(a, 10) + "\n")
+                                                                            except KeyboardInterrupt as e:
+                                                                                self.os._exit(1)
+                                                                            except UnicodeError as e:
+                                                                                pass
+                                                                            except:
+                                                                                open('F_PG.DAT', 'a+')
+                                                                                pass
+                                                                            self.time.sleep(sleep_thread)
+                                                                            self.time.sleep(1)
+                                                                            break
+                                                                    else:
+                                                                        break
+                                                                        pass
+                                                                    pass
+                                                                pass
+                                                            pass
+                                                        else:
+                                                            break
+                                                except KeyboardInterrupt as e:
+                                                    self.os._exit(1)
+                                                except UnicodeError as e:
+                                                    pass
+                                                except:
+                                                    pass
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except:
+                                            print(
+                                                '[+][Log][Failed] Comment To Pages Posts Service :[' + str(
+                                                    str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                            pass
+                                        pass
+                                    else:
+                                        if self.os.path.isfile(photo_path):
+                                            try:
+                                                xm = 0
+                                                self.browser.open('https://m.facebook.com' + page_url)
+                                                for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                                    0].find_all(
+                                                    'div'):
+                                                    try:
+                                                        if str(comment_div['id']).startswith('u_'):
+                                                            if xm < 1:
+                                                                for a in comment_div.find_all('a'):
+                                                                    if str(a['href']).lower().__contains__(
+                                                                            '/story.php?story_fbid='):
+                                                                        xm = 1
+                                                                        a = 'https://m.facebook.com' + a['href']
+                                                                        if a not in commented:
+                                                                            comment = self.url_encoder(comment)
+                                                                            self.browser.open(a)
+                                                                            try:
+                                                                                for x in self.browser.find_all('a'):
+                                                                                    if str(x[
+                                                                                               'href']).lower().startswith(
+                                                                                            '/mbasic/comment/advanced/?target_id='):
+                                                                                        self.browser.open(
+                                                                                            'https://m.facebook.com' +
+                                                                                            x[
+                                                                                                'href'])
+                                                                                        break
+                                                                                try:
+                                                                                    self.browser.find_all('textarea',
+                                                                                                          {
+                                                                                                              'name': 'comment_text'})[
+                                                                                        0].insert(0, comment)
+                                                                                    form = self.browser.get_forms()[0]
+                                                                                    form['photo'].value = open(
+                                                                                        photo_path, 'rb')
+                                                                                    self.browser.submit_form(form,
+                                                                                                             submit=
+                                                                                                             form[
+                                                                                                                 'post'])
+                                                                                except:
+                                                                                    pass
+                                                                            except:
+                                                                                try:
+                                                                                    xm = 0
+                                                                                    self.browser.open(
+                                                                                        'https://m.facebook.com' + page_url)
+                                                                                    for comment_div in \
+                                                                                    self.browser.find_all('div', {
+                                                                                        'id': 'recent'})[
+                                                                                        0].find_all(
+                                                                                        'div'):
+                                                                                        try:
+                                                                                            if str(comment_div[
+                                                                                                       'id']).startswith(
+                                                                                                    'u_'):
+                                                                                                if xm < 1:
+                                                                                                    for a in comment_div.find_all(
+                                                                                                            'a'):
+                                                                                                        if str(a[
+                                                                                                                   'href']).lower().__contains__(
+                                                                                                                '/story.php?story_fbid='):
+                                                                                                            xm = 1
+                                                                                                            a = 'https://m.facebook.com' + \
+                                                                                                                a[
+                                                                                                                    'href']
+                                                                                                            if a not in commented:
+                                                                                                                self.browser.open(
+                                                                                                                    a)
+                                                                                                                form = self.browser.get_form(
+                                                                                                                    self.browser.find_all(
+                                                                                                                        'form')[
+                                                                                                                        0])
+                                                                                                                comment = self.url_encoder(
+                                                                                                                    comment)
+                                                                                                                form[
+                                                                                                                    'comment_text'].value = comment
+                                                                                                                self.browser.submit_form(
+                                                                                                                    form,
+                                                                                                                    'https://m.facebok.com' +
+                                                                                                                    self.browser.find_all(
+                                                                                                                        'form')[
+                                                                                                                        0][
+                                                                                                                        'action'])
+                                                                                                                if self.action_blocked_checker(
+                                                                                                                        self.browser):
+                                                                                                                    print(
+                                                                                                                        '[+][Log][Blocked] Comment To Pages Posts (BOT)  Service : System Will Exit Now.')
+                                                                                                                    self.os._exit(
+                                                                                                                        1)
+                                                                                                                else:
+                                                                                                                    pass
+                                                                                                                try:
+                                                                                                                    m = \
+                                                                                                                    self.browser.find_all(
+                                                                                                                        'div',
+                                                                                                                        {
+                                                                                                                            'title': 'User Comments Blocked'})[
+                                                                                                                        0]
+                                                                                                                    print(
+                                                                                                                        '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                                                                            m[
+                                                                                                                                'title']) + ']:[' + str(
+                                                                                                                            str(
+                                                                                                                                page_name).encode(
+                                                                                                                                'ascii',
+                                                                                                                                'ignore').decode()) + ']')
+                                                                                                                    self.time.sleep(
+                                                                                                                        sleep_thread)
+                                                                                                                    break
+                                                                                                                except KeyboardInterrupt as e:
+                                                                                                                    self.os._exit(
+                                                                                                                        1)
+                                                                                                                except UnicodeError as e:
+                                                                                                                    pass
+                                                                                                                except:
+                                                                                                                    print(
+                                                                                                                        '[+][Log][Success] Comment To Pages Posts Service :[' + str(
+                                                                                                                            str(
+                                                                                                                                page_name).encode(
+                                                                                                                                'ascii',
+                                                                                                                                'ignore').decode()) + ']')
+                                                                                                                    a = \
+                                                                                                                    str(
+                                                                                                                        a).split(
+                                                                                                                        '&refid=')[
+                                                                                                                        0]
+                                                                                                                    commented.append(
+                                                                                                                        a)
+                                                                                                                    try:
+                                                                                                                        open(
+                                                                                                                            'F_PG.DAT',
+                                                                                                                            'a+').write(
+                                                                                                                            self.encrypter(
+                                                                                                                                a,
+                                                                                                                                10) + "\n")
+                                                                                                                    except KeyboardInterrupt as e:
+                                                                                                                        self.os._exit(
+                                                                                                                            1)
+                                                                                                                    except UnicodeError as e:
+                                                                                                                        pass
+                                                                                                                    except:
+                                                                                                                        open(
+                                                                                                                            'F_PG.DAT',
+                                                                                                                            'a+')
+                                                                                                                        pass
+                                                                                                                    self.time.sleep(
+                                                                                                                        sleep_thread)
+                                                                                                                    self.time.sleep(
+                                                                                                                        1)
+                                                                                                                    break
+                                                                                                            else:
+                                                                                                                break
+                                                                                                                pass
+                                                                                                            pass
+                                                                                                        pass
+                                                                                                    pass
+                                                                                                else:
+                                                                                                    break
+                                                                                        except KeyboardInterrupt as e:
+                                                                                            self.os._exit(1)
+                                                                                        except UnicodeError as e:
+                                                                                            pass
+                                                                                        except:
+                                                                                            pass
+                                                                                    pass
+                                                                                except KeyboardInterrupt as e:
+                                                                                    self.os._exit(1)
+                                                                                except UnicodeError as e:
+                                                                                    pass
+                                                                                except:
+                                                                                    print(
+                                                                                        '[+][Log][Failed] Comment To Pages Posts Service :[' + str(
+                                                                                            str(page_name).encode(
+                                                                                                'ascii',
+                                                                                                'ignore').decode()) + ']')
+                                                                                    pass
+                                                                                pass
+                                                                                pass
+                                                                            if self.action_blocked_checker(
+                                                                                    self.browser):
+                                                                                print(
+                                                                                    '[+][Log][Blocked] Comment To Pages Posts (BOT)  Service : System Will Exit Now.')
+                                                                                self.os._exit(1)
+                                                                            else:
+                                                                                pass
+                                                                            try:
+                                                                                m = self.browser.find_all('div', {
+                                                                                    'title': 'User Comments Blocked'})[
+                                                                                    0]
+                                                                                print(
+                                                                                    '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                                        m[
+                                                                                            'title']) + ']:[' + str(
+                                                                                        str(page_name).encode('ascii',
+                                                                                                              'ignore').decode()) + ']')
+                                                                                self.time.sleep(sleep_thread)
+                                                                                break
+                                                                            except KeyboardInterrupt as e:
+                                                                                self.os._exit(1)
+                                                                            except UnicodeError as e:
+                                                                                pass
+                                                                            except:
+                                                                                print(
+                                                                                    '[+][Log][Success] Comment To Pages Posts Service :[' + str(
+                                                                                        str(page_name).encode('ascii',
+                                                                                                              'ignore').decode()) + ']')
+                                                                                a = str(a).split('&refid=')[0]
+                                                                                commented.append(a)
+                                                                                try:
+                                                                                    open('F_PG.DAT', 'a+').write(
+                                                                                        self.encrypter(a, 10) + "\n")
+                                                                                except KeyboardInterrupt as e:
+                                                                                    self.os._exit(1)
+                                                                                except UnicodeError as e:
+                                                                                    pass
+                                                                                except:
+                                                                                    open('F_PG.DAT', 'a+')
+                                                                                    pass
+                                                                                self.time.sleep(sleep_thread)
+                                                                                self.time.sleep(1)
+                                                                                break
+                                                                        else:
+                                                                            break
+                                                                            pass
+                                                                        pass
+                                                                    pass
+                                                                pass
+                                                            else:
+                                                                break
+                                                    except KeyboardInterrupt as e:
+                                                        self.os._exit(1)
+                                                    except UnicodeError as e:
+                                                        pass
+                                                    except:
+                                                        pass
+                                                pass
+                                            except KeyboardInterrupt as e:
+                                                self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
+                                            except:
+                                                print(
+                                                    '[+][Log][Failed] Comment To Pages Posts Service :[' + str(
+                                                        str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                                pass
+                                            pass
+                                        else:
+                                            try:
+                                                xm = 0
+                                                self.browser.open('https://m.facebook.com' + page_url)
+                                                for comment_div in self.browser.find_all('div', {'id': 'recent'})[
+                                                    0].find_all(
+                                                    'div'):
+                                                    try:
+                                                        if str(comment_div['id']).startswith('u_'):
+                                                            if xm < 1:
+                                                                for a in comment_div.find_all('a'):
+                                                                    if str(a['href']).lower().__contains__(
+                                                                            '/story.php?story_fbid='):
+                                                                        xm = 1
+                                                                        a = 'https://m.facebook.com' + a['href']
+                                                                        if a not in commented:
+                                                                            self.browser.open(a)
+                                                                            form = self.browser.get_form(
+                                                                                self.browser.find_all('form')[0])
+                                                                            comment = self.url_encoder(comment)
+                                                                            form['comment_text'].value = comment
+                                                                            self.browser.submit_form(form,
+                                                                                                     'https://m.facebok.com' +
+                                                                                                     self.browser.find_all(
+                                                                                                         'form')[
+                                                                                                         0][
+                                                                                                         'action'])
+                                                                            if self.action_blocked_checker(
+                                                                                    self.browser):
+                                                                                print(
+                                                                                    '[+][Log][Blocked] Comment To Pages Posts (BOT)  Service : System Will Exit Now.')
+                                                                                self.os._exit(1)
+                                                                            else:
+                                                                                pass
+                                                                            try:
+                                                                                m = self.browser.find_all('div', {
+                                                                                    'title': 'User Comments Blocked'})[
+                                                                                    0]
+                                                                                print(
+                                                                                    '[+][Log][Failed] Comment To Pages Posts Service [' + str(
+                                                                                        m[
+                                                                                            'title']) + ']:[' + str(
+                                                                                        str(page_name).encode('ascii',
+                                                                                                              'ignore').decode()) + ']')
+                                                                                self.time.sleep(sleep_thread)
+                                                                                break
+                                                                            except KeyboardInterrupt as e:
+                                                                                self.os._exit(1)
+                                                                            except UnicodeError as e:
+                                                                                pass
+                                                                            except:
+                                                                                print(
+                                                                                    '[+][Log][Success] Comment To Pages Posts Service :[' + str(
+                                                                                        str(page_name).encode('ascii',
+                                                                                                              'ignore').decode()) + ']')
+                                                                                a = str(a).split('&refid=')[0]
+                                                                                commented.append(a)
+                                                                                try:
+                                                                                    open('F_PG.DAT', 'a+').write(
+                                                                                        self.encrypter(a, 10) + "\n")
+                                                                                except KeyboardInterrupt as e:
+                                                                                    self.os._exit(1)
+                                                                                except UnicodeError as e:
+                                                                                    pass
+                                                                                except:
+                                                                                    open('F_PG.DAT', 'a+')
+                                                                                    pass
+                                                                                self.time.sleep(sleep_thread)
+                                                                                self.time.sleep(1)
+                                                                                break
+                                                                        else:
+                                                                            break
+                                                                            pass
+                                                                        pass
+                                                                    pass
+                                                                pass
+                                                            else:
+                                                                break
+                                                    except KeyboardInterrupt as e:
+                                                        self.os._exit(1)
+                                                    except UnicodeError as e:
+                                                        pass
+                                                    except:
+                                                        pass
+                                                pass
+                                            except KeyboardInterrupt as e:
+                                                self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
+                                            except:
+                                                print(
+                                                    '[+][Log][Failed] Comment To Pages Posts Service :[' + str(
+                                                        str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                                pass
+                                            pass
                             print('[+][Log][Done] Comment To Pages Posts Service')
                             pass
                         else:
@@ -1627,21 +2246,106 @@ class Auto_Bot:
                                                                     a = 'https://m.facebook.com' + a['href']
                                                                     comment = self.url_encoder(comment)
                                                                     self.browser.open(a)
-                                                                    for x in self.browser.find_all('a'):
-                                                                        if str(x['href']).lower().startswith(
-                                                                                '/mbasic/comment/advanced/?target_id='):
-                                                                            self.browser.open(
-                                                                                'https://m.facebook.com' + x['href'])
-                                                                            break
                                                                     try:
-                                                                        self.browser.find_all('textarea',
-                                                                                              {'name': 'comment_text'})[
-                                                                            0].insert(0, comment)
-                                                                        form = self.browser.get_forms()[0]
-                                                                        form['photo'].value = open(photo_path, 'rb')
-                                                                        self.browser.submit_form(form,
-                                                                                                 submit=form['post'])
+                                                                        for x in self.browser.find_all('a'):
+                                                                            if str(x['href']).lower().startswith(
+                                                                                    '/mbasic/comment/advanced/?target_id='):
+                                                                                self.browser.open(
+                                                                                    'https://m.facebook.com' + x[
+                                                                                        'href'])
+                                                                                break
+                                                                        try:
+                                                                            self.browser.find_all('textarea',
+                                                                                                  {
+                                                                                                      'name': 'comment_text'})[
+                                                                                0].insert(0, comment)
+                                                                            form = self.browser.get_forms()[0]
+                                                                            form['photo'].value = open(photo_path, 'rb')
+                                                                            self.browser.submit_form(form,
+                                                                                                     submit=form[
+                                                                                                         'post'])
+                                                                        except:
+                                                                            pass
                                                                     except:
+                                                                        try:
+                                                                            if str(comment_div['id']).startswith('u_'):
+                                                                                if xm < 1:
+                                                                                    for a in comment_div.find_all('a'):
+                                                                                        if str(a[
+                                                                                                   'href']).lower().__contains__(
+                                                                                                'story.php?story_fbid='):
+                                                                                            xm = 1
+                                                                                            a = 'https://m.facebook.com' + \
+                                                                                                a['href']
+                                                                                            self.browser.open(a)
+                                                                                            form = self.browser.get_form(
+                                                                                                self.browser.find_all(
+                                                                                                    'form')[0])
+                                                                                            comment = self.url_encoder(
+                                                                                                comment)
+                                                                                            form[
+                                                                                                'comment_text'].value = comment
+                                                                                            self.browser.submit_form(
+                                                                                                form,
+                                                                                                'https://m.facebok.com' +
+                                                                                                self.browser.find_all(
+                                                                                                    'form')[
+                                                                                                    0][
+                                                                                                    'action'])
+                                                                                            if self.action_blocked_checker(
+                                                                                                    self.browser):
+                                                                                                print(
+                                                                                                    '[+][Log][Blocked] Comment To Friends Posts  Service : System Will Exit Now.')
+                                                                                                self.os._exit(1)
+                                                                                            else:
+                                                                                                pass
+                                                                                            try:
+                                                                                                m = \
+                                                                                                self.browser.find_all(
+                                                                                                    'div', {
+                                                                                                        'title': 'User Comments Blocked'})[
+                                                                                                    0]
+                                                                                                print(
+                                                                                                    '[+][Log][Failed] Comment To Friends Posts Service [' + str(
+                                                                                                        m[
+                                                                                                            'title']) + ']:[' + str(
+                                                                                                        str(
+                                                                                                            page_name).encode(
+                                                                                                            'ascii',
+                                                                                                            'ignore').decode()) + ']')
+                                                                                                self.time.sleep(
+                                                                                                    sleep_thread)
+                                                                                                break
+                                                                                            except KeyboardInterrupt as e:
+                                                                                                self.os._exit(1)
+                                                                                            except UnicodeError as e:
+                                                                                                pass
+                                                                                            except:
+                                                                                                print(
+                                                                                                    '[+][Log][Success] Comment To Friends Posts Service :[' + str(
+                                                                                                        str(
+                                                                                                            page_name).encode(
+                                                                                                            'ascii',
+                                                                                                            'ignore').decode()) + ']')
+                                                                                                self.time.sleep(
+                                                                                                    sleep_thread)
+                                                                                                self.time.sleep(1)
+                                                                                                break
+                                                                                            break
+                                                                                            pass
+                                                                                        else:
+                                                                                            pass
+                                                                                        pass
+                                                                                    pass
+                                                                                else:
+                                                                                    break
+                                                                        except KeyboardInterrupt as e:
+                                                                            self.os._exit(1)
+                                                                        except UnicodeError as e:
+                                                                            pass
+                                                                        except:
+                                                                            pass
+
                                                                         pass
                                                                     if self.action_blocked_checker(self.browser):
                                                                         print(
@@ -1889,20 +2593,153 @@ class Auto_Bot:
                                                                 a = 'https://m.facebook.com' + a['href']
                                                                 comment = self.url_encoder(comment)
                                                                 self.browser.open(a)
-                                                                for x in self.browser.find_all('a'):
-                                                                    if str(x['href']).lower().startswith(
-                                                                            '/mbasic/comment/advanced/?target_id='):
-                                                                        self.browser.open(
-                                                                            'https://m.facebook.com' + x['href'])
-                                                                        break
                                                                 try:
-                                                                    self.browser.find_all('textarea',
-                                                                                          {'name': 'comment_text'})[
-                                                                        0].insert(0, comment)
-                                                                    form = self.browser.get_forms()[0]
-                                                                    form['photo'].value = open(photo_path, 'rb')
-                                                                    self.browser.submit_form(form, submit=form['post'])
+                                                                    for x in self.browser.find_all('a'):
+                                                                        if str(x['href']).lower().startswith(
+                                                                                '/mbasic/comment/advanced/?target_id='):
+                                                                            self.browser.open(
+                                                                                'https://m.facebook.com' + x['href'])
+                                                                            break
+                                                                    try:
+                                                                        self.browser.find_all('textarea',
+                                                                                              {'name': 'comment_text'})[
+                                                                            0].insert(0, comment)
+                                                                        form = self.browser.get_forms()[0]
+                                                                        form['photo'].value = open(photo_path, 'rb')
+                                                                        self.browser.submit_form(form,
+                                                                                                 submit=form['post'])
+                                                                    except:
+                                                                        pass
                                                                 except:
+                                                                    try:
+                                                                        xm = 0
+                                                                        self.browser.open(
+                                                                            'https://m.facebook.com' + page_url)
+                                                                        for comment_div in \
+                                                                        self.browser.find_all('div', {'id': 'recent'})[
+                                                                            0].find_all(
+                                                                            'div'):
+                                                                            try:
+                                                                                if str(comment_div['id']).startswith(
+                                                                                        'u_'):
+                                                                                    if xm < 1:
+                                                                                        for a in comment_div.find_all(
+                                                                                                'a'):
+                                                                                            if str(a[
+                                                                                                       'href']).lower().__contains__(
+                                                                                                    'story.php?story_fbid='):
+                                                                                                xm = 1
+                                                                                                a = 'https://m.facebook.com' + \
+                                                                                                    a['href']
+                                                                                                if a not in commented:
+                                                                                                    self.browser.open(a)
+                                                                                                    form = self.browser.get_form(
+                                                                                                        self.browser.find_all(
+                                                                                                            'form')[0])
+                                                                                                    comment = self.url_encoder(
+                                                                                                        comment)
+                                                                                                    form[
+                                                                                                        'comment_text'].value = comment
+                                                                                                    self.browser.submit_form(
+                                                                                                        form,
+                                                                                                        'https://m.facebok.com' +
+                                                                                                        self.browser.find_all(
+                                                                                                            'form')[
+                                                                                                            0][
+                                                                                                            'action'])
+                                                                                                    if self.action_blocked_checker(
+                                                                                                            self.browser):
+                                                                                                        print(
+                                                                                                            '[+][Log][Blocked] Comment To Friends Posts (BOT) Service : System Will Exit Now.')
+                                                                                                        self.os._exit(1)
+                                                                                                    else:
+                                                                                                        pass
+                                                                                                    try:
+                                                                                                        m = \
+                                                                                                        self.browser.find_all(
+                                                                                                            'div', {
+                                                                                                                'title': 'User Comments Blocked'})[
+                                                                                                            0]
+                                                                                                        print(
+                                                                                                            '[+][Log][Failed] Comment To Friends Posts (BOT) Service [' + str(
+                                                                                                                m[
+                                                                                                                    'title']) + ']:[' + str(
+                                                                                                                str(
+                                                                                                                    page_name).encode(
+                                                                                                                    'ascii',
+                                                                                                                    'ignore').decode()) + ']')
+                                                                                                        self.time.sleep(
+                                                                                                            sleep_thread)
+                                                                                                        break
+                                                                                                    except KeyboardInterrupt as e:
+                                                                                                        self.os._exit(1)
+                                                                                                    except UnicodeError as e:
+                                                                                                        pass
+                                                                                                    except:
+                                                                                                        print(
+                                                                                                            '[+][Log][Success] Comment To Friends Posts (BOT) Service :[' + str(
+                                                                                                                str(
+                                                                                                                    page_name).encode(
+                                                                                                                    'ascii',
+                                                                                                                    'ignore').decode()) + ']')
+                                                                                                        a = \
+                                                                                                        str(a).split(
+                                                                                                            '&refid=')[
+                                                                                                            0]
+                                                                                                        commented.append(
+                                                                                                            a)
+                                                                                                        try:
+                                                                                                            open(
+                                                                                                                'F_FBF.DAT',
+                                                                                                                'a+').write(
+                                                                                                                self.encrypter(
+                                                                                                                    a,
+                                                                                                                    12) + "\n")
+                                                                                                        except KeyboardInterrupt as e:
+                                                                                                            self.os._exit(
+                                                                                                                1)
+                                                                                                        except UnicodeError as e:
+                                                                                                            pass
+                                                                                                        except:
+                                                                                                            open(
+                                                                                                                'F_FBF.DAT',
+                                                                                                                'a+')
+                                                                                                            pass
+                                                                                                        self.time.sleep(
+                                                                                                            sleep_thread)
+                                                                                                        self.time.sleep(
+                                                                                                            1)
+                                                                                                        break
+                                                                                                    break
+                                                                                                    pass
+                                                                                                else:
+                                                                                                    break
+                                                                                                    pass
+                                                                                                pass
+                                                                                            else:
+                                                                                                pass
+                                                                                            pass
+                                                                                        pass
+                                                                                    else:
+                                                                                        break
+                                                                            except KeyboardInterrupt as e:
+                                                                                self.os._exit(1)
+                                                                            except UnicodeError as e:
+                                                                                pass
+                                                                            except:
+                                                                                pass
+                                                                        pass
+                                                                    except KeyboardInterrupt as e:
+                                                                        self.os._exit(1)
+                                                                    except UnicodeError as e:
+                                                                        pass
+                                                                    except:
+                                                                        print(
+                                                                            '[+][Log][Failed] Comment To Friends Posts (BOT) Service :[' + str(
+                                                                                str(page_name).encode('ascii',
+                                                                                                      'ignore').decode()) + ']')
+                                                                        pass
+                                                                    pass
                                                                     pass
                                                                 if self.action_blocked_checker(self.browser):
                                                                     print(
@@ -2170,20 +3007,125 @@ class Auto_Bot:
                                                                     a = 'https://m.facebook.com' + a['href']
                                                                     comment = self.url_encoder(comment)
                                                                     self.browser.open(a)
-                                                                    for x in self.browser.find_all('a'):
-                                                                        if str(x['href']).lower().startswith(
-                                                                                '/mbasic/comment/advanced/?target_id='):
-                                                                            self.browser.open(
-                                                                                'https://m.facebook.com' + x['href'])
-                                                                            break
                                                                     try:
-                                                                        self.browser.find_all('textarea',
-                                                                                              {'name': 'comment_text'})[
-                                                                            0].insert(0, comment)
-                                                                        form = self.browser.get_forms()[0]
-                                                                        form['photo'].value = open(photo_path, 'rb')
-                                                                        self.browser.submit_form(form,
-                                                                                                 submit=form['post'])
+                                                                        for x in self.browser.find_all('a'):
+                                                                            if str(x['href']).lower().startswith(
+                                                                                    '/mbasic/comment/advanced/?target_id='):
+                                                                                self.browser.open(
+                                                                                    'https://m.facebook.com' + x[
+                                                                                        'href'])
+                                                                                break
+                                                                        try:
+                                                                            self.browser.find_all('textarea',
+                                                                                                  {
+                                                                                                      'name': 'comment_text'})[
+                                                                                0].insert(0, comment)
+                                                                            form = self.browser.get_forms()[0]
+                                                                            form['photo'].value = open(photo_path, 'rb')
+                                                                            self.browser.submit_form(form,
+                                                                                                     submit=form[
+                                                                                                         'post'])
+                                                                        except:
+                                                                            try:
+                                                                                xm = 0
+                                                                                self.browser.open(
+                                                                                    'https://m.facebook.com' + page_url)
+                                                                                for comment_div in \
+                                                                                        self.browser.find_all('div', {
+                                                                                            'id': 'm_group_stories_container'})[
+                                                                                            0].find_all(
+                                                                                            'div'):
+                                                                                    try:
+                                                                                        if str(comment_div[
+                                                                                                   'id']).startswith(
+                                                                                                'u_'):
+                                                                                            if xm < 1:
+                                                                                                for a in comment_div.find_all(
+                                                                                                        'a'):
+                                                                                                    if str(a[
+                                                                                                               'href']).lower().__contains__(
+                                                                                                            '?view=permalink&id='):
+                                                                                                        xm = 1
+                                                                                                        a = 'https://m.facebook.com' + \
+                                                                                                            a['href']
+                                                                                                        self.browser.open(
+                                                                                                            a)
+                                                                                                        form = \
+                                                                                                        self.browser.get_forms()[
+                                                                                                            1]
+                                                                                                        comment = self.url_encoder(
+                                                                                                            comment)
+                                                                                                        form[
+                                                                                                            'comment_text'].value = comment
+                                                                                                        self.browser.submit_form(
+                                                                                                            form,
+                                                                                                            'https://m.facebok.com' +
+                                                                                                            self.browser.find_all(
+                                                                                                                'form')[
+                                                                                                                0][
+                                                                                                                'action'])
+                                                                                                        if self.action_blocked_checker(
+                                                                                                                self.browser):
+                                                                                                            print(
+                                                                                                                '[+][Log][Blocked] Comment To Groups Posts  Service : System Will Exit Now.')
+                                                                                                            self.os._exit(
+                                                                                                                1)
+                                                                                                        else:
+                                                                                                            pass
+                                                                                                        try:
+                                                                                                            m = \
+                                                                                                            self.browser.find_all(
+                                                                                                                'div', {
+                                                                                                                    'title': 'User Comments Blocked'})[
+                                                                                                                0]
+                                                                                                            print(
+                                                                                                                '[+][Log][Failed] Comment To Groups Posts Service [' + str(
+                                                                                                                    m[
+                                                                                                                        'title']) + ']:[' + str(
+                                                                                                                    str(
+                                                                                                                        page_name).encode(
+                                                                                                                        'ascii',
+                                                                                                                        'ignore').decode()) + ']')
+                                                                                                            self.time.sleep(
+                                                                                                                sleep_thread)
+                                                                                                            break
+                                                                                                        except KeyboardInterrupt as e:
+                                                                                                            self.os._exit(
+                                                                                                                1)
+                                                                                                        except:
+                                                                                                            print(
+                                                                                                                '[+][Log][Success] Comment To Groups Posts Service :[' + str(
+                                                                                                                    str(
+                                                                                                                        page_name).encode(
+                                                                                                                        'ascii',
+                                                                                                                        'ignore').decode()) + ']')
+                                                                                                            self.time.sleep(
+                                                                                                                sleep_thread)
+                                                                                                            self.time.sleep(
+                                                                                                                1)
+                                                                                                            break
+                                                                                                        break
+                                                                                                        pass
+                                                                                                    else:
+                                                                                                        pass
+                                                                                                    pass
+                                                                                                pass
+                                                                                            else:
+                                                                                                break
+                                                                                    except KeyboardInterrupt as e:
+                                                                                        self.os._exit(1)
+                                                                                    except:
+                                                                                        pass
+                                                                                pass
+                                                                            except KeyboardInterrupt as e:
+                                                                                self.os._exit(1)
+                                                                            except:
+                                                                                print(
+                                                                                    '[+][Log][Failed] Comment To Groups Posts Service :[' + str(
+                                                                                        str(page_name).encode('ascii',
+                                                                                                              'ignore').decode()) + ']')
+                                                                                pass
+                                                                            pass
                                                                     except:
                                                                         pass
                                                                     if self.action_blocked_checker(self.browser):
@@ -2439,24 +3381,159 @@ class Auto_Bot:
                                                                             comment = self.url_encoder(comment)
                                                                             self.browser.open(a)
                                                                             form = self.browser.get_forms()[1]
-                                                                            for x in self.browser.find_all('a'):
-                                                                                if str(x['href']).lower().startswith(
-                                                                                        '/mbasic/comment/advanced/?target_id='):
-                                                                                    self.browser.open(
-                                                                                        'https://m.facebook.com' + x[
-                                                                                            'href'])
-                                                                                    break
                                                                             try:
-                                                                                self.browser.find_all('textarea',
-                                                                                                      {
-                                                                                                          'name': 'comment_text'})[
-                                                                                    0].insert(0, comment)
-                                                                                form = self.browser.get_forms()[0]
-                                                                                form['photo'].value = open(photo_path,
-                                                                                                           'rb')
-                                                                                self.browser.submit_form(form,
-                                                                                                         submit=form[
-                                                                                                             'post'])
+                                                                                for x in self.browser.find_all('a'):
+                                                                                    if str(x[
+                                                                                               'href']).lower().startswith(
+                                                                                            '/mbasic/comment/advanced/?target_id='):
+                                                                                        self.browser.open(
+                                                                                            'https://m.facebook.com' +
+                                                                                            x[
+                                                                                                'href'])
+                                                                                        break
+                                                                                try:
+                                                                                    self.browser.find_all('textarea',
+                                                                                                          {
+                                                                                                              'name': 'comment_text'})[
+                                                                                        0].insert(0, comment)
+                                                                                    form = self.browser.get_forms()[0]
+                                                                                    form['photo'].value = open(
+                                                                                        photo_path,
+                                                                                        'rb')
+                                                                                    self.browser.submit_form(form,
+                                                                                                             submit=
+                                                                                                             form[
+                                                                                                                 'post'])
+                                                                                except:
+                                                                                    try:
+                                                                                        xm = 0
+                                                                                        self.browser.open(
+                                                                                            'https://m.facebook.com' + page_url)
+                                                                                        for comment_div in \
+                                                                                                self.browser.find_all(
+                                                                                                    'div',
+                                                                                                    {
+                                                                                                        'id': 'm_group_stories_container'})[
+                                                                                                    0].find_all(
+                                                                                                    'div'):
+                                                                                            try:
+                                                                                                if str(comment_div[
+                                                                                                           'id']).startswith(
+                                                                                                        'u_'):
+                                                                                                    if xm < 1:
+                                                                                                        for a in comment_div.find_all(
+                                                                                                                'a'):
+                                                                                                            if str(a[
+                                                                                                                       'href']).lower().__contains__(
+                                                                                                                    '?view=permalink&id='):
+                                                                                                                xm = 1
+                                                                                                                a = 'https://m.facebook.com' + \
+                                                                                                                    a[
+                                                                                                                        'href']
+                                                                                                                if a not in commented:
+                                                                                                                    self.browser.open(
+                                                                                                                        a)
+                                                                                                                    form = \
+                                                                                                                    self.browser.get_forms()[
+                                                                                                                        1]
+                                                                                                                    comment = self.url_encoder(
+                                                                                                                        comment)
+                                                                                                                    form[
+                                                                                                                        'comment_text'].value = comment
+                                                                                                                    self.browser.submit_form(
+                                                                                                                        form,
+                                                                                                                        'https://m.facebok.com' +
+                                                                                                                        self.browser.find_all(
+                                                                                                                            'form')[
+                                                                                                                            0][
+                                                                                                                            'action'])
+                                                                                                                    if self.action_blocked_checker(
+                                                                                                                            self.browser):
+                                                                                                                        print(
+                                                                                                                            '[+][Log][Blocked] Comment To Groups Posts (BOT) Service : System Will Exit Now.')
+                                                                                                                        self.os._exit(
+                                                                                                                            1)
+                                                                                                                    else:
+                                                                                                                        pass
+                                                                                                                    try:
+                                                                                                                        m = \
+                                                                                                                        self.browser.find_all(
+                                                                                                                            'div',
+                                                                                                                            {
+                                                                                                                                'title': 'User Comments Blocked'})[
+                                                                                                                            0]
+                                                                                                                        print(
+                                                                                                                            '[+][Log][Failed] Comment To Pages Groups Service [' + str(
+                                                                                                                                m[
+                                                                                                                                    'title']) + ']:[' + str(
+                                                                                                                                str(
+                                                                                                                                    page_name).encode(
+                                                                                                                                    'ascii',
+                                                                                                                                    'ignore').decode()) + ']')
+                                                                                                                        break
+                                                                                                                    except KeyboardInterrupt as e:
+                                                                                                                        self.os._exit(
+                                                                                                                            1)
+                                                                                                                    except:
+                                                                                                                        print(
+                                                                                                                            '[+][Log][Success] Comment To Groups Posts Service :[' + str(
+                                                                                                                                str(
+                                                                                                                                    page_name).encode(
+                                                                                                                                    'ascii',
+                                                                                                                                    'ignore').decode()) + ']')
+                                                                                                                        a = \
+                                                                                                                        str(
+                                                                                                                            a).split(
+                                                                                                                            '&refid=')[
+                                                                                                                            0]
+                                                                                                                        commented.append(
+                                                                                                                            a)
+                                                                                                                        try:
+                                                                                                                            open(
+                                                                                                                                'F_GP.DAT',
+                                                                                                                                'a+').write(
+                                                                                                                                self.encrypter(
+                                                                                                                                    a,
+                                                                                                                                    11) + "\n")
+                                                                                                                        except KeyboardInterrupt as e:
+                                                                                                                            self.os._exit(
+                                                                                                                                1)
+                                                                                                                        except:
+                                                                                                                            open(
+                                                                                                                                'F_GP.DAT',
+                                                                                                                                'a+')
+                                                                                                                            pass
+                                                                                                                        self.time.sleep(
+                                                                                                                            sleep_thread)
+                                                                                                                        self.time.sleep(
+                                                                                                                            1)
+                                                                                                                        break
+                                                                                                                    break
+                                                                                                                    pass
+                                                                                                                else:
+                                                                                                                    break
+                                                                                                                    pass
+                                                                                                            else:
+                                                                                                                pass
+                                                                                                            pass
+                                                                                                        pass
+                                                                                                    else:
+                                                                                                        break
+                                                                                            except KeyboardInterrupt as e:
+                                                                                                self.os._exit(1)
+                                                                                            except:
+                                                                                                pass
+                                                                                        pass
+                                                                                    except KeyboardInterrupt as e:
+                                                                                        self.os._exit(1)
+                                                                                    except:
+                                                                                        print(
+                                                                                            '[+][Log][Failed] Comment To Friends Posts Service :[' + str(
+                                                                                                str(page_name).encode(
+                                                                                                    'ascii',
+                                                                                                    'ignore').decode()) + ']')
+                                                                                        pass
+                                                                                    pass
                                                                             except:
                                                                                 pass
                                                                             if self.action_blocked_checker(
@@ -2770,13 +3847,13 @@ class Auto_Bot:
                         pass
                     pass
 
-                def Comment_To_Pages_Posts(self, comment=None, sleep_thread=2):
+                def Comment_To_Pages_Posts(self, comment=None, sleep_thread=2, photo_path=None):
                     try:
                         self.login()
                         print('[+][start] Pages List Generator Service')
                         self.pages_list = self.pages_list_gen()
                         print('[+][Done] Pages List Generator Service')
-                        self.comment_to_pages(comment, sleep_thread)
+                        self.comment_to_pages(comment, sleep_thread, photo_path)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
@@ -2788,13 +3865,13 @@ class Auto_Bot:
                     self.login()
                     self.autobot(message, photo_path)
 
-                def Coment_To_Pages_Posts_BOT(self, comment=None, sleep_thread=2):
+                def Coment_To_Pages_Posts_BOT(self, comment=None, sleep_thread=2, photo_path=None):
                     try:
                         self.login()
                         print('[+][start] Pages List Generator Service')
                         self.pages_list = self.pages_list_gen()
                         print('[+][Done] Pages List Generator Service')
-                        self.comment_to_pages_Bot(comment, sleep_thread)
+                        self.comment_to_pages_Bot(comment, sleep_thread, photo_path)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
@@ -2946,7 +4023,7 @@ class Auto_Bot:
                         pass
                     pass
 
-                def Comment_To_All(self, Comment=None, sleep_thread=2):
+                def Comment_To_All(self, Comment=None, sleep_thread=2, photo_path=None):
                     self.login()
                     try:
                         print('[+][start] Friend List Generator Service')
@@ -2958,9 +4035,9 @@ class Auto_Bot:
                         print('[+][start] Pages List Generator Service')
                         self.pages_list = self.pages_list_gen()
                         print('[+][Done] Pages List Generator Service')
-                        self.comment_to_friends(Comment, sleep_thread)
-                        self.comment_to_groups(Comment, sleep_thread)
-                        self.comment_to_pages(Comment, sleep_thread)
+                        self.comment_to_friends(Comment, sleep_thread, photo_path)
+                        self.comment_to_groups(Comment, sleep_thread, photo_path)
+                        self.comment_to_pages(Comment, sleep_thread, photo_path)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
@@ -2968,7 +4045,7 @@ class Auto_Bot:
                         pass
                     pass
 
-                def Comment_To_All_Bot(self, Comment=None, sleep_thread=2):
+                def Comment_To_All_Bot(self, Comment=None, sleep_thread=2, photo_path=None):
                     self.login()
                     try:
                         print('[+][start] Friend List Generator Service')
@@ -2980,9 +4057,9 @@ class Auto_Bot:
                         print('[+][start] Pages List Generator Service')
                         self.pages_list = self.pages_list_gen()
                         print('[+][Done] Pages List Generator Service')
-                        self.comment_to_friends_Bot(Comment, sleep_thread)
-                        self.comment_to_groups_Bot(Comment, sleep_thread)
-                        self.comment_to_pages_Bot(Comment, sleep_thread)
+                        self.comment_to_friends_Bot(Comment, sleep_thread, photo_path)
+                        self.comment_to_groups_Bot(Comment, sleep_thread, photo_path)
+                        self.comment_to_pages_Bot(Comment, sleep_thread, photo_path)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
@@ -3176,6 +4253,7 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
                                         try:
                                             photo = str(input(
                                                 '[+]Enter Media Path (optional set to None for None) : '))
@@ -3208,6 +4286,7 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
                                         try:
                                             photo = str(input(
                                                 '[+]Enter Media Path (optional set to None for None) : '))
@@ -3239,6 +4318,7 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
                                         try:
                                             photo = str(input(
                                                 '[+]Enter Media Path (optional set to None for None) : '))
@@ -3270,6 +4350,7 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
                                         try:
                                             photo = str(input(
                                                 '[+]Enter Media Path (optional set to None for None) : '))
@@ -3301,8 +4382,22 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
+                                        try:
+                                            photo = str(input(
+                                                '[+]Enter Media Path (optional set to None for None) : '))
+                                            if str(photo).lower() == 'none':
+                                                photo = None
+                                            elif str(photo).lower == 0:
+                                                print(None)
+                                            else:
+                                                photo = photo
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Comment_To_All(message, thread)
+                                            self.Comment_To_All(message, thread, photo)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -3319,8 +4414,22 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
+                                        try:
+                                            photo = str(input(
+                                                '[+]Enter Media Path (optional set to None for None) : '))
+                                            if str(photo).lower() == 'none':
+                                                photo = None
+                                            elif str(photo).lower == 0:
+                                                print(None)
+                                            else:
+                                                photo = photo
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Comment_To_All_Bot(message, thread)
+                                            self.Comment_To_All_Bot(message, thread, photo)
                                         else:
                                             print('[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
