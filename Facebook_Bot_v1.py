@@ -77,7 +77,7 @@ class Auto_Bot:
                             import os
                             os.system('cls' if os.name == 'nt' else 'clear')
                         cls()
-                        self.test()
+                        self.Service_Start()
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
                     except UnicodeError as e:
