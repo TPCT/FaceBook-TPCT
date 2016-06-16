@@ -1701,7 +1701,7 @@ class Auto_Bot:
                     except:
                         pass
 
-                def comment_to_pages_Bot(self, comment=None, sleep_thread=2, photo_path):
+                def comment_to_pages_Bot(self, comment=None, sleep_thread=2, photo_path=None):
                     try:
                         if self.logged:
                             pages = self.pages_list
