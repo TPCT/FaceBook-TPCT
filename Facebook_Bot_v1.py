@@ -1,11 +1,63 @@
-# coding=utf-8
+class Auto_Bot:
+    class Installer:
+        import os, shutil
+        def __init__(self):
+            self.Admin_Rights()
+            self.Import_Checker()
 
-class Facebook:
-        class Auto_Bot:
+        def Admin_Rights(self):
+            try:
+                import os, sys, platform
+                if str(platform.system()).lower().startswith('linux'):
+                    open('/etc/Mod', 'w+')
+                    os.unlink('/etc/Mod')
+                elif str(platform.system()).lower().startswith('windows'):
+                    open('c:/Mod', 'w+')
+                    os.unlink('c:/Mod')
+                else:
+                    open('/etc/Mod', 'w+')
+                    os.unlink('/etc/Mod')
+            except KeyboardInterrupt as e:
+                self.os._exit(1)
+            except Exception as e:
+                e = e.args
+                if e[0] == 13:
+                    print('[+] Sorry You Need To Use Script As Admin Script Will Exit')
+                    sys.exit(1)
+                else:
+                    pass
+
+        def Import_Checker(self):
+            try:
+                __import__('imp').find_module('robobrowser')
+            except ImportError:
+                import pip
+                pip.main(['install', 'robobrowser'])
+                pass
+            except Exception as e:
+                pass
+            try:
+                __import__('imp').find_module('requests')
+            except ImportError:
+                import pip
+                pip.main(['install', 'requests'])
+                pass
+            except Exception as e:
+                pass
+            try:
+                __import__('imp').find_module('pickle')
+            except ImportError:
+                import pip
+                pip.main(['install', 'pickle'])
+                pass
+            except Exception as e:
+                pass
+            pass
+
+    class Facebook:
             try:
                 def __init__(self):
                     try:
-                        self.Installer()
                         self.username = ''
                         self.commented = []
                         self.password = ''
@@ -16,15 +68,20 @@ class Facebook:
                         self.pages_list = ''
                         self.account_name = ''
                         self.account_url = ''
-                        self.sys.stdout.write("\x1b]2;TPCT Facebook Auto Bot Version 1\x07")
+                        def title():
+                            import os
+                            os.system('title TPCT Facebook Auto Bot Version 1' if os.name == 'nt' else '\x1b]2;TPCT Facebook Auto Bot Version 1\x07')
+                        title()
                         self.plateform_check()
                         def cls():
                             import os
                             os.system('cls' if os.name == 'nt' else 'clear')
                         cls()
-                        self.Service_Start()
+                        self.test()
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except Exception as e:
                         pass
 
@@ -38,69 +95,59 @@ class Facebook:
                    Github: https://github.com/TPCT
                    Facebook: https://www.facebook.com/Taylor.Ackerley.9\n'''
 
-                class Installer:
-                    import os, shutil
-                    def __init__(self):
-                        self.Admin_Rights()
-                        self.Import_Checker()
-
-                    def Admin_Rights(self):
-                        try:
-                            import os, sys, platform
-                            if str(platform.system()).lower().startswith('linux'):
-                                open('/etc/Mod', 'w+')
-                                os.unlink('/etc/Mod')
-                            elif str(platform.system()).lower().startswith('windows'):
-                                open('c:/Mod', 'w+')
-                                os.unlink('c:/Mod')
-                            else:
-                                open('/etc/Mod', 'w+')
-                                os.unlink('/etc/Mod')
-                        except KeyboardInterrupt as e:
-                            self.os._exit(1)
-                        except Exception as e:
-                            e = e.args
-                            if e[0] == 13:
-                                print('[+] Sorry You Need To Use Script As Admin Script Will Exit')
-                                sys.exit(1)
-                            else:
-                                pass
-
-                    def Import_Checker(self):
-                        try:
-                            __import__('imp').find_module('robobrowser')
-                        except ImportError:
-                            import pip
-                            pip.main(['install', 'robobrowser'])
-                            pass
-                        except Exception as e:
-                            pass
-                        pass
                 import time, random, re, string, sys, warnings, os, pip, traceback, math, getpass, pickle, \
-                    signal, platform, pickle, requests, tarfile, zipfile
+                    signal, platform, requests, tarfile, zipfile
                 browser = ''
                 Browser = ''
 
-                def plateform_check(self):
+                def latest_useragent(self):
                     from robobrowser import RoboBrowser
+                    session = self.requests.session()
+                    session.headers['Referer'] = 'https://m.facebook.com'
                     if str(self.platform.system()).lower().startswith('linux'):
-                        browser = RoboBrowser(
-                            user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-                            multiplier=True,
-                            allow_redirects=True, history=True, parser='lxml')
+                        browser = RoboBrowser(session=session,
+                                              user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                              multiplier=True,
+                                              allow_redirects=True, history=True, parser='lxml')
                         self.browser = browser
                     elif str(self.platform.system()).lower().startswith('windows'):
-                        browser = RoboBrowser(
-                            user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-                            multiplier=True,
-                            allow_redirects=True, history=True, parser='html.parser')
+                        browser = RoboBrowser(session=session,
+                                              user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                              multiplier=True,
+                                              allow_redirects=True, history=True, parser='html.parser')
                         self.browser = browser
                     else:
-                        browser = RoboBrowser(
-                            user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-                            multiplier=True,
-                            allow_redirects=True, history=True, parser='lxml')
+                        browser = RoboBrowser(session=session,
+                                              user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                              multiplier=True,
+                                              allow_redirects=True, history=True, parser='lxml')
                         self.browser = browser
+                    try:
+                        self.browser.open('http://www.useragentstring.com/pages/Firefox/')
+                        main = self.browser.find_all('div', {'id': 'content'})[0]
+                        return main.find_all('a')[0].text
+                    except Exception as e:
+                        return 'Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0'
+
+                def plateform_check(self):
+                    try:
+                        from robobrowser import RoboBrowser
+                        session = self.requests.session()
+                        session.headers['Referer'] = 'https://m.facebook.com'
+                        if str(self.platform.system()).lower().startswith('linux'):
+                            browser = RoboBrowser(session=session, user_agent=self.latest_useragent(), multiplier=True,
+                                allow_redirects=True, history=True, parser='lxml')
+                            self.browser = browser
+                        elif str(self.platform.system()).lower().startswith('windows'):
+                            browser = RoboBrowser(session=session,user_agent=self.latest_useragent(), multiplier=True,
+                                                   allow_redirects=True, history=True, parser='html.parser')
+                            self.browser = browser
+                        else:
+                            browser = RoboBrowser(session=session, user_agent=self.latest_useragent(), multiplier=True,
+                                allow_redirects=True, history=True, parser='lxml')
+                            self.browser = browser
+                    except Execption as e:
+                        pass
 
                 def login(self):
                     try:
@@ -142,10 +189,23 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except Exception as e:
                         print('[-][Not Logged] Service Stopped ' + str(e) + ' System Will Close')
                         self.os._exit(1)
                         pass
+
+                def action_blocked_checker(self, browser=None):
+                    try:
+                        main = browser.find_all('div', {'id': 'root'})[0]
+                        if str(main.text).__contains__(
+                                'You have been temporarily blocked from performing this action.'):
+                            return True
+                        else:
+                            return False
+                    except Exception as e:
+                        print(e)
 
                 def Login(self, username=None, password=None):
                     try:
@@ -209,6 +269,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except Exception as e:
                         print('[-][Not Logged] Service Stopped ' + str(
                             self.traceback.print_exc()) + ' System Will Close')
@@ -251,6 +313,8 @@ class Facebook:
                                     pass
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
+                                except UnicodeError as e:
+                                    pass
                                 except:
                                     break
                                     pass
@@ -259,7 +323,7 @@ class Facebook:
                                 self.browser.open('https://m.facebook.com' + friend_url)
                                 for hovera in self.browser.find_all('a'):
                                     if str(hovera['href']).endswith('hovercard'):
-                                        m[friend_name] = hovera['href']
+                                        m[str(str(friend_name).encode('ascii', 'ignore').decode())] = hovera['href']
                                         break
                                         pass
                                     pass
@@ -280,6 +344,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -304,24 +370,6 @@ class Facebook:
                     return ''.join(
                         self.random.choice(self.string.ascii_lowercase.lower()) for i in range(length))
 
-                def Facebook_Accounts_Maker(self, Number=0, File_To_Save=None):
-                    try:
-                        self.browser.open('https://m.facebook.com/reg')
-                        form = self.browser.get_form(action='https://m.facebook.com/reg/')
-                        form['firstname'].value = 'jackie'
-                        form['lastname'].value = 'eslam'
-                        form['reg_email__'].value = 'soloam@extremail.ru'
-                        form['sex'].value = '1'
-                        form['birthday_day'].value = '14'
-                        form['birthday_month'].value = '8'
-                        form['birthday_year'].value = '1998'
-                        form['reg_passwd__'].value = 'Cod3r@Cod3r'
-                        self.browser.submit_form(form)
-                        print(self.browser.url)
-                        open('Mono.html', 'w+').write(str(self.browser.parsed))
-                    except:
-                        print(traceback.print_exc())  # Working on it
-
                 def unfriend_all(self, sleep_thread):
                     if self.logged:
                         try:
@@ -338,11 +386,13 @@ class Facebook:
                                         form = self.browser.get_form(action='/a/removefriend.php')
                                         self.browser.submit_form(form,
                                                                  submit='https://m.facebook.com' + form.action)
-                                        print('[+][Log][success] unfriend all Service :[' + friend_name + ']')
+                                        print('[+][Log][success] unfriend all Service :[' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
                                         break
                                         pass
                                     except KeyboardInterrupt:
                                         self.os._exit(1)
+                                    except UnicodeError as e:
+                                        pass
                                     except Exception as e:
                                         print('[+][Log][failed] unfriend all Service :[' + friend_name + ']')
                                     pass
@@ -359,17 +409,18 @@ class Facebook:
                                                 self.browser.submit_form(form,
                                                                          submit='https://m.facebook.com' + form.action)
                                                 print(
-                                                    '[+][Log][success] unfriend all Service :[' + friend_name + ']')
+                                                    '[+][Log][success] unfriend all Service :[' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
                                                 break
                                                 pass
                                             else:
                                                 pass
                                         except KeyboardInterrupt:
                                             self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
                                         except Exception as e:
-
                                             print(
-                                                '[+][Log][failed] unfriend all Service :[' + friend_name + ']')
+                                                '[+][Log][failed] unfriend all Service :[' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
                                         pass
                                     pass
                                 pass
@@ -378,6 +429,8 @@ class Facebook:
                             pass
                         except KeyboardInterrupt:
                             self.os._exit(1)
+                        except UnicodeError as e:
+                            pass
                         except Exception as e:
                             print('[-][error] Service Stopped ' + str(e) + ' System Will Close')
                             pass
@@ -450,6 +503,8 @@ class Facebook:
                             pass
                         self.os._exit(1)
                         pass
+                    except UnicodeError as e:
+                        pass
                     except Exception as e:
                         pass
 
@@ -471,6 +526,8 @@ class Facebook:
                             print('[-][Not Logged] Service Stopped')
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -502,6 +559,8 @@ class Facebook:
                                                     see_more.append('https://m.facebook.com' + a['href'])
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
                                         except:
                                             pass
                                         pass
@@ -523,6 +582,8 @@ class Facebook:
                                                     see_more.append('https://m.facebook.com' + a['href'])
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
                                         except:
                                             pass
                                         pass
@@ -555,6 +616,8 @@ class Facebook:
                                                     pass
                                             except KeyboardInterrupt as e:
                                                 self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
                                             except:
                                                 pass
                                             pass
@@ -572,6 +635,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -584,6 +649,8 @@ class Facebook:
                                 self.commented.append(self.decrypter(r, 10))
                     except FileNotFoundError:
                         open('F_PG.DAT', 'w+').read()
+                    except UnicodeError as e:
+                        pass
                     except Exception as e:
                         pass
                     try:
@@ -595,6 +662,8 @@ class Facebook:
                         open('F_GP.DAT', 'w+').read()
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
                     try:
@@ -606,6 +675,8 @@ class Facebook:
                         open('F_FBF.DAT', 'w+').read()
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
                     print('[+][Done] Fetching Commented Lists Service')
@@ -630,11 +701,13 @@ class Facebook:
                         return message
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         return message
                     pass
 
-                def message_all_friends(self, message=None, sleep_thread=0):
+                def message_all_friends(self, message=None, sleep_thread=0, photo_path=None):
                     try:
                         if self.logged:
                             print('[+][Log][start] Post Message To All Service')
@@ -653,22 +726,11 @@ class Facebook:
                                         pass
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
+                                    except UnicodeError as e:
+                                        pass
                                     except:
                                         pass
-                                try:
-                                    message = self.url_encoder(message)
-                                    self.browser.find_all('textarea')[0].insert(0, message)
-                                    form = self.browser.get_forms()[1]
-                                    form.action = 'https://m.facebook.com' + form.action
-                                    self.browser.submit_form(form, submit=form.submit_fields['send'])
-                                    print(
-                                        '[+][Log][success] Post Message To All Service :[' + friend_name + ']')
-                                    pass
-                                except TypeError:
-                                    pass
-                                except KeyboardInterrupt as e:
-                                    self.os._exit(1)
-                                except:
+                                if not photo_path:
                                     try:
                                         message = self.url_encoder(message)
                                         self.browser.find_all('textarea')[0].insert(0, message)
@@ -676,18 +738,129 @@ class Facebook:
                                         form.action = 'https://m.facebook.com' + form.action
                                         self.browser.submit_form(form, submit=form.submit_fields['send'])
                                         print(
-                                            '[+][Log][success] Post Message To All Service :[' + friend_name + ']')
+                                            '[+][Log][success] Post Message To All Service :[' + str(
+                                                str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                        self.time.sleep(sleep_thread)
                                         pass
                                     except TypeError:
                                         pass
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
-                                    except Exception as e:
-                                        print(
-                                            '[+][Log][failed] Post Message To All Service :[' + friend_name + ']')
+                                    except UnicodeError as e:
                                         pass
-                                    pass
-                                self.time.sleep(sleep_thread)
+                                    except:
+                                        try:
+                                            message = self.url_encoder(message)
+                                            self.browser.find_all('textarea')[0].insert(0, message)
+                                            form = self.browser.get_forms()[1]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form.submit_fields['send'])
+                                            print(
+                                                '[+][Log][success] Post Message To All Service :[' + str(
+                                                    str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                        except TypeError:
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except Exception as e:
+                                            print(
+                                                '[+][Log][failed] Post Message To All Service :[' + str(
+                                                    str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                        pass
+                                else:
+                                    if self.os.path.isfile(photo_path):
+                                        try:
+                                            message = self.url_encoder(message)
+                                            form = self.browser.get_forms()[1]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form['send_photo'])
+                                            self.browser.find_all('textarea')[0].insert(0, message)
+                                            form = self.browser.get_forms()[0]
+                                            form['file1'].value = open(photo_path, 'rb')
+                                            self.browser.submit_form(form, form.action)
+                                            print(
+                                                '[+][Log][success] Post Message To All Service :[' + str(
+                                                    str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                        except TypeError:
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except:
+                                            try:
+                                                message = self.url_encoder(message)
+                                                self.browser.find_all('textarea')[0].insert(0, message)
+                                                form = self.browser.get_forms()[1]
+                                                form.action = 'https://m.facebook.com' + form.action
+                                                self.browser.submit_form(form, submit=form.action)
+                                                self.browser.submit_form(form, submit=form['send_photo'])
+                                                form = self.browser.get_forms()[0]
+                                                form['file1'].value = open(photo_path, 'rb')
+                                                self.browser.submit_form(form, form.action)
+                                                print(
+                                                    '[+][Log][success] Post Message To All Service :[' + str(
+                                                        str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                                self.time.sleep(sleep_thread)
+                                                pass
+                                            except:
+                                                print(
+                                                    '[+][Log][failed] Post Message To All Service :[' + str(
+                                                        str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                                self.time.sleep(sleep_thread)
+                                            pass
+                                        pass
+                                    else:
+                                        try:
+                                            message = self.url_encoder(message)
+                                            self.browser.find_all('textarea')[0].insert(0, message)
+                                            form = self.browser.get_forms()[1]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form.submit_fields['send'])
+                                            print(
+                                                '[+][Log][success] Post Message To All Service :[' + str(
+                                                    str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                        except TypeError:
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except:
+                                            try:
+                                                message = self.url_encoder(message)
+                                                self.browser.find_all('textarea')[0].insert(0, message)
+                                                form = self.browser.get_forms()[1]
+                                                form.action = 'https://m.facebook.com' + form.action
+                                                self.browser.submit_form(form, submit=form.submit_fields['send'])
+                                                print(
+                                                    '[+][Log][success] Post Message To All Service :[' + str(
+                                                        str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                                self.time.sleep(sleep_thread)
+                                                pass
+                                            except TypeError:
+                                                pass
+                                            except KeyboardInterrupt as e:
+                                                self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
+                                            except Exception as e:
+                                                print(
+                                                    '[+][Log][failed] Post Message To All Service :[' + str(
+                                                        str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                                self.time.sleep(sleep_thread)
+                                                pass
+                                            pass
                                 pass
                             self.os._exit(1)
                             print('[+][Log][Done] Post Message To All Service')
@@ -697,6 +870,8 @@ class Facebook:
                             pass
                         self.os._exit(1)
                         print('[+][Done] Post To All Friends Messages')
+                        pass
+                    except UnicodeError as e:
                         pass
                     except Exception as e:
                         pass
@@ -713,13 +888,21 @@ class Facebook:
                                     form = self.browser.get_forms()[1]
                                     form.action = 'https://m.facebook.com' + form.action
                                     self.browser.submit_form(form, submit=form.submit_fields['view_post'])
+                                    if self.action_blocked_checker(self.browser):
+                                        print('[+][Log][Blocked] Wall Message Service : System Will Exit Now.')
+                                        self.os._exit(1)
+                                    else:
+                                        pass
+                                    print('[+][Log][success] Wall Message Service :[' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
                                     self.time.sleep(sleep_thread)
-                                    print('[+][Log][success] Wall Message Service :[' + friend_name + ']')
                                     pass
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
+                                except UnicodeError as e:
+                                    pass
                                 except Exception:
-                                    print('[+][Log][failed] Message Service :[' + friend_name + ']')
+                                    print('[+][Log][failed] Message Service :[' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                    self.time.sleep(sleep_thread)
                                     pass
                         else:
                             print('[-][Not Logged] Wall Message Service Stopped')
@@ -729,6 +912,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -741,18 +926,27 @@ class Facebook:
                                 message = self.url_encoder(message)
                                 self.browser.open('https://m.facebook.com/messages')
                                 for element in self.browser.find_all('table'):
-                                    if ' '.join(element['class']) == 'bl bm bn bo bp bq br':
-                                        if not str(element.find_all('a')[0]).split('>')[1].split('<')[0].split('(')[0] in message_list:
-                                            message_list[
-                                                str(element.find_all('a')[0]).split('>')[1].split('<')[0].split('(')[0]] = 'https://m.facebook.com' + element.find_all(
-                                                'a')[0]['href']
-                                            pass
-                                        else:
-                                            message_list[str(element.find_all('a')[0]).split('>')[1].split('<')[0].split('(')[0] + str(
-                                                self.random.randint(0,
-                                                                    99999999))] = 'https://m.facebook.com' + element.find_all(
-                                                'a')[0]['href']
-                                    pass
+                                    try:
+                                        if not 'f' in element['class']:
+                                            if not str(element.find_all('a')[0]).split('>')[1].split('<')[0].split('(')[0] in message_list:
+                                                message_list[
+                                                    str(element.find_all('a')[0]).split('>')[1].split('<')[0].split(
+                                                        '(')[0]] = 'https://m.facebook.com' + element.find_all(
+                                                    'a')[0]['href']
+                                                pass
+                                            else:
+                                                message_list[
+                                                    str(element.find_all('a')[0]).split('>')[1].split('<')[0].split(
+                                                        '(')[0] + str(
+                                                        self.random.randint(0,
+                                                                            99999999))] = 'https://m.facebook.com' + \
+                                                                                          element.find_all(
+                                                                                              'a')[0]['href']
+                                        pass
+                                    except UnicodeError as e:
+                                        pass
+                                    except:
+                                        pass
                                 for message_name, message_url in message_list.items():
                                     if message_list[message_name] != 'delete':
                                         try:
@@ -769,22 +963,9 @@ class Facebook:
                                             pass
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
                                         except:
-                                            try:
-                                                self.Browser.get(message_url)
-                                                self.time.sleep(2)
-                                                self.Browser.find_element_by_name('body').send_keys(
-                                                    'sorry this the bot')
-                                                self.Browser.find_element_by_name('Send').click()
-                                                message_list[message_name] = 'delete'
-                                                print('[+][success] Auto Bot (messages) Service :[' +
-                                                      str(message_name).split('(')[
-                                                          0] + ']')
-                                                pass
-                                            except KeyboardInterrupt as e:
-                                                self.os._exit(1)
-                                            except:
-                                                pass
                                             pass
                                         pass
                                     pass
@@ -795,7 +976,6 @@ class Facebook:
                                     pass
                                 pass
                             print('[+][Done] Auto Bot (messages) Service')
-                            self.Browser.quit()
                             self.os._exit(1)
                             pass
                         else:
@@ -806,8 +986,134 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except Exception as e:
                         print(self.traceback.print_exc())
+                        pass
+
+                def delete_posts_friends_wall(self, thread_sleep=0):
+                    if self.logged:
+                        try:
+                            print('[+][Log][start] Delete Posts From all Friends Walls  Service')
+                            friends = self.friends.items()
+                            for friend_name, friend_url in friends:
+                                try:
+                                    self.browser.open('https://m.facebook.com' + friend_url)
+                                    main = self.browser.find_all('div', {'id': 'structured_composer_async_container'})[
+                                        0]
+                                    for div in main.find_all('div'):
+                                        try:
+                                            if str(div['id']).startswith('u_'):
+                                                for a in div.find_all('a'):
+                                                    if str(a['href']).startswith('/nfx/basic'):
+                                                        try:
+                                                            self.browser.open('https://m.facebook.com' + a['href'])
+                                                            form = self.browser.get_forms()[0]
+                                                            form['action_key'].value = 'DELETE'
+                                                            form.fields.pop('cancel')
+                                                            self.browser.submit_form(form,
+                                                                                     submit='http://m.facebook.com/' + str(
+                                                                                         form.action))
+                                                            print(
+                                                            '[+][Log][success] Delete Post From all Friends Walls Service : [' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                                            self.time.sleep(thread_sleep)
+                                                        except UnicodeError as e:
+                                                            pass
+                                                        except Exception as e:
+                                                            pass
+                                        except UnicodeError as e:
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except Exception as e:
+                                            pass
+                                        pass
+                                    pass
+                                except UnicodeError as e:
+                                    pass
+                                except KeyboardInterrupt as e:
+                                    self.os._exit(1)
+                                except Exception as e:
+                                    pass
+                                print('[+][Log][Done] Delete Post From all Friends Walls Service To: [' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                pass
+                            print('[+][Log][Done] Delete Posts From all Friends Walls  Service')
+                            self.os._exit(1)
+                            pass
+                        except KeyboardInterrupt:
+                            self.os._exit(1)
+                        except UnicodeError as e:
+                            pass
+                        except Exception as e:
+                            print('[-][error] Service Stopped ' + str(e) + ' System Will Close')
+                            self.os._exit(1)
+                            pass
+                    else:
+                        print('[-][Not Logged] Delete Posts From all Friends Walls Service Stopped')
+                        self.os._exit(1)
+                        pass
+
+                def delete_posts_Groups_wall(self, thread_sleep=0):
+                    if self.logged:
+                        try:
+                            print('[+][Log][start] Delete Posts From all Groups Walls  Service')
+                            Groups = self.group_list.items()
+                            for group_name, group_url in Groups:
+                                try:
+                                    self.browser.open('https://m.facebook.com' + group_url)
+                                    main = self.browser.find_all('div', {'id': 'm_group_stories_container'})[
+                                        0]
+                                    for div in main.find_all('div'):
+                                        try:
+                                            if str(div['id']).startswith('u_'):
+                                                for a in div.find_all('a'):
+                                                    if str(a['href']).startswith('/nfx/basic'):
+                                                        try:
+                                                            self.browser.open('https://m.facebook.com' + a['href'])
+                                                            form = self.browser.get_forms()[0]
+                                                            form['action_key'].value = 'DELETE'
+                                                            form.fields.pop('cancel')
+                                                            self.browser.submit_form(form,
+                                                                                     submit='http://m.facebook.com/' + str(
+                                                                                         form.action))
+                                                            print(
+                                                            '[+][Log][success] Delete Post From all Groups Walls Service : [' + str(str(group_name).encode('ascii', 'ignore').decode()) + ']')
+                                                            self.time.sleep(thread_sleep)
+                                                        except UnicodeError as e:
+                                                            pass
+                                                        except Exception as e:
+                                                            pass
+                                        except UnicodeError as e:
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except Exception as e:
+                                            pass
+                                        pass
+                                    pass
+                                except UnicodeError as e:
+                                    pass
+                                except KeyboardInterrupt as e:
+                                    self.os._exit(1)
+                                except Exception as e:
+                                    pass
+                                print('[+][Log][Done] Delete Post From all Groups Walls Service To: [' + str(str(group_name).encode('ascii', 'ignore').decode()) + ']')
+                                pass
+                            print('[+][Log][Done] Delete Posts From all Groups Walls  Service')
+                            self.os._exit(1)
+                            pass
+                        except KeyboardInterrupt:
+                            self.os._exit(1)
+                        except UnicodeError as e:
+                            pass
+                        except Exception as e:
+                            print('[-][error] Service Stopped ' + str(e) + ' System Will Close')
+                            self.os._exit(1)
+                            pass
+                    else:
+                        print('[-][Not Logged] Delete Posts From all Friends Walls Service Stopped')
+                        self.os._exit(1)
                         pass
 
                 def unlike_all_friends(self, sleep_thread):
@@ -833,23 +1139,28 @@ class Facebook:
                                         pass
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
+                                    except UnicodeError as e:
+                                        pass
                                     except:
                                         pass
                                     pass
                                 for post in post_links:
                                     self.browser.open(post)
-                                    print('[+][Log][success] unLike Post Service : [' + friend_name + ']')
+                                    print('[+][Log][success] unLike Post Service : [' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
                                     self.time.sleep(sleep_thread)
                                 pass
                             print('[+][Done] unLike Post (bot) Service')
                             pass
                         else:
                             print('[-][Not Logged] Service Stopped')
+                            self.os._exit(1)
                             pass
                         self.os._exit(1)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
                     pass
@@ -867,14 +1178,21 @@ class Facebook:
                                     form = self.browser.get_forms()[1]
                                     form.action = 'https://m.facebook.com' + form.action
                                     self.browser.submit_form(form, submit=form.submit_fields['view_post'])
-                                    print('[+][Log][success] Post To Groups Wall Service :[' + group_name + ']')
+                                    if self.action_blocked_checker(self.browser):
+                                        print('[+][Log][Blocked] Post To Groups Wall Service : System Will Exit Now.')
+                                        self.os._exit(1)
+                                    else:
+                                        pass
+                                    print('[+][Log][success] Post To Groups Wall Service :[' + str(str(groups_name).encode('ascii', 'ignore').decode()) + ']')
                                     self.time.sleep(sleep_thread)
                                     pass
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
+                                except UnicodeError as e:
+                                    pass
                                 except Exception as e:
-
-                                    print('[+][Log][failed] Post To Groups Wall Service :[' + group_name + ']')
+                                    print('[+][Log][failed] Post To Groups Wall Service :[' + str(str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                    self.time.sleep(sleep_thread)
                                     pass
                                 pass
                             print('[+][Log][Done] Post To Groups Wall Service')
@@ -887,6 +1205,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -921,18 +1241,27 @@ class Facebook:
                                                                                          'form')[
                                                                                          0][
                                                                                          'action'])
+                                                            if self.action_blocked_checker(self.browser):
+                                                                print(
+                                                                '[+][Log][Blocked] Comment To Pages Posts  Service : System Will Exit Now.')
+                                                                self.os._exit(1)
+                                                            else:
+                                                                pass
                                                             try:
                                                                 m = self.browser.find_all('div', {
                                                                     'title': 'User Comments Blocked'})[0]
                                                                 print(
                                                                     '[+][Log][Failed] Comment To Pages Posts Service [' + str(
-                                                                        m['title']) + ']:[' + page_name + ']')
+                                                                        m['title']) + ']:[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                                                self.time.sleep(sleep_thread)
                                                                 break
                                                             except KeyboardInterrupt as e:
                                                                 self.os._exit(1)
+                                                            except UnicodeError as e:
+                                                                pass
                                                             except:
                                                                 print(
-                                                                    '[+][Log][Success] Comment To Pages Posts Service :[' + page_name + ']')
+                                                                    '[+][Log][Success] Comment To Pages Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                                                 self.time.sleep(sleep_thread)
                                                                 self.time.sleep(1)
                                                                 break
@@ -943,14 +1272,18 @@ class Facebook:
                                                     break
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
                                         except:
                                             pass
                                     pass
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
+                                except UnicodeError as e:
+                                    pass
                                 except:
                                     print(
-                                        '[+][Log][Failed] Comment To Pages Posts Service :[' + page_name + ']')
+                                        '[+][Log][Failed] Comment To Pages Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                     pass
                                 pass
                             print('[+][Log][Done] Comment To Pages Posts Service')
@@ -962,6 +1295,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -999,6 +1334,12 @@ class Facebook:
                                                                                                  'form')[
                                                                                                  0][
                                                                                                  'action'])
+                                                                    if self.action_blocked_checker(self.browser):
+                                                                        print(
+                                                                            '[+][Log][Blocked] Comment To Pages Posts (BOT)  Service : System Will Exit Now.')
+                                                                        self.os._exit(1)
+                                                                    else:
+                                                                        pass
                                                                     try:
                                                                         m = self.browser.find_all('div', {
                                                                             'title': 'User Comments Blocked'})[
@@ -1006,13 +1347,16 @@ class Facebook:
                                                                         print(
                                                                             '[+][Log][Failed] Comment To Pages Posts Service [' + str(
                                                                                 m[
-                                                                                    'title']) + ']:[' + page_name + ']')
+                                                                                    'title']) + ']:[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                                                        self.time.sleep(sleep_thread)
                                                                         break
                                                                     except KeyboardInterrupt as e:
                                                                         self.os._exit(1)
+                                                                    except UnicodeError as e:
+                                                                        pass
                                                                     except:
                                                                         print(
-                                                                            '[+][Log][Success] Comment To Pages Posts Service :[' + page_name + ']')
+                                                                            '[+][Log][Success] Comment To Pages Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                                                         a = str(a).split('&refid=')[0]
                                                                         commented.append(a)
                                                                         try:
@@ -1020,6 +1364,8 @@ class Facebook:
                                                                                 self.encrypter(a, 10) + "\n")
                                                                         except KeyboardInterrupt as e:
                                                                             self.os._exit(1)
+                                                                        except UnicodeError as e:
+                                                                            pass
                                                                         except:
                                                                             open('F_PG.DAT', 'a+')
                                                                             pass
@@ -1036,14 +1382,18 @@ class Facebook:
                                                         break
                                             except KeyboardInterrupt as e:
                                                 self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
                                             except:
                                                 pass
                                         pass
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
+                                    except UnicodeError as e:
+                                        pass
                                     except:
                                         print(
-                                            '[+][Log][Failed] Comment To Pages Posts Service :[' + page_name + ']')
+                                            '[+][Log][Failed] Comment To Pages Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                         pass
                                     pass
                             print('[+][Log][Done] Comment To Pages Posts Service')
@@ -1055,6 +1405,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -1089,18 +1441,27 @@ class Facebook:
                                                                                          'form')[
                                                                                          0][
                                                                                          'action'])
+                                                            if self.action_blocked_checker(self.browser):
+                                                                print(
+                                                                    '[+][Log][Blocked] Comment To Friends Posts  Service : System Will Exit Now.')
+                                                                self.os._exit(1)
+                                                            else:
+                                                                pass
                                                             try:
                                                                 m = self.browser.find_all('div', {
                                                                     'title': 'User Comments Blocked'})[0]
                                                                 print(
                                                                     '[+][Log][Failed] Comment To Friends Posts Service [' + str(
-                                                                        m['title']) + ']:[' + page_name + ']')
+                                                                        m['title']) + ']:[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                                                self.time.sleep(sleep_thread)
                                                                 break
                                                             except KeyboardInterrupt as e:
                                                                 self.os._exit(1)
+                                                            except UnicodeError as e:
+                                                                pass
                                                             except:
                                                                 print(
-                                                                    '[+][Log][Success] Comment To Friends Posts Service :[' + page_name + ']')
+                                                                    '[+][Log][Success] Comment To Friends Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                                                 self.time.sleep(sleep_thread)
                                                                 self.time.sleep(1)
                                                                 break
@@ -1114,14 +1475,18 @@ class Facebook:
                                                     break
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
                                         except:
                                             pass
                                     pass
                                 except KeyboardInterrupt as e:
                                     self.os._exit(1)
+                                except UnicodeError as e:
+                                    pass
                                 except:
                                     print(
-                                        '[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                        '[+][Log][Failed] Comment To Friends Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                     pass
                                 pass
                             print('[+][Log][Done] Comment To Friends Posts Service')
@@ -1133,6 +1498,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -1170,6 +1537,12 @@ class Facebook:
                                                                                                  'form')[
                                                                                                  0][
                                                                                                  'action'])
+                                                                    if self.action_blocked_checker(self.browser):
+                                                                        print(
+                                                                            '[+][Log][Blocked] Comment To Friends Posts (BOT)  Service : System Will Exit Now.')
+                                                                        self.os._exit(1)
+                                                                    else:
+                                                                        pass
                                                                     try:
                                                                         m = self.browser.find_all('div', {
                                                                             'title': 'User Comments Blocked'})[
@@ -1177,13 +1550,16 @@ class Facebook:
                                                                         print(
                                                                             '[+][Log][Failed] Comment To Friends Posts Service [' + str(
                                                                                 m[
-                                                                                    'title']) + ']:[' + page_name + ']')
+                                                                                    'title']) + ']:[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                                                        self.time.sleep(sleep_thread)
                                                                         break
                                                                     except KeyboardInterrupt as e:
                                                                         self.os._exit(1)
+                                                                    except UnicodeError as e:
+                                                                        pass
                                                                     except:
                                                                         print(
-                                                                            '[+][Log][Success] Comment To Friends Posts Service :[' + page_name + ']')
+                                                                            '[+][Log][Success] Comment To Friends Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                                                         a = str(a).split('&refid=')[0]
                                                                         commented.append(a)
                                                                         try:
@@ -1191,6 +1567,8 @@ class Facebook:
                                                                                 self.encrypter(a, 12) + "\n")
                                                                         except KeyboardInterrupt as e:
                                                                             self.os._exit(1)
+                                                                        except UnicodeError as e:
+                                                                            pass
                                                                         except:
                                                                             open('F_FBF.DAT', 'a+')
                                                                             pass
@@ -1211,14 +1589,18 @@ class Facebook:
                                                         break
                                             except KeyboardInterrupt as e:
                                                 self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
                                             except:
                                                 pass
                                         pass
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
+                                    except UnicodeError as e:
+                                        pass
                                     except:
                                         print(
-                                            '[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                            '[+][Log][Failed] Comment To Friends Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                         pass
                                     pass
                             print('[+][Log][Done] Comment To Friends Posts Service')
@@ -1230,6 +1612,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
 
@@ -1264,18 +1648,25 @@ class Facebook:
                                                                                          'form')[
                                                                                          0][
                                                                                          'action'])
+                                                            if self.action_blocked_checker(self.browser):
+                                                                print(
+                                                                    '[+][Log][Blocked] Comment To Groups Posts  Service : System Will Exit Now.')
+                                                                self.os._exit(1)
+                                                            else:
+                                                                pass
                                                             try:
                                                                 m = self.browser.find_all('div', {
                                                                     'title': 'User Comments Blocked'})[0]
                                                                 print(
                                                                     '[+][Log][Failed] Comment To Groups Posts Service [' + str(
-                                                                        m['title']) + ']:[' + page_name + ']')
+                                                                        m['title']) + ']:[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
+                                                                self.time.sleep(sleep_thread)
                                                                 break
                                                             except KeyboardInterrupt as e:
                                                                 self.os._exit(1)
                                                             except:
                                                                 print(
-                                                                    '[+][Log][Success] Comment To Groups Posts Service :[' + page_name + ']')
+                                                                    '[+][Log][Success] Comment To Groups Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                                                 self.time.sleep(sleep_thread)
                                                                 self.time.sleep(1)
                                                                 break
@@ -1296,7 +1687,7 @@ class Facebook:
                                     self.os._exit(1)
                                 except:
                                     print(
-                                        '[+][Log][Failed] Comment To Groups Posts Service :[' + page_name + ']')
+                                        '[+][Log][Failed] Comment To Groups Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                     pass
                                 pass
                             print('[+][Log][Done] Comment To Groups Posts Service')
@@ -1308,6 +1699,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except Exception as e:
                         pass
 
@@ -1346,6 +1739,12 @@ class Facebook:
                                                                                                  'form')[
                                                                                                  0][
                                                                                                  'action'])
+                                                                    if self.action_blocked_checker(self.browser):
+                                                                        print(
+                                                                            '[+][Log][Blocked] Comment To Groups Posts (BOT) Service : System Will Exit Now.')
+                                                                        self.os._exit(1)
+                                                                    else:
+                                                                        pass
                                                                     try:
                                                                         m = self.browser.find_all('div', {
                                                                             'title': 'User Comments Blocked'})[
@@ -1353,13 +1752,13 @@ class Facebook:
                                                                         print(
                                                                             '[+][Log][Failed] Comment To Pages Groups Service [' + str(
                                                                                 m[
-                                                                                    'title']) + ']:[' + page_name + ']')
+                                                                                    'title']) + ']:[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                                                         break
                                                                     except KeyboardInterrupt as e:
                                                                         self.os._exit(1)
                                                                     except:
                                                                         print(
-                                                                            '[+][Log][Success] Comment To Groups Posts Service :[' + page_name + ']')
+                                                                            '[+][Log][Success] Comment To Groups Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                                                         a = str(a).split('&refid=')[0]
                                                                         commented.append(a)
                                                                         try:
@@ -1393,7 +1792,7 @@ class Facebook:
                                         self.os._exit(1)
                                     except:
                                         print(
-                                            '[+][Log][Failed] Comment To Friends Posts Service :[' + page_name + ']')
+                                            '[+][Log][Failed] Comment To Friends Posts Service :[' + str(str(page_name).encode('ascii', 'ignore').decode()) + ']')
                                         pass
                                     pass
                             print('[+][Log][Done] Comment To Friends Posts Service')
@@ -1405,86 +1804,10 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except Exception as e:
                         pass
-
-                def delete_wall_posts_friends(self, sleep_thread=2):
-                    try:
-                        if self.logged:
-                            user_agent = (
-                                "Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0"
-                            )
-                            dcap = dict(self.DesiredCapabilities.PHANTOMJS)
-                            dcap["phantomjs.page.settings.userAgent"] = user_agent
-                            self.Browser = self.webdriver.PhantomJS(desired_capabilities=dcap,
-                                                               executable_path='/usr/share/phantomjsbr/phanjs/bin/phantomjs')
-                            self.Browser.get('https://www.facebook.com/login.php')
-                            try:
-                                self.Browser.find_element_by_name('email').send_keys(self.username)
-                                self.Browser.find_element_by_name('pass').send_keys(self.password)
-                                self.Browser.find_element_by_id('loginbutton').click()
-                                pass
-                            except KeyboardInterrupt as e:
-                                self.os._exit(1)
-                            except:
-                                pass
-                            print('[+][Log][start] Delete Wall Message Service')
-                            friends = self.friends
-                            account_url = self.account_url.split('/')[3]
-                            for friend_name, friend_url in friends.items():
-                                self.browser.open('https://m.facebook.com' + friend_url)
-                                for div in self.browser.find_all('div'):
-                                    try:
-                                        if str(div['id']).startswith('u_'):
-                                            if str(div.find_all('a')[0]['href']).split('?')[0].split('/')[
-                                                1] == account_url:
-                                                for a in div.find_all('a'):
-                                                    if (
-                                                            str(a['href']).__contains__('/nfx/basic/direct_actions/')):
-                                                        try:
-                                                            self.Browser.get(
-                                                                'http://m.facebook.com' + str(a['href']))
-                                                            print(self.Browser.page_source)
-                                                            self.Browser.find_elements_by_name('action_key')[
-                                                                1].click()
-                                                            for e in self.Browser.find_elements_by_tag_name(
-                                                                    'input'):
-                                                                if e.get_attribute('value') == 'Continue':
-                                                                    e.click()
-                                                                    break
-                                                            print(
-                                                                '[+][Log][success] Delete Wall Message Service: ' + friend_name)
-                                                        except Exception as e:
-                                                            print(
-                                                                '[+][Log][success] Delete Wall Message Service: ' + friend_name)
-                                                            pass
-                                            pass
-                                        else:
-                                            pass
-                                        pass
-                                    except KeyboardInterrupt as e:
-                                        self.os._exit(1)
-                                    except Exception as e:
-                                        pass
-                                    pass
-                                pass
-                            self.Browser.close()
-                            self.Browser.quit()
-                            print('[+][Log][Done] Delete Wall Message Service')
-                            pass
-                        else:
-                            print('[-][Not Logged] Wall Message Service Stopped')
-                            pass
-                        self.Browser.close()
-                        self.Browser.quit()
-                        self.os._exit(1)
-                        print('[+][Done] Post To All Friends Walls')
-                        pass
-                    except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except:
-                        pass
-                    pass
 
                 def auto_liker(self, sleep_thread=2):
                     try:
@@ -1514,7 +1837,7 @@ class Facebook:
                                     pass
                                 for post in post_links:
                                     self.browser.open(post)
-                                    print('[+][Log][success] Like Post Service : [' + friend_name + ']')
+                                    print('[+][Log][success] Like Post Service : [' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
                                     self.time.sleep(sleep_thread)
                                 pass
                             print('[+][Done] Like Post (bot) Service')
@@ -1526,6 +1849,8 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
                     pass
@@ -1563,10 +1888,14 @@ class Facebook:
                                                 pass
                                             except KeyboardInterrupt as e:
                                                 self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
                                             except Exception as e:
                                                 pass
                                     except KeyboardInterrupt as e:
                                         self.os._exit(1)
+                                    except UnicodeError as e:
+                                        pass
                                     except Exception as m:
                                         pass
                                     pass
@@ -1579,17 +1908,19 @@ class Facebook:
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
                     except:
                         pass
                     pass
 
-                def Message_To_All_Friends(self, message=None, sleep_thread=2):
+                def Message_To_All_Friends(self, message=None, sleep_thread=2, photo_path=None):
                     try:
                         self.login()
                         print('[+][start] Friend List Generator Service')
                         self.friends = self.friend_list_gen()
                         print('[+][Done] Friend List Generator Service')
-                        self.message_all_friends(message, sleep_thread)
+                        self.message_all_friends(message, sleep_thread, photo_path)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
@@ -1713,6 +2044,52 @@ class Facebook:
                         self.friends = self.friend_list_gen()
                         print('[+][Done] Friend List Generator Service')
                         self.comment_to_friends(Comment, sleep_thread)
+                        pass
+                    except KeyboardInterrupt as e:
+                        self.os._exit(1)
+                    except:
+                        pass
+                    pass
+
+                def Delete_Post_Service_Friends(self, sleep_thread=2):
+                    self.login()
+                    try:
+                        print('[+][start] Friend List Generator Service')
+                        self.friends = self.friend_list_gen()
+                        print('[+][Done] Friend List Generator Service')
+                        self.delete_posts_friends_wall(sleep_thread)
+                        pass
+                    except KeyboardInterrupt as e:
+                        self.os._exit(1)
+                    except:
+                        pass
+                    pass
+
+                def Delete_Post_Service_Groups(self, sleep_thread=2):
+                    self.login()
+                    try:
+                        print('[+][start] Groups List Generator Service')
+                        self.group_list = self.group_list_gen()
+                        print('[+][Done] Groups List Generator Service')
+                        self.delete_posts_Groups_wall(sleep_thread)
+                        pass
+                    except KeyboardInterrupt as e:
+                        self.os._exit(1)
+                    except:
+                        pass
+                    pass
+
+                def Delete_Post_Service_All(self, sleep_thread=2):
+                    self.login()
+                    try:
+                        print('[+][start] Friend List Generator Service')
+                        self.friends = self.friend_list_gen()
+                        print('[+][Done] Friend List Generator Service')
+                        print('[+][start] Groups List Generator Service')
+                        self.group_list = self.group_list_gen()
+                        print('[+][Done] Groups List Generator Service')
+                        self.delete_posts_friends_wall(sleep_thread)
+                        self.delete_posts_Groups__wall(sleep_thread)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
@@ -1844,14 +2221,16 @@ class Facebook:
                                                    '\n[+][10] Comment On Latest Groups Posts(BOT)'
                                                    '\n[+][11] Comment On All Latest Posts'
                                                    '\n[+][12] Comment On All Latest Posts (BOT)'
-                                                   '\n[+][13] Auto Liker For All Friends'
-                                                   '\n[+][14] Auto Liker For All Friends (BOT)'
-                                                   '\n[+][15] Unfriend all'
-                                                   '\n[+][16] Unlike all Friends'
+                                                   '\n[+][13] Auto Liker For All Friends Posts'
+                                                   '\n[+][14] Auto Liker For All Friends Posts (BOT)'
+                                                   '\n[+][15] Unlike all Friends Posts'
+                                                   '\n[+][16] Delete Posts From All Friends Walls'
+                                                   '\n[+][17] Delete Posts From All Groups Walls'
+                                                   '\n[+][18] Delete Posts From All Walls'
                                                    '\n[+][Choose] Enter Your Choise: '))
-                                if choose > 0 and choose < 17:
-                                    thread = 2
+                                if choose > 0 and choose < 19:
                                     if choose == 1:
+                                        thread = 2
                                         message = input('[+]You have chose Message To All'
                                                         '\n[+]Enter Your Message Text To Start: ')
                                         try:
@@ -1861,13 +2240,28 @@ class Facebook:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
+                                        try:
+                                            photo = str(input(
+                                                '[+]Enter Media Path (optional set to None for None) : '))
+                                            if str(photo).lower() == 'none':
+                                                photo = None
+                                            elif str(photo).lower == 0:
+                                                print(None)
+                                            else:
+                                                photo = photo
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Message_To_All_Friends(message, thread)
+                                            self.Message_To_All_Friends(message, thread, photo)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 2:
+                                        thread = 2
                                         message = input('[+]You have chose Auto Bot Message'
                                                         '\n[+]Enter Your Message Text To Start: ')
                                         if str(message).strip().replace(' ', '').__len__() > 0:
@@ -1878,6 +2272,7 @@ class Facebook:
                                             self.os._exit(1)
                                         self.Auto_Bot(message)
                                     elif choose == 3:
+                                        thread = 2
                                         message = input('[+]You have chose Post To All Friends Walls'
                                                         '\n[+]Enter Your Post Text To Start: ')
                                         try:
@@ -1895,6 +2290,7 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 4:
+                                        thread = 2
                                         message = input('[+]You have chose Post To All Groups Walls'
                                                         '\n[+]Enter Your Post Text To Start: ')
                                         try:
@@ -1912,6 +2308,7 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 5:
+                                        thread = 2
                                         message = input('[+]You have Comment On Latest Pages Posts'
                                                         '\n[+]Enter Your Post Text To Start: ')
                                         try:
@@ -1929,6 +2326,7 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 6:
+                                        thread = 2
                                         message = input('[+]You have chose Comment On Latest Pages Posts (BOT)'
                                                         '\n[+]Enter Your Post Text To Start: ')
                                         try:
@@ -1946,6 +2344,7 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 7:
+                                        thread = 2
                                         message = input('[+]You have chose Comment On Latest Friends Posts'
                                                         '\n[+]Enter Your Post Text To Start: ')
                                         try:
@@ -1963,6 +2362,7 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 8:
+                                        thread = 2
                                         message = input(
                                             '[+]You have chose Comment On Latest Friends Posts (BOT)'
                                             '\n[+]Enter Your Post Text To Start: ')
@@ -1981,6 +2381,7 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 9:
+                                        thread = 2
                                         message = input('[+]You have chose Comment On Latest Groups Posts'
                                                         '\n[+]Enter Your Post Text To Start: ')
                                         try:
@@ -1998,6 +2399,7 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 10:
+                                        thread = 2
                                         message = input('[+]You have chose Comment On Latest Groups Posts (BOT)'
                                                         '\n[+]Enter Your Post Text To Start: ')
                                         try:
@@ -2015,6 +2417,7 @@ class Facebook:
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
                                     elif choose == 11:
+                                        thread = 2
                                         message = input('[+]You have chose Comment On All Latest Posts'
                                                         '\n[+]Enter Your Post Text To Start: ')
                                         try:
@@ -2034,6 +2437,7 @@ class Facebook:
                                     elif choose == 12:
                                         message = input('[+]You have chose Comment On All Latest Posts (BOT)'
                                                         '\n[+]Enter Your Post Text To Start: ')
+                                        thread = 2
                                         try:
                                             thread = int(
                                                 input(
@@ -2045,85 +2449,119 @@ class Facebook:
                                         if str(message).strip().replace(' ', '').__len__() > 0:
                                             self.Comment_To_All_Bot(message, thread)
                                         else:
-                                            print(
-                                                '[-][error] Message Is Empty. System Will Exit')
+                                            print('[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
+                                            pass
+                                        pass
                                     elif choose == 13:
+                                        print('[+]You have chose Auto Liker On All Posts')
                                         thread = 2
                                         try:
-                                            thread = int(input('[+]You have chose Auto Liker For All Friends'
-                                                               '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
                                         except:
                                             pass
                                         self.Auto_Liker(thread)
+                                        pass
                                     elif choose == 14:
+                                        print('[+]You have chose Auto Liker On All Posts (BOT)')
                                         thread = 2
                                         try:
                                             thread = int(
-                                                input('[+]You have chose Auto Liker For All Friends (BOT)'
-                                                      '\n[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
                                         except:
                                             pass
                                         self.Auto_Liker_BOT(thread)
+                                        pass
                                     elif choose == 15:
-                                        print('[+]You have chose Unfriend All')
+                                        print('[+]You have chose Auto Unlike On Posts')
+                                        thread = 2
                                         try:
-                                            thread = int(input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                            self.Unfriend_all(thread)
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
                                         except:
                                             pass
-                                            pass
+                                        self.Unlike_all_friends(thread)
                                         pass
                                     elif choose == 16:
-                                        print('[+]You have chose Unlike All Friends')
+                                        print('[+]You have chose Auto Delete Posts From All Friends Walls')
+                                        thread = 2
                                         try:
-                                            thread = int(input(
-                                                '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
-                                            self.Unlike_all_friends(thread)
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
                                         except KeyboardInterrupt as e:
                                             self.os._exit(1)
                                         except:
                                             pass
-                                            pass
+                                        self.Delete_Post_Service_Friends(thread)
                                         pass
-                                    else:
-                                        print(
-                                            '[-][error] Message Is Empty. System Will Exit')
-                                        self.os._exit(1)
+                                    elif choose == 17:
+                                        print('[+]You have chose Auto Delete Posts From All Groups Walls')
+                                        thread = 2
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
+                                        self.Delete_Post_Service_Groups(thread)
+                                        pass
+                                    elif choose == 18:
+                                        print('[+]You have chose Auto Delete Posts From All Walls')
+                                        thread = 2
+                                        try:
+                                            thread = int(
+                                                input(
+                                                    '[+]Enter Thread Sleep in seconds (optional set to zero for None) : '))
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
+                                        self.Delete_Post_Service_All(thread)
                                         pass
                                     pass
                                 else:
-                                    print(
-                                        '[-][error] You Must Choose Number between 1 and 16 to Start. System Will Exit')
-                                    self.os._exit(1)
+                                    print('[-] Something error occurred : You Must Choose Between 1 and 18. System will exit')
+                                pass
+                            except Exception as e:
+                                print('[-] Something error occurred : ' + str(e.args) + '. System will exit')
+                                import os
+                                os._exit(1)
                                 pass
                             except KeyboardInterrupt as e:
                                 self.os._exit(1)
-                            except Exception as e:
-                                print(e)
-                                print('[-][error] You Must Choose Number To Start. System Will Exit')
-                                pass
+                            pass
                         else:
-                            print('[-][Not Logged] Service Stopped System Will Close')
-                            return False
-                            self.os._exit(1)
+                            print('[-] Something error occurred : Empty Username or Password. System will exit')
+                        pass
+                    except Exception as e:
+                        print('[-] Something error occurred : ' + str(e.args) + '. System will exit')
+                        import os
+                        os._exit(1)
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
-                    except:
-                        print(self.traceback.print_exc())
-                        pass
-                    pass
-                pass
-            except Exception as e:
-                import traceback
-                print(traceback.print_exc())
-                pass
 
-Facebook().Auto_Bot()
+            except KeyboardInterrupt as e:
+                import os
+                os._exit(1)
+            except Exception as e:
+                print('[-] Something error occurred : ' + str(e.args) + '. System will exit')
+                import os
+                os._exit(1)
+
+    def __init__(self):
+        self.Installer()
+        self.Facebook()
+Auto_Bot()
