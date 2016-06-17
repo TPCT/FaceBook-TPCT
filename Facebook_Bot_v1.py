@@ -72,11 +72,12 @@ class Auto_Bot:
                             import os
                             os.system('title TPCT Facebook Auto Bot Version 1' if os.name == 'nt' else '\x1b]2;TPCT Facebook Auto Bot Version 1\x07')
                         title()
-                        self.plateform_check()
                         def cls():
                             import os
                             os.system('cls' if os.name == 'nt' else 'clear')
                         cls()
+                        self.network_checker()
+                        self.plateform_check()
                         self.Service_Start()
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
@@ -102,6 +103,16 @@ class Auto_Bot:
                     pass
                 browser = ''
                 Browser = ''
+
+                def network_checker(self):
+                    import requests
+                    try:
+                        response = requests.get('https://m.facebook.com')
+                    except requests.exceptions.ConnectionError:
+                        print('[-] Network Is Not Connected. System will exit')
+                        self.os._exit(1)
+                    except:
+                        pass
 
                 def latest_useragent(self):
                     from robobrowser import RoboBrowser
@@ -4272,6 +4283,63 @@ class Auto_Bot:
                         pass
                     pass
 
+                def notifications(self):
+                    try:
+                        if self.logged:
+                            print('[+][Log][Start] Getting Notifications Service')
+                            self.browser.open('https://m.facebook.com/notifications.php')
+                            main = self.browser.find_all('div', {'id': 'notifications_list'})[1]
+                            for a in main.find_all('a'):
+                                if str(a['href']).startswith('/a/notifications.php?redir='):
+                                    print(a.text.encode('ascii', 'ignore').decode() + "\nhttps://m.facebook.com" + str(a['href']).encode('ascii', 'ignore').decode() + "\n")
+                            print('[+][Log][Done] Getting Notifications Service')
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.os._exit(1)
+                        pass
+                    except KeyboardInterrupt as e:
+                        self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
+                    except:
+                        pass
+
+                def notifications_bot(self):
+                    try:
+                        if self.logged:
+                            print('[+][Log][Start] Getting Notifications Service')
+                            notification_list = []
+                            while True:
+                                self.browser.open('https://m.facebook.com/notifications.php')
+                                main = self.browser.find_all('div', {'id': 'notifications_list'})[1]
+                                for a in main.find_all('a'):
+                                    if str(a['href']).startswith('/a/notifications.php?redir=') and a.text.encode('ascii', 'ignore').decode().__len__() > 0 and str(a['href']) not in notification_list:
+                                        notification_list.append(str(a['href']))
+                                        print(a.text.encode('ascii',
+                                                            'ignore').decode() + "\nhttps://m.facebook.com" + str(
+                                            a['href']).encode('ascii', 'ignore').decode() + "\n")
+                            print('[+][Log][Done] Getting Notifications Service')
+                        else:
+                            print('[-][Not Logged] Service Stopped')
+                            pass
+                        self.os._exit(1)
+                        pass
+                    except KeyboardInterrupt as e:
+                        self.os._exit(1)
+                    except UnicodeError as e:
+                        pass
+                    except:
+                        pass
+
+                def Notification(self):
+                    self.login()
+                    self.notifications()
+
+                def Notification_BOt(self):
+                    self.login()
+                    self.notifications_bot()
+
                 def Service_Start(self):
                     try:
                         print(self.Coder)
@@ -4307,8 +4375,12 @@ class Auto_Bot:
                                                    '\n[+][16] Delete Posts From All Friends Walls'
                                                    '\n[+][17] Delete Posts From All Groups Walls'
                                                    '\n[+][18] Delete Posts From All Walls'
+                                                   '\n[+][19] Notifications'
+                                                   '\n[+][20] Notification Bot'
                                                    '\n[+][Choose] Enter Your Choise: '))
-                                if choose > 0 and choose < 19:
+                                if choose > 0 and choose < 21:
+                                    cls()
+                                    print(self.Coder)
                                     if choose == 1:
                                         thread = 2
                                         message = input('[+]You have chose Message To All'
@@ -4765,9 +4837,17 @@ class Auto_Bot:
                                             pass
                                         self.Delete_Post_Service_All(thread)
                                         pass
+                                    elif choose == 19:
+                                        print('[+]You have chose Notifications')
+                                        self.Notification()
+                                        pass
+                                    elif choose == 20:
+                                        print('[+]You have chose Notifications (BOT)')
+                                        self.Notification_BOt()
+                                        pass
                                     pass
                                 else:
-                                    print('[-] Something error occurred : You Must Choose Between 1 and 18. System will exit')
+                                    print('[-] Something error occurred : You Must Choose Between 1 and 20. System will exit')
                                 pass
                             except Exception as e:
                                 print('[-] Something error occurred : ' + str(e.args) + '. System will exit')
