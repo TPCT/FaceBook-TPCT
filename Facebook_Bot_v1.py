@@ -95,14 +95,18 @@ class Auto_Bot:
                    Github: https://github.com/TPCT
                    Facebook: https://www.facebook.com/Taylor.Ackerley.9\n'''
 
-                import time, random, re, string, sys, warnings, os, pip, traceback, math, getpass, pickle, \
-                    signal, platform, requests, tarfile, zipfile
+                try:
+                    import time, random, re, string, sys, warnings, os, pip, traceback, math, getpass, pickle, \
+                        signal, platform, tarfile, zipfile
+                except:
+                    pass
                 browser = ''
                 Browser = ''
 
                 def latest_useragent(self):
                     from robobrowser import RoboBrowser
-                    session = self.requests.session()
+                    import requests
+                    session = requests.session()
                     session.headers['Referer'] = 'https://m.facebook.com'
                     if str(self.platform.system()).lower().startswith('linux'):
                         browser = RoboBrowser(session=session,
@@ -132,7 +136,8 @@ class Auto_Bot:
                 def plateform_check(self):
                     try:
                         from robobrowser import RoboBrowser
-                        session = self.requests.session()
+                        import requests
+                        session = requests.session()
                         session.headers['Referer'] = 'https://m.facebook.com'
                         if str(self.platform.system()).lower().startswith('linux'):
                             browser = RoboBrowser(session=session, user_agent=self.latest_useragent(), multiplier=True,
