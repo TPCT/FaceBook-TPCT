@@ -4282,6 +4282,11 @@ class Auto_Bot:
                             ' ', '').__len__() > 0:
                             self.Login(username, password)
                             self.Comments_Fetcher()
+                            def cls():
+                                import os
+                                os.system('cls' if os.name == 'nt' else 'clear')
+                            cls()
+                            print(self.Coder)
                             try:
                                 choose = int(input('[+]Please Choose One Of this Services To Start:'
                                                    '\n[+][1] Message To All Friends'
