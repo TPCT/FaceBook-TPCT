@@ -4399,8 +4399,22 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
+                                        try:
+                                            photo = str(input(
+                                                '[+]Enter Media Path (optional set to None for None) : '))
+                                            if str(photo).lower() == 'none':
+                                                photo = None
+                                            elif str(photo).lower == 0:
+                                                print(None)
+                                            else:
+                                                photo = photo
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Post_To_Groups_Wall(message, thread)
+                                            self.Post_To_Groups_Wall(message, thread, photo)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -4417,8 +4431,22 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
+                                        try:
+                                            photo = str(input(
+                                                '[+]Enter Media Path (optional set to None for None) : '))
+                                            if str(photo).lower() == 'none':
+                                                photo = None
+                                            elif str(photo).lower == 0:
+                                                print(None)
+                                            else:
+                                                photo = photo
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Comment_To_Pages_Posts(message, thread)
+                                            self.Comment_To_Pages_Posts(message, thread, photo)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -4435,8 +4463,22 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
+                                        try:
+                                            photo = str(input(
+                                                '[+]Enter Media Path (optional set to None for None) : '))
+                                            if str(photo).lower() == 'none':
+                                                photo = None
+                                            elif str(photo).lower == 0:
+                                                print(None)
+                                            else:
+                                                photo = photo
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Coment_To_Pages_Posts_BOT(message, thread)
+                                            self.Coment_To_Pages_Posts_BOT(message, thread, photo)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -4734,7 +4776,7 @@ class Auto_Bot:
                         os._exit(1)
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
-                        
+
             except KeyboardInterrupt as e:
                 import os
                 os._exit(1)
