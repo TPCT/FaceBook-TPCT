@@ -205,7 +205,7 @@ class Auto_Bot:
                         else:
                             return False
                     except Exception as e:
-                        print(e)
+                        pass
 
                 def Login(self, username=None, password=None):
                     try:
@@ -733,7 +733,7 @@ class Auto_Bot:
                                 if not photo_path:
                                     try:
                                         message = self.url_encoder(message)
-                                        self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                        self.browser.find_all('textarea')[0].insert(0, message)
                                         form = self.browser.get_forms()[1]
                                         form.action = 'https://m.facebook.com' + form.action
                                         self.browser.submit_form(form, submit=form.submit_fields['send'])
@@ -751,10 +751,10 @@ class Auto_Bot:
                                     except:
                                         try:
                                             message = self.url_encoder(message)
-                                            self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                            self.browser.find_all('textarea')[0].insert(0, message)
                                             form = self.browser.get_forms()[1]
                                             form.action = 'https://m.facebook.com' + form.action
-                                            self.browser.submit_form(form, submit=form.submit_fields['send'])
+                                            self.browser.submit_form(form, submit=form.submit_fields['Send'])
                                             print(
                                                 '[+][Log][success] Post Message To All Service :[' + str(
                                                     str(friend_name).encode('ascii', 'ignore').decode()) + ']')
@@ -780,7 +780,7 @@ class Auto_Bot:
                                             form = self.browser.get_forms()[1]
                                             form.action = 'https://m.facebook.com' + form.action
                                             self.browser.submit_form(form, submit=form['send_photo'])
-                                            self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                            self.browser.find_all('textarea')[0].insert(0, message)
                                             form = self.browser.get_forms()[0]
                                             form['file1'].value = open(photo_path, 'rb')
                                             self.browser.submit_form(form, form.action)
@@ -798,7 +798,7 @@ class Auto_Bot:
                                         except:
                                             try:
                                                 message = self.url_encoder(message)
-                                                self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                                self.browser.find_all('textarea')[0].insert(0, message)
                                                 form = self.browser.get_forms()[1]
                                                 form.action = 'https://m.facebook.com' + form.action
                                                 self.browser.submit_form(form, submit=form['send_photo'])
@@ -820,7 +820,7 @@ class Auto_Bot:
                                     else:
                                         try:
                                             message = self.url_encoder(message)
-                                            self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                            self.browser.find_all('textarea')[0].insert(0, message)
                                             form = self.browser.get_forms()[1]
                                             form.action = 'https://m.facebook.com' + form.action
                                             self.browser.submit_form(form, submit=form.submit_fields['send'])
@@ -838,7 +838,7 @@ class Auto_Bot:
                                         except:
                                             try:
                                                 message = self.url_encoder(message)
-                                                self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                                self.browser.find_all('textarea')[0].insert(0, message)
                                                 form = self.browser.get_forms()[1]
                                                 form.action = 'https://m.facebook.com' + form.action
                                                 self.browser.submit_form(form, submit=form.submit_fields['send'])
@@ -880,29 +880,117 @@ class Auto_Bot:
                         if self.logged:
                             friends = self.friends
                             for friend_name, friend_url in friends.items():
+                                message = self.url_encoder(message)
                                 self.browser.open('https://m.facebook.com' + friend_url)
-                                try:
-                                    message = self.url_encoder(message)
-                                    self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
-                                    form = self.browser.get_forms()[1]
-                                    form.action = 'https://m.facebook.com' + form.action
-                                    self.browser.submit_form(form, submit=form.submit_fields['view_post'])
-                                    if self.action_blocked_checker(self.browser):
-                                        print('[+][Log][Blocked] Wall Message Service : System Will Exit Now.')
-                                        self.os._exit(1)
-                                    else:
+                                if not photo_path:
+                                    try:
+                                        self.browser.find_all('textarea')[0].insert(0, message)
+                                        form = self.browser.get_forms()[1]
+                                        form.action = 'https://m.facebook.com' + form.action
+                                        self.browser.submit_form(form, submit=form['view_post'])
+                                        if self.action_blocked_checker(self.browser):
+                                            print('[+][Log][Blocked] Wall Message Service : System Will Exit Now.')
+                                            self.os._exit(1)
+                                        else:
+                                            pass
+                                        print('[+][Log][success] Wall Message Service :[' + str(
+                                            str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                        self.time.sleep(sleep_thread)
                                         pass
-                                    print('[+][Log][success] Wall Message Service :[' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
-                                    self.time.sleep(sleep_thread)
-                                    pass
-                                except KeyboardInterrupt as e:
-                                    self.os._exit(1)
-                                except UnicodeError as e:
-                                    pass
-                                except Exception:
-                                    print('[+][Log][failed] Message Service :[' + str(str(friend_name).encode('ascii', 'ignore').decode()) + ']')
-                                    self.time.sleep(sleep_thread)
-                                    pass
+                                    except KeyboardInterrupt as e:
+                                        self.os._exit(1)
+                                    except UnicodeError as e:
+                                        pass
+                                    except Exception:
+                                        print('[+][Log][failed] Message Service :[' + str(
+                                            str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                        self.time.sleep(sleep_thread)
+                                        pass
+                                else:
+                                    if self.os.path.isfile(photo_path):
+                                        try:
+                                            try:
+                                                form = self.browser.get_forms()[1]
+                                                form.action = 'https://m.facebook.com' + form.action
+                                                self.browser.submit_form(form, submit=form['view_photo'])
+                                                form = self.browser.get_forms()[0]
+                                                form.action = 'https://m.facebook.com' + form.action
+                                                form['file1'].value = open(photo_path, 'rb')
+                                                self.browser.submit_form(form, submit=form['add_photo_done'])
+                                                self.browser.find_all('textarea')[0].insert(0, message)
+                                                form = self.browser.get_forms()[0]
+                                                form.action = 'https://m.facebook.com' + form.action
+                                                self.browser.submit_form(form, submit=form['view_post'])
+                                                form = self.browser.get_forms()[0]
+                                                form.action = 'https://m.facebook.com' + form.action
+                                                self.browser.submit_form(form, submit=form['done'])
+                                            except:
+                                                pass
+                                            if self.action_blocked_checker(self.browser):
+                                                print('[+][Log][Blocked] Wall Message Service : System Will Exit Now.')
+                                                self.os._exit(1)
+                                            else:
+                                                pass
+                                            print('[+][Log][success] Wall Message Service :[' + str(
+                                                str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except Exception:
+                                            try:
+                                                self.browser.find_all('textarea')[0].insert(0,
+                                                                                            message)
+                                                form = self.browser.get_forms()[1]
+                                                form.action = 'https://m.facebook.com' + form.action
+                                                self.browser.submit_form(form, submit=form.submit_fields['view_post'])
+                                                if self.action_blocked_checker(self.browser):
+                                                    print(
+                                                        '[+][Log][Blocked] Wall Message Service : System Will Exit Now.')
+                                                    self.os._exit(1)
+                                                else:
+                                                    pass
+                                                print('[+][Log][success] Wall Message Service :[' + str(
+                                                    str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                                self.time.sleep(sleep_thread)
+                                                pass
+                                            except KeyboardInterrupt as e:
+                                                self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
+                                            except Exception:
+                                                print('[+][Log][failed] Message Service :[' + str(
+                                                    str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                                self.time.sleep(sleep_thread)
+                                                pass
+                                    else:
+                                        try:
+                                            self.browser.find_all('textarea')[0].insert(0,
+                                                                                        message)
+                                            form = self.browser.get_forms()[1]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form.submit_fields['view_post'])
+                                            if self.action_blocked_checker(self.browser):
+                                                print(
+                                                    '[+][Log][Blocked] Wall Message Service : System Will Exit Now.')
+                                                self.os._exit(1)
+                                            else:
+                                                pass
+                                            print('[+][Log][success] Wall Message Service :[' + str(
+                                                str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except Exception:
+                                            print('[+][Log][failed] Message Service :[' + str(
+                                                str(friend_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
                         else:
                             print('[-][Not Logged] Wall Message Service Stopped')
                             self.os._exit(1)
@@ -974,7 +1062,7 @@ class Auto_Bot:
                                         if not photo_path:
                                             try:
                                                 message = self.url_encoder(message)
-                                                self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                                self.browser.find_all('textarea')[0].insert(0, message)
                                                 form = self.browser.get_forms()[1]
                                                 form.action = 'https://m.facebook.com' + form.action
                                                 self.browser.submit_form(form, submit=form.submit_fields['send'])
@@ -992,7 +1080,7 @@ class Auto_Bot:
                                             except:
                                                 try:
                                                     message = self.url_encoder(message)
-                                                    self.browser.find_all('textarea', {'id': 'composerInput'})[
+                                                    self.browser.find_all('textarea')[
                                                         0].insert(0, message)
                                                     form = self.browser.get_forms()[1]
                                                     form.action = 'https://m.facebook.com' + form.action
@@ -1059,7 +1147,7 @@ class Auto_Bot:
                                             else:
                                                 try:
                                                     message = self.url_encoder(message)
-                                                    self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                                    self.browser.find_all('textarea')[0].insert(0, message)
                                                     form = self.browser.get_forms()[1]
                                                     form.action = 'https://m.facebook.com' + form.action
                                                     self.browser.submit_form(form, submit=form.submit_fields['send'])
@@ -1077,7 +1165,7 @@ class Auto_Bot:
                                                 except:
                                                     try:
                                                         message = self.url_encoder(message)
-                                                        self.browser.find_all('textarea', {'id': 'composerInput'})[0].insert(0, message)
+                                                        self.browser.find_all('textarea')[0].insert(0, message)
                                                         form = self.browser.get_forms()[1]
                                                         form.action = 'https://m.facebook.com' + form.action
                                                         self.browser.submit_form(form,
@@ -1296,35 +1384,133 @@ class Auto_Bot:
                         pass
                     pass
 
-                def post_to_groups_wall(self, post=None, sleep_thread=2):
+                def post_to_groups_wall(self, post=None, sleep_thread=2, photo_path=None):
                     try:
                         if self.logged:
                             groups = self.group_list
                             for group_name, group_url in groups.items():
-                                try:
-                                    self.browser.open('https://m.facebook.com' + group_url)
-                                    message = self.url_encoder(post)
-                                    self.browser.find_all('textarea', {'name': 'xc_message'})[0].insert(0,
-                                                                                                        message)
-                                    form = self.browser.get_forms()[1]
-                                    form.action = 'https://m.facebook.com' + form.action
-                                    self.browser.submit_form(form, submit=form.submit_fields['view_post'])
-                                    if self.action_blocked_checker(self.browser):
-                                        print('[+][Log][Blocked] Post To Groups Wall Service : System Will Exit Now.')
-                                        self.os._exit(1)
-                                    else:
+                                post = self.url_encoder(post)
+                                self.browser.open('https://m.facebook.com' + group_url)
+                                if not photo_path:
+                                    try:
+                                        self.browser.open('https://m.facebook.com' + group_url)
+                                        message = self.url_encoder(post)
+                                        self.browser.find_all('textarea')[0].insert(0,
+                                                                                    post)
+                                        form = self.browser.get_forms()[1]
+                                        form.action = 'https://m.facebook.com' + form.action
+                                        self.browser.submit_form(form, submit=form.submit_fields['view_post'])
+                                        if self.action_blocked_checker(self.browser):
+                                            print(
+                                                '[+][Log][Blocked] Post To Groups Wall Service : System Will Exit Now.')
+                                            self.os._exit(1)
+                                        else:
+                                            pass
+                                        print('[+][Log][success] Post To Groups Wall Service :[' + str(
+                                            str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                        self.time.sleep(sleep_thread)
                                         pass
-                                    print('[+][Log][success] Post To Groups Wall Service :[' + str(str(groups_name).encode('ascii', 'ignore').decode()) + ']')
-                                    self.time.sleep(sleep_thread)
-                                    pass
-                                except KeyboardInterrupt as e:
-                                    self.os._exit(1)
-                                except UnicodeError as e:
-                                    pass
-                                except Exception as e:
-                                    print('[+][Log][failed] Post To Groups Wall Service :[' + str(str(groups_name).encode('ascii', 'ignore').decode()) + ']')
-                                    self.time.sleep(sleep_thread)
-                                    pass
+                                    except KeyboardInterrupt as e:
+                                        self.os._exit(1)
+                                    except UnicodeError as e:
+                                        pass
+                                    except Exception as e:
+                                        print('[+][Log][failed] Post To Groups Wall Service :[' + str(
+                                            str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                        self.time.sleep(sleep_thread)
+                                        pass
+                                else:
+                                    if self.os.path.isfile(photo_path):
+                                        try:
+                                            form = self.browser.get_forms()[1]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form['view_photo'])
+                                            form = self.browser.get_forms()[0]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            form['file1'].value = open(photo_path, 'rb')
+                                            self.browser.submit_form(form, submit=form['add_photo_done'])
+                                            self.browser.find_all('textarea')[0].insert(0, post)
+                                            form = self.browser.get_forms()[0]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form['view_post'])
+                                            form = self.browser.get_forms()[0]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form['done'])
+                                            if self.action_blocked_checker(self.browser):
+                                                print(
+                                                    '[+][Log][Blocked] Post To Groups Wall Service : System Will Exit Now.')
+                                                self.os._exit(1)
+                                            else:
+                                                pass
+                                            print('[+][Log][success] Post To Groups Wall Service :[' + str(
+                                                str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except Exception as e:
+                                            print('[+][Log][failed] Post To Groups Wall Service :[' + str(
+                                                str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                            try:
+                                                self.browser.open('https://m.facebook.com' + group_url)
+                                                message = self.url_encoder(post)
+                                                self.browser.find_all('textarea')[0].insert(0,
+                                                                                            post)
+                                                form = self.browser.get_forms()[1]
+                                                form.action = 'https://m.facebook.com' + form.action
+                                                self.browser.submit_form(form, submit=form.submit_fields['view_post'])
+                                                if self.action_blocked_checker(self.browser):
+                                                    print(
+                                                        '[+][Log][Blocked] Post To Groups Wall Service : System Will Exit Now.')
+                                                    self.os._exit(1)
+                                                else:
+                                                    pass
+                                                print('[+][Log][success] Post To Groups Wall Service :[' + str(
+                                                    str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                                self.time.sleep(sleep_thread)
+                                                pass
+                                            except KeyboardInterrupt as e:
+                                                self.os._exit(1)
+                                            except UnicodeError as e:
+                                                pass
+                                            except Exception as e:
+                                                print('[+][Log][failed] Post To Groups Wall Service :[' + str(
+                                                    str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                                self.time.sleep(sleep_thread)
+                                                pass
+                                            pass
+                                    else:
+                                        try:
+                                            self.browser.open('https://m.facebook.com' + group_url)
+                                            message = self.url_encoder(post)
+                                            self.browser.find_all('textarea')[0].insert(0,
+                                                                                        post)
+                                            form = self.browser.get_forms()[1]
+                                            form.action = 'https://m.facebook.com' + form.action
+                                            self.browser.submit_form(form, submit=form.submit_fields['view_post'])
+                                            if self.action_blocked_checker(self.browser):
+                                                print(
+                                                    '[+][Log][Blocked] Post To Groups Wall Service : System Will Exit Now.')
+                                                self.os._exit(1)
+                                            else:
+                                                pass
+                                            print('[+][Log][success] Post To Groups Wall Service :[' + str(
+                                                str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except UnicodeError as e:
+                                            pass
+                                        except Exception as e:
+                                            print('[+][Log][failed] Post To Groups Wall Service :[' + str(
+                                                str(groups_name).encode('ascii', 'ignore').decode()) + ']')
+                                            self.time.sleep(sleep_thread)
+                                            pass
                                 pass
                             print('[+][Log][Done] Post To Groups Wall Service')
                             self.os._exit(1)
@@ -3820,26 +4006,26 @@ class Auto_Bot:
                     except:
                         pass
 
-                def Post_To_Groups_Wall(self, Post=None, sleep_thread=2):
+                def Post_To_Groups_Wall(self, Post=None, sleep_thread=2, photo_path=None):
                     try:
                         self.login()
                         print('[+][start] Groups List Generator Service')
                         self.group_list = self.group_list_gen()
                         print('[+][Done] Groups List Generator Service')
-                        self.post_to_groups_wall(Post, sleep_thread)
+                        self.post_to_groups_wall(Post, sleep_thread, photo_path)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
                     except:
                         pass
 
-                def Wall_Message_To_All_Friends(self, message=None, sleep_thread=2):
+                def Wall_Message_To_All_Friends(self, message=None, sleep_thread=2, photo_path=None):
                     try:
                         self.login()
                         print('[+][start] Friend List Generator Service')
                         self.friends = self.friend_list_gen()
                         print('[+][Done] Friend List Generator Service')
-                        self.wall_message_for_all_friends(message, sleep_thread)
+                        self.wall_message_for_all_friends(message, sleep_thread, photo_path)
                         pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
@@ -4181,8 +4367,22 @@ class Auto_Bot:
                                             self.os._exit(1)
                                         except:
                                             pass
+                                        photo = None
+                                        try:
+                                            photo = str(input(
+                                                '[+]Enter Media Path (optional set to None for None) : '))
+                                            if str(photo).lower() == 'none':
+                                                photo = None
+                                            elif str(photo).lower == 0:
+                                                print(None)
+                                            else:
+                                                photo = photo
+                                        except KeyboardInterrupt as e:
+                                            self.os._exit(1)
+                                        except:
+                                            pass
                                         if str(message).strip().replace(' ', '').__len__() > 0:
-                                            self.Wall_Message_To_All_Friends(message, thread)
+                                            self.Wall_Message_To_All_Friends(message, thread, photo)
                                         else:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
@@ -4534,7 +4734,7 @@ class Auto_Bot:
                         os._exit(1)
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
-
+                        
             except KeyboardInterrupt as e:
                 import os
                 os._exit(1)
