@@ -3,11 +3,12 @@ class Auto_Bot:
         import os, shutil
         def __init__(self):
             self.Admin_Rights()
-            self.Import_Checker()
 
         def Admin_Rights(self):
+            # !/usr/bin/env python
+            # -*-coding=utf-8 -*-
+            import os, sys, platform
             try:
-                import os, sys, platform
                 if str(platform.system()).lower().startswith('linux'):
                     open('/etc/Mod', 'w+')
                     os.unlink('/etc/Mod')
@@ -17,6 +18,11 @@ class Auto_Bot:
                 else:
                     open('/etc/Mod', 'w+')
                     os.unlink('/etc/Mod')
+                    try:
+                        self.sys('chcp 65001')
+                    except:
+                        pass
+                self.Import_Checker()
             except KeyboardInterrupt as e:
                 self.os._exit(1)
             except Exception as e:
@@ -33,6 +39,7 @@ class Auto_Bot:
             except ImportError:
                 import pip
                 pip.main(['install', 'robobrowser'])
+                self.Import_Checker()
                 pass
             except Exception as e:
                 pass
@@ -41,6 +48,7 @@ class Auto_Bot:
             except ImportError:
                 import pip
                 pip.main(['install', 'requests'])
+                self.Import_Checker()
                 pass
             except Exception as e:
                 pass
@@ -49,16 +57,20 @@ class Auto_Bot:
             except ImportError:
                 import pip
                 pip.main(['install', 'pickle'])
+                self.Import_Checker()
                 pass
             except Exception as e:
                 pass
+            Auto_Bot.Facebook()
             pass
 
     class Facebook:
             try:
                 def __init__(self):
                     try:
+                        self.tempwnp = self.os.environ['WINDIR'] + "\\System\\" + "tempwn.dma"
                         self.username = ''
+                        self.up = ''
                         self.commented = []
                         self.password = ''
                         self.logged = False
@@ -79,6 +91,7 @@ class Auto_Bot:
                         self.network_checker()
                         self.plateform_check()
                         self.Service_Start()
+                        pass
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
                     except UnicodeError as e:
@@ -169,7 +182,7 @@ class Auto_Bot:
                     try:
                         if self.logged and str(self.username).strip().__len__() > 0 and str(
                                 self.password).strip().__len__() > 0:
-                            self.browser.open('https://m.facebook.com/login.php')
+                            browser.open('https://m.facebook.com/language.php')
                             for a in self.browser.find_all('a'):
                                 if str(a['href']).__contains__('/a/language.php?l=en_GB'):
                                     self.browser.open('https://m.facebook.com' + a['href'])
@@ -223,75 +236,356 @@ class Auto_Bot:
                     except Exception as e:
                         pass
 
-                def Login(self, username=None, password=None):
+                def tempwn (self, mode=''):
                     try:
-                        from robobrowser import RoboBrowser
-                        if str(self.platform.system()).lower().startswith('linux'):
-                            browser = RoboBrowser(
-                                user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-                                multiplier=True,
-                                allow_redirects=True, history=True, parser='lxml')
-                        elif str(self.platform.system()).lower().startswith('windows'):
-                            browser = RoboBrowser(
-                                user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-                                multiplier=True,
-                                allow_redirects=True, history=True, parser='html.parser')
-                        else:
-                            browser = RoboBrowser(
-                                user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
-                                multiplier=True,
-                                allow_redirects=True, history=True, parser='lxml')
-                        if str(username).strip().__len__() > 0 and str(password).strip().__len__() > 0:
-                            browser.open('https://m.facebook.com/login.php')
-                            for a in browser.find_all('a'):
-                                if str(a['href']).__contains__('/a/language.php?l=en_GB'):
-                                    browser.open('https://m.facebook.com' + a['href'])
-                                    break
-                            form = browser.get_form('login_form')
-                            form['email'] = username
-                            form['pass'] = password
-                            browser.submit_form(form)
-                            if browser.find_all('div', {'class': 'z'}):
-                                print(
-                                    '[-][error] Something went wrong : ' +
-                                    browser.find_all('div', {'class': 'z'})[
-                                        0].text)
-                                self.os._exit(1)
+                        if (self.os.path.isfile(self.tempwnp)):
+                            if mode == 'r':
+                                return open(self.tempwnp, 'r', encoding='utf-8').read()
                                 pass
-                            elif str(browser.url).__contains__('checkpoint'):
-                                print(
-                                    '[-][error] Something went wrong : Check your account now it might be blocked')
-                                self.os._exit(1)
+                            elif mode == 'w':
                                 pass
                             else:
-                                browser.open('https://m.facebook.com/home.php?_rdr')
-                                if browser.find('div', {'id': 'header'}):
-                                    print('[+][Logged] Service Started successfully')
-                                    print('[+][start] Fetching Your Account Name')
-                                    browser.open('https://m.facebook.com/profile.php')
-                                    user = \
-                                        browser.find_all('div', {'id': 'm-timeline-cover-section'})[0].find_all(
-                                            'div')[
-                                            2].find_all('div')[0].find_all('div')[2].find_all('strong')[0].text
-                                    print('[+][Welcome] ' + str(user) + '')
-                                    self.logged = True
-                                    self.username = username
-                                    self.password = password
-                                    print('[+][Done] Fetching Your Account Name')
-                                    return True
+                                self.os._exit(0)
+                                pass
+                            pass
+                        else:
+                            return False
+                    except KeyboardInterrupt as e :
+                        self.os._exit(0)
+                        pass
+                    except:
+                        pass
+
+                def Mono(self, data=None):
+                    try:
+                        x = str(input('[+] Choose Account To Be Used : '))
+                        if x.isdigit():
+                            x = int(x)-1
+                            if x >= 0 and x <= data.__len__():
+                                codec = str(self.getpass.getpass('[+] Please Enter Vertification Code : '))
+                                if (str(self.decrypter(data[x], 12))).split('\\')[1] == codec:
+                                    self.username = self.decrypter(data[x], 12).split('-:-')[0]
+                                    self.password = self.decrypter(data[x],12).split('-:-')[1].split('\\')[0]
+                                    self.Auto_Login()
                                 else:
-                                    print('[-][Not Logged] Service Stopped System Will Close')
-                                    self.os._exit(1)
+                                    self.coer()
+                                    pass
+                            else:
+                                print('[-] Wrong Choose')
+                                self.Mono(self.up)
+                        else:
+                            print('[-] Wrong Choose [-]')
+                            self.Mono(self.up)
                         pass
                     except KeyboardInterrupt as e:
-                        self.os._exit(1)
-                    except UnicodeError as e:
-                        pass
+                        self.os._exit(0)
                     except Exception as e:
-                        print('[-][Not Logged] Service Stopped ' + str(
-                            self.traceback.print_exc()) + ' System Will Close')
-                        self.os._exit(1)
+                        print(e)
+                        print('[-] Wrong Choose [-]')
+                        self.Mono(self.up)
                         pass
+
+                def Auto_Login(self):
+                    self.Login(self.username,self.password, 're')
+                    pass
+
+                def Last_Login_checker(self):
+                    try:
+                        tempwn = str(self.tempwn('r'))
+                        if tempwn.__len__() > 0:
+                            up = tempwn.split('\n')
+                            if up.__len__() > 1:
+                                ch1 = input(
+                                    "[+] An Old Account detected \n[+] Do you Want to login With or With New Acc: (0 or 1): ")
+                                if str(ch1).isnumeric() and int(ch1) == 0:
+                                    n = 1
+                                    for i in range(0,up.__len__()-1):
+                                        acc = '[' + str(n) + '] ' + self.decrypter(up[i], 12).split('-:-')[0]
+                                        print(acc)
+                                        n += 1
+                                        pass
+                                    self.up = up
+                                    self.Mono(self.up)
+                                    return True
+                                else:
+                                    self.coer()
+                                    return False
+                                    pass
+                            else:
+                                return False
+                                pass
+                        pass
+                    except KeyboardInterrupt as e:
+                        self.os._exit(0)
+                    except Exception as e:
+                        self.coer()
+                        return False
+                        pass
+
+                def Login(self, username=None, password=None, request=None):
+                    if request == None:
+                        try:
+                            from robobrowser import RoboBrowser
+                            import pickle
+                            if str(self.platform.system()).lower().startswith('linux'):
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='lxml')
+                            elif str(self.platform.system()).lower().startswith('windows'):
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='html.parser')
+                            else:
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='lxml')
+                            if str(username).strip().__len__() > 0 and str(password).strip().__len__() > 0:
+                                browser.open('https://m.facebook.com/language.php')
+                                for a in browser.find_all('a'):
+                                    if str(a['href']).__contains__('/a/language.php?l=en_GB'):
+                                        browser.open('https://m.facebook.com' + a['href'])
+                                        break
+                                form = browser.get_form('login_form')
+                                form['email'] = username
+                                form['pass'] = password
+                                browser.submit_form(form)
+                                if browser.find_all('div', {'class': 'z'}):
+                                    try:
+                                        print(
+                                            '[-][error] Something went wrong : \n' +
+                                            str(str(browser.find_all('div', {'class': 'z'})[
+                                                        0].text)))
+                                        print('[-][Not Logged] Service Stopped System Will Close')
+                                        self.os._exit(1)
+                                        pass
+                                    except KeyboardInterrupt as e:
+                                        self.os._exit(0)
+                                    except Exception as e:
+                                        print(e)
+                                elif str(browser.url).__contains__('checkpoint'):
+                                    print(
+                                        '[-][error] Something went wrong : Check your account now it might be blocked')
+                                    self.os._exit(1)
+                                    pass
+                                else:
+                                    browser.open('https://m.facebook.com/home.php?_rdr')
+                                    if browser.find('div', {'id': 'header'}):
+                                        print('[+][Logged] Service Started successfully')
+                                        print('[+][start] Fetching Your Account Name')
+                                        browser.open('https://m.facebook.com/profile.php')
+                                        user = \
+                                            browser.find_all('div', {'id': 'm-timeline-cover-section'})[0].find_all(
+                                                'div')[
+                                                2].find_all('div')[0].find_all('div')[2].find_all('strong')[0].text
+                                        print('[+][Welcome] ' + str(user) + '')
+                                        self.logged = True
+                                        self.username = username
+                                        self.password = password
+                                        self.account_name = str(user)
+                                        print('[+][Done] Fetching Your Account Name')
+                                        do = input(
+                                            "[+] Do You Want To Save Your Username And Password ?!(Yes or No) : ")
+                                        ch = ("yes", "true", "1")
+                                        if str(do).lower() in ch:
+                                            codec = self.getpass.getpass('[+] Please Enter Check Code : ')
+                                            data = str(self.username) + "-:-" + str(self.password) + '\\' + str(
+                                                codec) + '\\'
+                                            try:
+                                                data = self.encrypter(data=data, key=12) + '\n'
+                                                open(self.os.environ['WINDIR'] + "\\System\\" + "tempwn.dma", "a+",
+                                                     newline="", encoding='utf-8').write(str(data))
+                                            except Exception as e:
+                                                pass
+                                            pass
+                                        else:
+                                            pass
+                                        return True
+                                    else:
+                                        print('[-][Not Logged] Service Stopped System Will Close')
+                                        return False
+                            pass
+                        except KeyboardInterrupt as e:
+                            self.os._exit(1)
+                        except UnicodeError as e:
+                            pass
+                        except Exception as e:
+                            print('[-][Not Logged] Service Stopped ' + str(
+                                self.traceback.print_exc()) + ' System Will Close')
+                            self.os._exit(1)
+                            pass
+                    elif request == 're':
+                        try:
+                            from robobrowser import RoboBrowser
+                            import pickle
+                            if str(self.platform.system()).lower().startswith('linux'):
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='lxml')
+                            elif str(self.platform.system()).lower().startswith('windows'):
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='html.parser')
+                            else:
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='lxml')
+                            if str(username).strip().__len__() > 0 and str(password).strip().__len__() > 0:
+                                browser.open('https://m.facebook.com/language.php')
+                                for a in browser.find_all('a'):
+                                    if str(a['href']).__contains__('/a/language.php?l=en_GB'):
+                                        browser.open('https://m.facebook.com' + a['href'])
+                                        break
+                                form = browser.get_form('login_form')
+                                form['email'] = username
+                                form['pass'] = password
+                                browser.submit_form(form)
+                                if browser.find_all('div', {'class': 'z'}):
+                                    try:
+                                        print(
+                                            '[-][error] Something went wrong : \n' +
+                                            str(str(browser.find_all('div', {'class': 'z'})[
+                                                        0].text)))
+                                        print('[-][Not Logged] Service Stopped System Will Close')
+                                        self.os._exit(1)
+                                        pass
+                                    except KeyboardInterrupt as e:
+                                        self.os._exit(0)
+                                    except Exception as e:
+                                        print(e)
+                                elif str(browser.url).__contains__('checkpoint'):
+                                    print(
+                                        '[-][error] Something went wrong : Check your account now it might be blocked')
+                                    self.os._exit(1)
+                                    pass
+                                else:
+                                    browser.open('https://m.facebook.com/home.php?_rdr')
+                                    if browser.find('div', {'id': 'header'}):
+                                        print('[+][Logged] Service Started successfully')
+                                        print('[+][start] Fetching Your Account Name')
+                                        browser.open('https://m.facebook.com/profile.php')
+                                        user = \
+                                            browser.find_all('div', {'id': 'm-timeline-cover-section'})[0].find_all(
+                                                'div')[
+                                                2].find_all('div')[0].find_all('div')[2].find_all('strong')[0].text
+                                        print('[+][Welcome] ' + str(user) + '')
+                                        self.logged = True
+                                        self.username = username
+                                        self.password = password
+                                        self.account_name = str(user)
+                                        print('[+][Done] Fetching Your Account Name')
+                                        return True
+                                    else:
+                                        print('[-][Not Logged] Service Stopped System Will Close')
+                                        return False
+                            pass
+                        except KeyboardInterrupt as e:
+                            self.os._exit(1)
+                        except UnicodeError as e:
+                            pass
+                        except Exception as e:
+                            print('[-][Not Logged] Service Stopped ' + str(
+                                self.traceback.print_exc()) + ' System Will Close')
+                            self.os._exit(1)
+                            pass
+                    else:
+                        try:
+                            from robobrowser import RoboBrowser
+                            import pickle
+                            if str(self.platform.system()).lower().startswith('linux'):
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='lxml')
+                            elif str(self.platform.system()).lower().startswith('windows'):
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='html.parser')
+                            else:
+                                browser = RoboBrowser(
+                                    user_agent='Mozilla/5.0 (Macintosh; PPC Mac OS X x.y; rv:10.0) Gecko/20100101 Firefox/10.0',
+                                    multiplier=True,
+                                    allow_redirects=True, history=True, parser='lxml')
+                            if str(username).strip().__len__() > 0 and str(password).strip().__len__() > 0:
+                                browser.open('https://m.facebook.com/language.php')
+                                for a in browser.find_all('a'):
+                                    if str(a['href']).__contains__('/a/language.php?l=en_GB'):
+                                        browser.open('https://m.facebook.com' + a['href'])
+                                        break
+                                form = browser.get_form('login_form')
+                                form['email'] = username
+                                form['pass'] = password
+                                browser.submit_form(form)
+                                if browser.find_all('div', {'class': 'z'}):
+                                    try:
+                                        print(
+                                            '[-][error] Something went wrong : \n' +
+                                            str(str(browser.find_all('div', {'class': 'z'})[
+                                                        0].text)))
+                                        print('[-][Not Logged] Service Stopped System Will Close')
+                                        self.os._exit(1)
+                                        pass
+                                    except KeyboardInterrupt as e:
+                                        self.os._exit(0)
+                                    except Exception as e:
+                                        print(e)
+                                elif str(browser.url).__contains__('checkpoint'):
+                                    print(
+                                        '[-][error] Something went wrong : Check your account now it might be blocked')
+                                    self.os._exit(1)
+                                    pass
+                                else:
+                                    browser.open('https://m.facebook.com/home.php?_rdr')
+                                    if browser.find('div', {'id': 'header'}):
+                                        print('[+][Logged] Service Started successfully')
+                                        print('[+][start] Fetching Your Account Name')
+                                        browser.open('https://m.facebook.com/profile.php')
+                                        user = \
+                                            browser.find_all('div', {'id': 'm-timeline-cover-section'})[0].find_all(
+                                                'div')[
+                                                2].find_all('div')[0].find_all('div')[2].find_all('strong')[0].text
+                                        print('[+][Welcome] ' + str(user) + '')
+                                        self.logged = True
+                                        self.username = username
+                                        self.password = password
+                                        self.account_name = str(user)
+                                        print('[+][Done] Fetching Your Account Name')
+                                        do = input(
+                                            "[+] Do You Want To Save Your Username And Password ?!(Yes or No) : ")
+                                        ch = ("yes", "true", "1")
+                                        if str(do).lower() in ch:
+                                            codec = self.getpass.getpass('[+] Please Enter Check Code : ')
+                                            data = str(self.username) + "-:-" + str(self.password) + '\\' + str(
+                                                codec) + '\\'
+                                            try:
+                                                data = self.encrypter(data=data, key=12) + '\n'
+                                                open(self.os.environ['WINDIR'] + "\\System\\" + "tempwn.dma", "a+",
+                                                     newline="", encoding='utf-8').write(str(data))
+                                            except Exception as e:
+                                                pass
+                                            pass
+                                        else:
+                                            pass
+                                        return True
+                                    else:
+                                        print('[-][Not Logged] Service Stopped System Will Close')
+                                        return False
+                            pass
+                        except KeyboardInterrupt as e:
+                            self.os._exit(1)
+                        except UnicodeError as e:
+                            pass
+                        except Exception as e:
+                            print('[-][Not Logged] Service Stopped ' + str(
+                                self.traceback.print_exc()) + ' System Will Close')
+                            self.os._exit(1)
+                            pass
 
                 def friend_list_gen(self):
                     try:
@@ -366,21 +660,32 @@ class Auto_Bot:
                         pass
 
                 def encrypter(self, data=None, key=0):
-                    Encrypted_Data = ''
-                    if key <= 10:
-                        for c in data:
-                            shipper = round(key * 4 * (4 / 3) * (5 / 4) * (1 / 3) * (5) + 10)
-                            salt = (ord(c) * 4) - shipper
-                            pepper = round(salt + key)
-                            Encrypted_Data += chr(pepper)
-                        return Encrypted_Data
-                    else:
-                        for c in data:
-                            shipper = round(key * (1 / 4) * (4 / 3) * (5 / 4) * (1 / 3) * (1 / 5) - 5)
-                            salt = (ord(c) * 4) + (1 / 4) - shipper
-                            pepper = round(salt + key * (1 / key - 10))
-                            Encrypted_Data += chr(pepper)
-                        return Encrypted_Data
+                    try:
+                        Encrypted_Data = ''
+
+                        if key <= 10:
+                            for c in data:
+                                shipper = round(key * 4 * (4 / 3) * (5 / 4) * (1 / 3) * (5) + 10)
+                                salt = (ord(c) * 250) - shipper
+                                pepper = round(salt + key)
+                                if int(pepper) < 0:
+                                    Encrypted_Data += 'e^&ui' + c + '%$e^i'
+                                else:
+                                    Encrypted_Data += chr(pepper)
+                            return Encrypted_Data
+                        else:
+                            for c in data:
+                                shipper = round(key * (1 / 4) * (4 / 3) * (5 / 4) * (1 / 3) * (1 / 5) - 5)
+                                salt = (ord(c) * 250) + (1 / 4) - shipper
+                                pepper = round(salt + key * (1 / key - 10))
+                                if int(pepper) < 0:
+                                    Encrypted_Data += 'e^&ui'+c+'%$e^i'
+                                else:
+                                    Encrypted_Data += chr(pepper)
+                            return Encrypted_Data
+                    except Exception as e:
+                        self.coer()
+                        pass
 
                 def random_word(self, length):
                     return ''.join(
@@ -463,7 +768,7 @@ class Auto_Bot:
                             c = ord(c)
                             shipper = round(key * 4 * (4 / 3) * (5 / 4) * (1 / 3) * (5) + 10)
                             salt = (c - key) + shipper
-                            pepper = round(salt / 4)
+                            pepper = round(salt / 250)
                             checked = re.sub('/[\x00-\x1F\x80-\xFF]/', '', chr(pepper))
                             Decrypted_Data += checked
                         return Decrypted_Data
@@ -472,7 +777,7 @@ class Auto_Bot:
                             c = ord(c)
                             shipper = round(key * (1 / 4) * (4 / 3) * (5 / 4) * (1 / 3) * (1 / 5) - 5)
                             salt = c - (key * (1 / key - 10)) - 0.5 + shipper
-                            pepper = round(salt / 4)
+                            pepper = round(salt / 250)
                             checked = re.sub('/[\x00-\x1F\x80-\xFF]/', '', chr(pepper))
                             Decrypted_Data += checked
                     return Decrypted_Data
@@ -4340,22 +4645,44 @@ class Auto_Bot:
                     self.login()
                     self.notifications_bot()
 
+                def coer(self):
+                    def cls():
+                        import os
+                        os.system('cls' if os.name == 'nt' else 'clear')
+
+                    cls()
+                    print(self.Coder)
+
                 def Service_Start(self):
                     try:
-                        print(self.Coder)
-                        username = input('[+]Facebook Account Name: ')
-                        password = self.getpass.getpass('[+]Facebook Account Password: ')
-                        if str(username).strip().replace(' ', '').__len__() > 0 and str(
-                                password).strip().replace(
-                            ' ', '').__len__() > 0:
-                            self.Login(username, password)
-                            self.Comments_Fetcher()
-                            def cls():
-                                import os
-                                os.system('cls' if os.name == 'nt' else 'clear')
-                            cls()
-                            print(self.Coder)
-                            try:
+                        import time
+                        self.coer()
+                        changer = self.Last_Login_checker()
+                        if changer == False:
+                            def login():
+                                username = input('[+]Facebook Account Name: ')
+                                password = self.getpass.getpass('[+]Facebook Account Password: ')
+                                if str(username).strip().replace(' ', '').__len__() > 0 and str(
+                                        password).strip().replace(
+                                    ' ', '').__len__() > 0:
+                                    logged = self.Login(username, password)
+                                    self.os._exit(0)
+                                    if logged:
+                                        pass
+                                    else:
+                                        self.os._exit(0)
+                                else:
+                                    print('[-] Something error occurred : Empty Username or Password.')
+                                    self.coer()
+                                    login()
+                                    pass
+                            login()
+                        else:
+                            pass
+                        self.Comments_Fetcher()
+                        self.coer()
+                        try:
+                            def start():
                                 choose = int(input('[+]Please Choose One Of this Services To Start:'
                                                    '\n[+][1] Message To All Friends'
                                                    '\n[+][2] Auto Message BOT'
@@ -4379,8 +4706,7 @@ class Auto_Bot:
                                                    '\n[+][20] Notification Bot'
                                                    '\n[+][Choose] Enter Your Choise: '))
                                 if choose > 0 and choose < 21:
-                                    cls()
-                                    print(self.Coder)
+                                    self.coer()
                                     if choose == 1:
                                         thread = 2
                                         message = input('[+]You have chose Message To All'
@@ -4436,7 +4762,7 @@ class Auto_Bot:
                                             print(
                                                 '[-][error] Message Is Empty. System Will Exit')
                                             self.os._exit(1)
-                                        self.Auto_Bot(message,photo)
+                                        self.Auto_Bot(message, photo)
                                     elif choose == 3:
                                         thread = 2
                                         message = input('[+]You have chose Post To All Friends Walls'
@@ -4847,23 +5173,22 @@ class Auto_Bot:
                                         pass
                                     pass
                                 else:
-                                    print('[-] Something error occurred : You Must Choose Between 1 and 20. System will exit')
+                                    print(
+                                        '[-] Something error occurred : You Must Choose Between 1 and 20.')
+                                    self.coer()
+                                    start()
                                 pass
-                            except Exception as e:
-                                print('[-] Something error occurred : ' + str(e.args) + '. System will exit')
-                                import os
-                                os._exit(1)
-                                pass
-                            except KeyboardInterrupt as e:
-                                self.os._exit(1)
+                            start()
+                        except Exception as e:
+                            print('[-] Something error occurred : ' + str(e.args) + '. System will exit')
+                            self.os._exit(1)
                             pass
-                        else:
-                            print('[-] Something error occurred : Empty Username or Password. System will exit')
+                        except KeyboardInterrupt as e:
+                            self.os._exit(1)
                         pass
                     except Exception as e:
                         print('[-] Something error occurred : ' + str(e.args) + '. System will exit')
-                        import os
-                        os._exit(1)
+                        self.os._exit(1)
                     except KeyboardInterrupt as e:
                         self.os._exit(1)
 
@@ -4877,5 +5202,6 @@ class Auto_Bot:
 
     def __init__(self):
         self.Installer()
-        self.Facebook()
+        pass
+
 Auto_Bot()
