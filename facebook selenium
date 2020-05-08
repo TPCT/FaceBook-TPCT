@@ -1,0 +1,70 @@
+from warnings import simplefilter
+from os import path, stat
+simplefilter('ignore')
+
+
+class FacebookScrapper:
+    from time import sleep
+    from selenium import webdriver
+    from selenium.webdriver.common import keys
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.common.by import By
+    from selenium.common.exceptions import TimeoutException
+    from robobrowser import RoboBrowser
+
+    def login(self):
+        pass
+
+    def __init__(self, username, password, pageLink, accountsPath):
+        if username.strip() and password.strip() and pageLink.strip() and accountsPath.strip() \
+                and path.isfile(accountsPath) and stat(accountsPath).st_size != 0:
+            self.browser = self.webdriver.Firefox(executable_path=path.sep.join(
+                path.realpath(__file__).split(path.sep)[:-1]) + path.sep + 'firefox')
+            self.browser.get('https://www.facebook.com')
+            self.browser.find_element_by_name('email').send_keys(username)
+            self.browser.find_element_by_name('pass').send_keys(password)
+            self.browser.find_element_by_css_selector('input[data-testid="royal_login_button"]').click()
+            try:
+                self.browser.find_element_by_id('loginform')
+                self.browser.close()
+                raise ValueError('invalid username or password')
+            except:
+                pass
+            self.browser.get(pageLink)
+            try:
+                dummmy = self.WebDriverWait(self.browser, 100).until(
+                    lambda x: x.find_element_by_id('userNavigationLabel')
+                )
+                dummmy.click()
+                EditpageInfo = self.WebDriverWait(self.browser, 100).until(
+                    lambda x: x.find_element_by_css_selector('div[data-tooltip-content="Edit Page Info"]'))
+                EditpageInfo.click()
+            except self.TimeoutException:
+                self.browser.close()
+                raise Exception("You don't have admin permission to this page script will exit")
+
+            try:
+                settingTable = self.WebDriverWait(self.browser, 100).until(
+                    lambda x: x.find_element_by_css_selector('div[defaultselected="page_info"]'))
+                pageRoles = settingTable.find_elements_by_tag_name('a')
+                for element in pageRoles:
+                    href = element.get_attribute('href')
+                    if 'admin_roles' in href:
+                        element.click()
+                        break
+            except self.TimeoutException:
+                self.browser.close()
+                raise Exception("You don't have admin permission to this page script will exit")
+            searchBox = self.browser.find_element_by_css_selector('input[placeholder="Type a name or email"]')
+            searchBox.click()
+            searchBox.send_keys('gll1950@hotmail.com')
+            print(self.browser.get_log('network'))
+            self.sleep(10)
+            self.browser.close()
+        else:
+            raise ValueError('invalid username or password or accounts list path')
+
+
+FacebookScrapper('th3professionalcod3r@gmail.com', 'TPCTLovesNobody@14!',
+                 'https://www.facebook.com/Nomo-108061600903702', 'accounts')
