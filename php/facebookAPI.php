@@ -1,7 +1,7 @@
 <?php
     class FACEBOOKAPI{
         private ?string $url = "https://m.facebook.com";
-        private ?string $email = "";
+        private ?string $username = "";
         private ?string $password = "";
         private ?string $useragent = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
         private bool $logged = false;
